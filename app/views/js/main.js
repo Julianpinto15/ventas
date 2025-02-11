@@ -81,11 +81,11 @@ document.addEventListener("DOMContentLoaded", () => {
 function cargarFavicon(url) {
   const link = document.createElement("link");
   link.rel = "icon";
-  link.type = "image/png";
+  link.type = "image/jpg";
   link.href = url;
   document.head.appendChild(link);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  cargarFavicon("http://localhost/Libreria/app/views/img/allbooks.jpg");
+  cargarFavicon("http://localhost/LIBRERIA/app/views/img/allbooks.jpg");
 });
