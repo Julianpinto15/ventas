@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 07-02-2025 a las 13:32:58
+-- Tiempo de generación: 11-02-2025 a las 12:52:53
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 8.1.10
 
@@ -35,15 +35,6 @@ CREATE TABLE `autor` (
   `paisorigen` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Volcado de datos para la tabla `autor`
---
-
-INSERT INTO `autor` (`idAutor`, `codigo`, `nombre`, `biografia`, `paisorigen`) VALUES
-(2, 'AUT001206', 'Gabriel García Márquez', 'Autor colombiano, premio Nobel de Literatura.', 'Colombia'),
-(3, 'AUT0023', 'Jane Austen', 'Autora inglesa de novelas clásicas.', 'Inglaterra'),
-(4, 'AUT0035', 'George Orwell', 'Ensayista y novelista británico.', 'Reino Unido');
-
 -- --------------------------------------------------------
 
 --
@@ -62,7 +53,7 @@ CREATE TABLE `caja` (
 --
 
 INSERT INTO `caja` (`caja_id`, `caja_numero`, `caja_nombre`, `caja_efectivo`) VALUES
-(1, 1, 'Caja Principal', 200000.00);
+(1, 1, 'Caja Principal', 0.00);
 
 -- --------------------------------------------------------
 
@@ -75,16 +66,6 @@ CREATE TABLE `categoria` (
   `categoria_nombre` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish2_ci NOT NULL,
   `categoria_ubicacion` varchar(150) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish2_ci;
-
---
--- Volcado de datos para la tabla `categoria`
---
-
-INSERT INTO `categoria` (`categoria_id`, `categoria_nombre`, `categoria_ubicacion`) VALUES
-(1, 'terror', 'neiva'),
-(2, 'Drama', 'Guadalupe'),
-(3, 'Ficcion', 'neiva'),
-(4, 'Historia', 'neiva');
 
 -- --------------------------------------------------------
 
@@ -126,14 +107,6 @@ CREATE TABLE `editorial` (
   `pais` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
---
--- Volcado de datos para la tabla `editorial`
---
-
-INSERT INTO `editorial` (`idEditorial`, `codigo`, `nombre`, `informacioncontacto`, `pais`) VALUES
-(1, '123456', 'Planeta', 'safawerasfd ag cvw', 'Estados Unidos'),
-(4, '6598745', 'Planeta World', 'ADDSAFSFG', 'Colmbia');
-
 -- --------------------------------------------------------
 
 --
@@ -153,7 +126,7 @@ CREATE TABLE `empresa` (
 --
 
 INSERT INTO `empresa` (`empresa_id`, `empresa_nombre`, `empresa_telefono`, `empresa_email`, `empresa_direccion`) VALUES
-(1, 'Allbooks', '3217696864', 'allboooks12@gmail.com', 'calle 38');
+(1, 'Allbooks', '3217696864', 'allboooks12@gmail.com', 'carrera 6 # 32-12');
 
 -- --------------------------------------------------------
 
@@ -174,17 +147,10 @@ CREATE TABLE `producto` (
   `producto_estado` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish2_ci NOT NULL,
   `producto_foto` varchar(500) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish2_ci NOT NULL,
   `categoria_id` int NOT NULL,
-  `id_subcategoria` int DEFAULT NULL
+  `id_subcategoria` int DEFAULT NULL,
+  `idAutor` int DEFAULT NULL,
+  `idEditorial` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish2_ci;
-
---
--- Volcado de datos para la tabla `producto`
---
-
-INSERT INTO `producto` (`producto_id`, `producto_codigo`, `producto_nombre`, `producto_stock_total`, `producto_tipo_unidad`, `producto_precio_compra`, `producto_precio_venta`, `producto_marca`, `producto_modelo`, `producto_estado`, `producto_foto`, `categoria_id`, `id_subcategoria`) VALUES
-(1, '9832', 'Satanas', 29, 'Unidad', 32000.00, 40000.00, 'planeta', 'diez', 'Habilitado', '', 1, 1),
-(2, '49382', 'abusp', 46, 'Unidad', 32000.00, 40000.00, 'sklas', 'skals', 'Habilitado', '', 3, NULL),
-(3, '99999', 'akelarre', 90, 'Unidad', 52000.00, 60000.00, '2klsals', 'lkskla', 'Habilitado', '', 2, NULL);
 
 -- --------------------------------------------------------
 
@@ -197,15 +163,6 @@ CREATE TABLE `subcategoria` (
   `nombre` varchar(100) NOT NULL,
   `categoria_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Volcado de datos para la tabla `subcategoria`
---
-
-INSERT INTO `subcategoria` (`id_subcategoria`, `nombre`, `categoria_id`) VALUES
-(1, 'cuento', 2),
-(3, ' ficcion romantico', 3),
-(4, 'Ejemplo', 1);
 
 -- --------------------------------------------------------
 
@@ -221,16 +178,17 @@ CREATE TABLE `usuario` (
   `usuario_usuario` varchar(30) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish2_ci NOT NULL,
   `usuario_clave` varchar(535) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish2_ci NOT NULL,
   `usuario_foto` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish2_ci NOT NULL,
-  `caja_id` int NOT NULL
+  `caja_id` int NOT NULL,
+  `usuario_creado` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `usuario_actualizado` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish2_ci;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`usuario_id`, `usuario_nombre`, `usuario_apellido`, `usuario_email`, `usuario_usuario`, `usuario_clave`, `usuario_foto`, `caja_id`) VALUES
-(1, 'Administrador', 'Principal', '', 'admin12', '$2y$10$Jgm6xFb5Onz/BMdIkNK2Tur8yg/NYEMb/tdnhoV7kB1BwIG4R05D2', '', 1),
-(2, 'admin', 'admin', 'admin12@gmail.com', 'admin', '$2y$10$/thuywpBusv2fX8U1YwPSOhz8zObbF/9rLJISb1EJ6gHfhi5qSkWW', '', 1);
+INSERT INTO `usuario` (`usuario_id`, `usuario_nombre`, `usuario_apellido`, `usuario_email`, `usuario_usuario`, `usuario_clave`, `usuario_foto`, `caja_id`, `usuario_creado`, `usuario_actualizado`) VALUES
+(1, 'Administrador', 'Principal', 'admin@gmail.com', 'admin', '$2y$10$NeehrobdPdFUxG4T0sweo.S7vbbyVcEwzU8/fmeyhhO23I/FCOvCy', '', 1, '2025-02-11 12:49:19', '2025-02-11 12:49:19');
 
 -- --------------------------------------------------------
 
@@ -251,14 +209,6 @@ CREATE TABLE `venta` (
   `caja_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish2_ci;
 
---
--- Volcado de datos para la tabla `venta`
---
-
-INSERT INTO `venta` (`venta_id`, `venta_codigo`, `venta_fecha`, `venta_hora`, `venta_total`, `venta_pagado`, `venta_cambio`, `usuario_id`, `cliente_id`, `caja_id`) VALUES
-(1, 'E9Q9R7H4B7-1', '2025-02-06', '04:25 pm', 40000.00, 45000.00, 5000.00, 1, 1, 1),
-(2, 'T9J6C7T7S5-2', '2025-02-06', '06:26 pm', 160000.00, 170000.00, 10000.00, 1, 1, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -273,16 +223,9 @@ CREATE TABLE `venta_detalle` (
   `venta_detalle_total` decimal(30,2) NOT NULL,
   `venta_detalle_descripcion` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish2_ci NOT NULL,
   `venta_codigo` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish2_ci NOT NULL,
-  `producto_id` int NOT NULL
+  `producto_id` int NOT NULL,
+  `autor` varchar(255) COLLATE utf8mb3_spanish2_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish2_ci;
-
---
--- Volcado de datos para la tabla `venta_detalle`
---
-
-INSERT INTO `venta_detalle` (`venta_detalle_id`, `venta_detalle_cantidad`, `venta_detalle_precio_compra`, `venta_detalle_precio_venta`, `venta_detalle_total`, `venta_detalle_descripcion`, `venta_codigo`, `producto_id`) VALUES
-(1, 1, 32000.00, 40000.00, 40000.00, 'Satanas', 'E9Q9R7H4B7-1', 1),
-(2, 4, 32000.00, 40000.00, 160000.00, 'abusp', 'T9J6C7T7S5-2', 2);
 
 --
 -- Índices para tablas volcadas
@@ -330,7 +273,9 @@ ALTER TABLE `empresa`
 ALTER TABLE `producto`
   ADD PRIMARY KEY (`producto_id`),
   ADD KEY `categoria_id` (`categoria_id`),
-  ADD KEY `id_subcategoria` (`id_subcategoria`);
+  ADD KEY `producto_ibfk_3` (`id_subcategoria`),
+  ADD KEY `fk_producto_autor` (`idAutor`),
+  ADD KEY `fk_producto_editorial` (`idEditorial`);
 
 --
 -- Indices de la tabla `subcategoria`
@@ -372,7 +317,7 @@ ALTER TABLE `venta_detalle`
 -- AUTO_INCREMENT de la tabla `autor`
 --
 ALTER TABLE `autor`
-  MODIFY `idAutor` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idAutor` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `caja`
@@ -396,7 +341,7 @@ ALTER TABLE `cliente`
 -- AUTO_INCREMENT de la tabla `editorial`
 --
 ALTER TABLE `editorial`
-  MODIFY `idEditorial` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idEditorial` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `empresa`
@@ -408,31 +353,31 @@ ALTER TABLE `empresa`
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `producto_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `producto_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `subcategoria`
 --
 ALTER TABLE `subcategoria`
-  MODIFY `id_subcategoria` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_subcategoria` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `usuario_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `usuario_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `venta`
 --
 ALTER TABLE `venta`
-  MODIFY `venta_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `venta_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3240;
 
 --
 -- AUTO_INCREMENT de la tabla `venta_detalle`
 --
 ALTER TABLE `venta_detalle`
-  MODIFY `venta_detalle_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `venta_detalle_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Restricciones para tablas volcadas
@@ -442,8 +387,10 @@ ALTER TABLE `venta_detalle`
 -- Filtros para la tabla `producto`
 --
 ALTER TABLE `producto`
+  ADD CONSTRAINT `fk_producto_autor` FOREIGN KEY (`idAutor`) REFERENCES `autor` (`idAutor`),
+  ADD CONSTRAINT `fk_producto_editorial` FOREIGN KEY (`idEditorial`) REFERENCES `editorial` (`idEditorial`),
   ADD CONSTRAINT `producto_ibfk_2` FOREIGN KEY (`categoria_id`) REFERENCES `categoria` (`categoria_id`),
-  ADD CONSTRAINT `producto_ibfk_3` FOREIGN KEY (`id_subcategoria`) REFERENCES `subcategoria` (`id_subcategoria`);
+  ADD CONSTRAINT `producto_ibfk_3` FOREIGN KEY (`id_subcategoria`) REFERENCES `subcategoria` (`id_subcategoria`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
 -- Filtros para la tabla `subcategoria`
