@@ -17,6 +17,7 @@
 		    $clave1=$this->limpiarCadena($_POST['usuario_clave_1']);
 		    $clave2=$this->limpiarCadena($_POST['usuario_clave_2']);
 
+		    $cargo=$this->limpiarCadena($_POST['usuario_cargo']);
 		    $caja=$this->limpiarCadena($_POST['usuario_caja']);
 
 
@@ -124,6 +125,18 @@
 					"tipo"=>"simple",
 					"titulo"=>"Ocurrió un error inesperado",
 					"texto"=>"El USUARIO ingresado ya se encuentra registrado, por favor elija otro",
+					"icono"=>"error"
+				];
+				return json_encode($alerta);
+		        exit();
+		    }
+
+		    # Verificando cargo #
+		    if($cargo!="Administrador" && $cargo!="Cajero"){
+		    	$alerta=[
+					"tipo"=>"simple",
+					"titulo"=>"Ocurrió un error inesperado",
+					"texto"=>"El cargo no es correcto",
 					"icono"=>"error"
 				];
 				return json_encode($alerta);
@@ -252,6 +265,11 @@
 					"campo_valor"=>$foto
 				],
 				[
+					"campo_nombre"=>"usuario_cargo",
+					"campo_marcador"=>":Cargo",
+					"campo_valor"=>$cargo
+				],
+				[
 					"campo_nombre"=>"caja_id",
 					"campo_marcador"=>":Caja",
 					"campo_valor"=>$caja
@@ -323,78 +341,83 @@
 			$total = (int) $total->fetchColumn();
 
 			$numeroPaginas =ceil($total/$registros);
-$tabla.='
-    <div class="table-responsive">
-    <table class="table table-striped table-bordered table-hover">
-        <thead class="table-dark">
-            <tr class="text-center">
-                <th class="text-th">Nombre</th>
-                <th class="text-th">Usuario</th>
-                <th class="text-th">Email</th>
-                <th class="text-th">Foto</th>
-                <th class="text-th">Actualizar</th>
-                <th class="text-th">Eliminar</th>
-            </tr>
-        </thead>
-        <tbody>
-';
 
-if($total>=1 && $pagina<=$numeroPaginas){
-    $contador=$inicio+1;
-    $pag_inicio=$inicio+1;
-    foreach($datos as $rows){
-        $tabla.='
-            <tr class="tr-main text-center">
-                <td class="text-td">'.$rows['usuario_nombre'].' '.$rows['usuario_apellido'].'</td>
-                <td class="text-td">'.$rows['usuario_usuario'].'</td>
-                <td class="text-td">'.$rows['usuario_email'].'</td>
-                <td class="text-td">
-                    <a href="'.APP_URL.'userPhoto/'.$rows['usuario_id'].'/" class="text-td btn btn-success btn-sm rounded-pill">
-                        <i class="fas fa-camera fa-fw"></i>
-                    </a>
-                </td>
-                <td class="text-td">
-                    <a href="'.APP_URL.'userUpdate/'.$rows['usuario_id'].'/" class="text-td btn btn-success btn-sm rounded-pill">
-                        <i class="fas fa-sync fa-fw"></i>
-                    </a>
-                </td>
-                <td class="text-td">
-                    <form class="FormularioAjax" action="'.APP_URL.'app/ajax/usuarioAjax.php" method="POST" autocomplete="off">
-                        <input type="hidden" name="modulo_usuario" value="eliminar">
-                        <input type="hidden" name="usuario_id" value="'.$rows['usuario_id'].'">
-                        <button type="submit" class="text-td btn btn-danger btn-sm rounded-pill">
-                            <i class="far fa-trash-alt fa-fw"></i>
-                        </button>
-                    </form>
-                </td>
-            </tr>
-        ';
-        $contador++;
-    }
-    $pag_final=$contador-1;
-}else{
-    if($total>=1){
-        $tabla.='
-            <tr class="has-text-centered">
-                <td colspan="6">
-                    <a href="'.$url.'1/" class="button is-link is-rounded is-small mt-4 mb-4">
-                        Haga clic acá para recargar el listado
-                    </a>
-                </td>
-            </tr>
-        ';
-    }else{
-        $tabla.='
-            <tr class="has-text-centered">
-                <td colspan="6">
-                    No hay registros en el sistema
-                </td>
-            </tr>
-        ';
-    }
-}
+			$tabla.='
+		        <div class="table-container">
+		        <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+		            <thead>
+		                <tr>
+		                    <th class="has-text-centered">#</th>
+		                    <th class="has-text-centered">Nombre</th>
+		                    <th class="has-text-centered">Usuario</th>
+		                    <th class="has-text-centered">Email</th>
+		                    <th class="has-text-centered">Foto</th>
+		                    <th class="has-text-centered">Actualizar</th>
+		                    <th class="has-text-centered">Eliminar</th>
+		                </tr>
+		            </thead>
+		            <tbody>
+		    ';
 
-$tabla.='</tbody></table></div>';
+		    if($total>=1 && $pagina<=$numeroPaginas){
+				$contador=$inicio+1;
+				$pag_inicio=$inicio+1;
+				foreach($datos as $rows){
+					$tabla.='
+						<tr class="has-text-centered" >
+							<td>'.$contador.'</td>
+							<td>'.$rows['usuario_nombre'].' '.$rows['usuario_apellido'].'</td>
+							<td>'.$rows['usuario_usuario'].'</td>
+							<td>'.$rows['usuario_email'].'</td>
+							<td>
+			                    <a href="'.APP_URL.'userPhoto/'.$rows['usuario_id'].'/" class="button is-info is-rounded is-small">
+			                    	<i class="fas fa-camera fa-fw"></i>
+			                    </a>
+			                </td>
+			                <td>
+			                    <a href="'.APP_URL.'userUpdate/'.$rows['usuario_id'].'/" class="button is-success is-rounded is-small">
+			                    	<i class="fas fa-sync fa-fw"></i>
+			                    </a>
+			                </td>
+			                <td>
+			                	<form class="FormularioAjax" action="'.APP_URL.'app/ajax/usuarioAjax.php" method="POST" autocomplete="off" >
+
+			                		<input type="hidden" name="modulo_usuario" value="eliminar">
+			                		<input type="hidden" name="usuario_id" value="'.$rows['usuario_id'].'">
+
+			                    	<button type="submit" class="button is-danger is-rounded is-small">
+			                    		<i class="far fa-trash-alt fa-fw"></i>
+			                    	</button>
+			                    </form>
+			                </td>
+						</tr>
+					';
+					$contador++;
+				}
+				$pag_final=$contador-1;
+			}else{
+				if($total>=1){
+					$tabla.='
+						<tr class="has-text-centered" >
+			                <td colspan="7">
+			                    <a href="'.$url.'1/" class="button is-link is-rounded is-small mt-4 mb-4">
+			                        Haga clic acá para recargar el listado
+			                    </a>
+			                </td>
+			            </tr>
+					';
+				}else{
+					$tabla.='
+						<tr class="has-text-centered" >
+			                <td colspan="7">
+			                    No hay registros en el sistema
+			                </td>
+			            </tr>
+					';
+				}
+			}
+
+			$tabla.='</tbody></table></div>';
 
 			### Paginacion ###
 			if($total>0 && $pagina<=$numeroPaginas){
@@ -500,6 +523,18 @@ $tabla.='</tbody></table></div>';
 		    	$datos=$datos->fetch();
 		    }
 
+		    # Verificando privilegios #
+		    if($_SESSION['cargo']=="Cajero" && $id!=$_SESSION['id']){
+				$alerta=[
+					"tipo"=>"simple",
+					"titulo"=>"Ocurrió un error inesperado",
+					"texto"=>"No puedes realizar esta operacion en el sistema",
+					"icono"=>"error"
+				];
+				return json_encode($alerta);
+		        exit();
+			}
+
 		    $admin_usuario=$this->limpiarCadena($_POST['administrador_usuario']);
 		    $admin_clave=$this->limpiarCadena($_POST['administrador_clave']);
 
@@ -574,6 +609,12 @@ $tabla.='</tbody></table></div>';
 		    $email=$this->limpiarCadena($_POST['usuario_email']);
 		    $clave1=$this->limpiarCadena($_POST['usuario_clave_1']);
 		    $clave2=$this->limpiarCadena($_POST['usuario_clave_2']);
+
+		    if($_SESSION['cargo']=="Administrador"){
+		    	$cargo=$this->limpiarCadena($_POST['usuario_cargo']);
+		    }else{
+		    	$cargo=$datos['usuario_cargo'];
+		    }
 
 		    $caja=$this->limpiarCadena($_POST['usuario_caja']);
 
@@ -710,6 +751,18 @@ $tabla.='</tbody></table></div>';
 			    }
             }
 
+            # Verificando cargo #
+		    if($cargo!="Administrador" && $cargo!="Cajero"){
+		    	$alerta=[
+					"tipo"=>"simple",
+					"titulo"=>"Ocurrió un error inesperado",
+					"texto"=>"El cargo no es correcto",
+					"icono"=>"error"
+				];
+				return json_encode($alerta);
+		        exit();
+		    }
+
             $usuario_datos_up=[
 				[
 					"campo_nombre"=>"usuario_nombre",
@@ -735,6 +788,11 @@ $tabla.='</tbody></table></div>';
 					"campo_nombre"=>"usuario_clave",
 					"campo_marcador"=>":Clave",
 					"campo_valor"=>$clave
+				],
+				[
+					"campo_nombre"=>"usuario_cargo",
+					"campo_marcador"=>":Cargo",
+					"campo_valor"=>$cargo
 				],
 				[
 					"campo_nombre"=>"caja_id",
@@ -795,6 +853,18 @@ $tabla.='</tbody></table></div>';
 		    }else{
 		    	$datos=$datos->fetch();
 		    }
+
+		    # Verificando privilegios #
+		    if($_SESSION['cargo']=="Cajero" && $id!=$_SESSION['id']){
+				$alerta=[
+					"tipo"=>"simple",
+					"titulo"=>"Ocurrió un error inesperado",
+					"texto"=>"No puedes realizar esta operacion en el sistema",
+					"icono"=>"error"
+				];
+				return json_encode($alerta);
+		        exit();
+			}
 
 		    # Directorio de imagenes #
     		$img_dir="../views/fotos/";
@@ -884,6 +954,18 @@ $tabla.='</tbody></table></div>';
 		    }else{
 		    	$datos=$datos->fetch();
 		    }
+
+		    # Verificando privilegios #
+		    if($_SESSION['cargo']=="Cajero" && $id!=$_SESSION['id']){
+				$alerta=[
+					"tipo"=>"simple",
+					"titulo"=>"Ocurrió un error inesperado",
+					"texto"=>"No puedes realizar esta operacion en el sistema",
+					"icono"=>"error"
+				];
+				return json_encode($alerta);
+		        exit();
+			}
 
 		    # Directorio de imagenes #
     		$img_dir="../views/fotos/";

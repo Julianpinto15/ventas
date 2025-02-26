@@ -256,8 +256,7 @@
             <h4 class="alert-heading">¡Ocurrio un error inesperado!</h4>
             <div class="text-center">
                 <i class="fas fa-exclamation-triangle fa-2x"></i><br>
-                No hemos podio seleccionar algunos datos sobre la empresa, por favor <a href="<?php echo APP_URL; ?>companyNew/">verifique aquí los datos de la empresa</a>
-            </div>
+                No hemos podio seleccionar algunos datos sobre la empresa<?php if($_SESSION['cargo']=="Administrador"){ ?>, por favor <a href="<?php echo APP_URL; ?>companyNew/" >verifique aquí los datos de la empresa<?php } ?></div>            </div>
         </div>
     <?php } ?>
 </div>

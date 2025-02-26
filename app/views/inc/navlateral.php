@@ -6,7 +6,6 @@
         <span class="menu-text">Inicio</span>
     </a>
 
-    
     <!-- Ventas -->
     <div class="menu-item has-dropdown">
         <span class="emoji"><i class="fas fa-shopping-cart"></i></span>
@@ -21,7 +20,8 @@
         </div>
     </div>
 
-         <!-- Productos -->
+    <!-- Productos -->
+    <?php if ($_SESSION['cargo'] == "Administrador") { ?>
     <div class="menu-item has-dropdown">
         <span class="emoji"><i class="fas fa-cubes"></i></span>
         <span class="menu-text">Producto</span>
@@ -37,8 +37,10 @@
             </a>
         </div>
     </div>
+    <?php } ?>
 
-      <!-- Categorias -->
+    <!-- Categorias -->
+    <?php if ($_SESSION['cargo'] == "Administrador") { ?>
     <div class="menu-item has-dropdown">
         <span class="emoji"><i class="fas fa-tags"></i></span>
         <span class="menu-text">Categoria</span>
@@ -51,15 +53,34 @@
             </a>
         </div>
     </div>
+    <?php } ?>
+
+    <!-- Reportes -->
+    <?php if ($_SESSION['cargo'] == "Administrador") { ?>
+    <div class="menu-item has-dropdown">
+        <span class="emoji"><i class="fas fa-tags"></i></span>
+        <span class="menu-text">Reportes</span>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="<?php echo APP_URL; ?>reportSales/">
+               <span class="emoji"><i class="fas fa-clipboard-list"></i></span> Reporte por venta
+            </a>
+            <a class="dropdown-item" href="<?php echo APP_URL; ?>reportInventory/">
+                <span class="emoji"><i class="bi bi-book"></i></span> Reporte por inventario
+            </a>
+        </div>
+    </div>
+    <?php } ?>
 
     <!-- Configuraciones -->
     <div class="menu-item has-dropdown">
         <span class="emoji"><i class="fas fa-cogs"></i></span>
         <span class="menu-text">Configuracion</span>
         <div class="dropdown-menu">
+            <?php if ($_SESSION['cargo'] == "Administrador") { ?>
             <a class="dropdown-item" href="<?php echo APP_URL; ?>companyNew/">
                 <span class="emoji"><i class="fas fa-store-alt"></i></span> Datos de empresa
             </a>
+            <?php } ?>
             <a class="dropdown-item" href="<?php echo APP_URL."userUpdate/".$_SESSION['id']."/"; ?>">
                 <span class="emoji"><i class="fas fa-user-tie"></i></span> Mi cuenta
             </a>
@@ -68,24 +89,20 @@
             </a>
         </div>
     </div>
-    
-  
-   
-
-     
 
     <!-- Clientes -->
-     <a class="menu-item" href="<?php echo APP_URL; ?>clientList/">
+    <a class="menu-item" href="<?php echo APP_URL; ?>clientList/">
         <span class="emoji"><i class="fas fa-address-book"></i></span>
         <span class="menu-text">Cliente</span>
     </a>
 
     <!-- Cajas -->
-     <a class="menu-item" href="<?php echo APP_URL; ?>cashierList/">
+    <?php if ($_SESSION['cargo'] == "Administrador") { ?>
+    <a class="menu-item" href="<?php echo APP_URL; ?>cashierList/">
         <span class="emoji"><i class="fas fa-cash-register"></i></span>
         <span class="menu-text">Caja</span>
     </a>
-   
+    <?php } ?>
 
     <!-- Logout -->
     <a class="menu-item" href="<?php echo APP_URL."logOut/"; ?>">
@@ -93,4 +110,3 @@
         <span class="menu-text text-danger">Cerrar sesión</span>
     </a>
 </div>
-

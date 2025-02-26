@@ -22,10 +22,36 @@
                 <input type="hidden" name="modulo_empresa" value="actualizar">
                 <input type="hidden" name="empresa_id" value="<?php echo $datos['empresa_id']; ?>">
 
+                <!-- Sección de la imagen del logo -->
+                <div class="row mb-4">
+                    <div class="col-md-6 mb-3 mb-md-0 text-center">
+                        <?php if (is_file("./app/views/img/" . $datos['empresa_foto'])) { ?>
+                            <figure class="company-image">
+                                <img src="<?php echo APP_URL; ?>app/views/img/<?php echo $datos['empresa_foto']; ?>" 
+                                     class="img-fluid rounded" 
+                                     alt="Logo de la empresa">
+                            </figure>
+                        <?php } else { ?>
+                            <figure class="company-image">
+                                <img src="<?php echo APP_URL; ?>app/views/img/logo.png" 
+                                     class="img-fluid rounded" 
+                                     alt="Logo predeterminado">
+                            </figure>
+                        <?php } ?>
+                        <p class="mt-3">
+                            <a href="<?php echo APP_URL . "companyImage/" . $datos['empresa_id']; ?>" 
+                               class="btn btn-outline-primary">
+                                <i class="far fa-image me-2"></i>Cambiar logo o imagen
+                            </a>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Campos del formulario -->
                 <div class="row mb-4">
                     <div class="col-md-6 mb-3 mb-md-0">
                         <div class="form-group">
-                            <label for="empresa_nombre label-form" class="form-label">Nombre *</label>
+                            <label for="empresa_nombre" class="form-label">Nombre *</label>
                             <input type="text" 
                                    class="form-control" 
                                    id="empresa_nombre" 
@@ -38,7 +64,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="empresa_telefono label-form" class="form-label">Teléfono</label>
+                            <label for="empresa_telefono" class="form-label">Teléfono</label>
                             <input type="text" 
                                    class="form-control" 
                                    id="empresa_telefono" 
@@ -53,7 +79,7 @@
                 <div class="row mb-4">
                     <div class="col-md-6 mb-3 mb-md-0">
                         <div class="form-group">
-                            <label for="empresa_email label-form" class="form-label">Email</label>
+                            <label for="empresa_email" class="form-label">Email</label>
                             <input type="email" 
                                    class="form-control" 
                                    id="empresa_email" 
@@ -64,7 +90,7 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="empresa_direccion label-form" class="form-label">Dirección</label>
+                            <label for="empresa_direccion" class="form-label">Dirección</label>
                             <input type="text" 
                                    class="form-control" 
                                    id="empresa_direccion" 
