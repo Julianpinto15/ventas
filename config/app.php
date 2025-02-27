@@ -1,7 +1,7 @@
 <?php
 
-	const APP_URL="http://localhost/VENTAS/";
-	const APP_NAME="VENTAS";
+	const APP_URL="http://localhost/Libreria/";
+	const APP_NAME="Libreria";
 	const APP_SESSION_NAME="POS";
 
 	/*----------  Tipos de documentos  ----------*/

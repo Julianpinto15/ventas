@@ -24,7 +24,7 @@ html {
   width: 7.8rem;
   height: 100vh;
   background-color: #4a1d1f;
-  transition: width 0.3s;
+  transition: width 0.75s;
   position: fixed;
   left: 0;
   top: 0;

@@ -17,7 +17,7 @@
 
 
 <!-- Favicon Styles -->
-<link rel="icon" href="http://localhost/Libreria/app/views/img/allbooks.jpg" type="image/png">
+<link rel="icon" href="<?php echo APP_URL; ?>app/views/img/allbooks.jpg"" type="image/jpg">
 
 
 <!-- Custom Styles -->
