@@ -87,5 +87,5 @@ function cargarFavicon(url) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  cargarFavicon("app/views/img/allbooks.jpg");
+  cargarFavicon("http://localhost/LIBRERIA/app/views/img/allbooks.jpg");
 });

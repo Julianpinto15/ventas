@@ -27,110 +27,110 @@
 
     <!-- First row of cards -->
     <div class="row g-4 mb-4">
-            <!-- Cajas Card -->
-    <div class="col-md-4">
-        <div class="card h-100">
-            <a href="<?php echo APP_URL; ?>cashierList/" class="card-enlace">
-                <div class="card-body d-flex align-items-center justify-content-center">
-                    <div class="flex-shrink-0 me-3">
-                        <i class="fas fa-cash-register fa-5x text-primary"></i>
+        <?php if($_SESSION['cargo']=="Administrador"){ ?>
+        <!-- Cajas Card -->
+        <div class="col-md-4">
+            <div class="card h-100">
+                <a href="<?php echo APP_URL; ?>cashierList/" class="card-enlace">
+                    <div class="card-body d-flex align-items-center justify-content-center">
+                        <div class="flex-shrink-0 me-3">
+                            <i class="fas fa-cash-register fa-5x text-primary"></i>
+                        </div>
+                        <div>
+                            <h6 class="card-subtitle mb-1 text-muted">Cajas</h6>
+                            <h2 class="card-title mb-0"><?php echo $total_cajas->rowCount(); ?></h2>
+                        </div>
                     </div>
-                    <div>
-                        <h6 class="card-subtitle mb-1 text-muted">Cajas</h6>
-                        <h2 class="card-title mb-0"><?php echo $total_cajas->rowCount(); ?></h2>
-                    </div>
-                </div>
-            </a>
+                </a>
+            </div>
         </div>
-    </div>
 
-    <!-- Usuarios Card -->
-    <div class="col-md-4">
-        <div class="card card-orange h-100 ">
-            <a href="<?php echo APP_URL; ?>userList/" class="card-enlace">
-                <div class="card-body d-flex align-items-center justify-content-center">
-                    <div class="flex-shrink-0 me-3">
-                        <i class="fas fa-users fa-5x text-success "></i>
+        <!-- Usuarios Card -->
+        <div class="col-md-4">
+            <div class="card card-orange h-100 ">
+                <a href="<?php echo APP_URL; ?>userList/" class="card-enlace">
+                    <div class="card-body d-flex align-items-center justify-content-center">
+                        <div class="flex-shrink-0 me-3">
+                            <i class="fas fa-users fa-5x text-success "></i>
+                        </div>
+                        <div>
+                            <h6 class="card-subtitle mb-1 text-muted">Usuarios</h6>
+                            <h2 class="card-title mb-0"><?php echo $total_usuarios->rowCount(); ?></h2>
+                        </div>
                     </div>
-                    <div>
-                        <h6 class="card-subtitle mb-1 text-muted">Usuarios</h6>
-                        <h2 class="card-title mb-0"><?php echo $total_usuarios->rowCount(); ?></h2>
-                    </div>
-                </div>
-            </a>
+                </a>
+            </div>
         </div>
-    </div>
+        <?php } ?>
 
-    <!-- Clientes Card -->
-    <div class="col-md-4 ">
-        <div class="card card-yellow h-100 p-3">
-            <a href="<?php echo APP_URL; ?>clientList/" class="card-enlace">
-                <div class="card-body d-flex align-items-center justify-content-center">
-                    <div class="flex-shrink-0 me-3">
-                        <i class="fas fa-address-book fa-5x text-info"></i>
+        <!-- Clientes Card -->
+        <div class="col-md-4 ">
+            <div class="card card-yellow h-100 p-3">
+                <a href="<?php echo APP_URL; ?>clientList/" class="card-enlace">
+                    <div class="card-body d-flex align-items-center justify-content-center">
+                        <div class="flex-shrink-0 me-3">
+                            <i class="fas fa-address-book fa-5x text-info"></i>
+                        </div>
+                        <div>
+                            <h6 class="card-subtitle mb-1 text-muted">Clientes</h6>
+                            <h2 class="card-title mb-0"><?php echo $total_clientes->rowCount(); ?></h2>
+                        </div>
                     </div>
-                    <div>
-                        <h6 class="card-subtitle mb-1 text-muted">Clientes</h6>
-                        <h2 class="card-title mb-0"><?php echo $total_clientes->rowCount(); ?></h2>
-                    </div>
-                </div>
-            </a>
+                </a>
+            </div>
         </div>
-    </div>
 
-    <!-- Categorías Card -->
-    <div class="col-md-4">
-        <div class="card card-orange h-100">
-            <a href="<?php echo APP_URL; ?>categoryList/" class="card-enlace">
-                <div class="card-body d-flex align-items-center justify-content-center">
-                    <div class="flex-shrink-0 me-3">
-                        <i class="fas fa-tags fa-5x text-warning"></i>
+        <?php if($_SESSION['cargo']=="Administrador"){ ?>
+        <!-- Categorías Card -->
+        <div class="col-md-4">
+            <div class="card card-orange h-100">
+                <a href="<?php echo APP_URL; ?>categoryList/" class="card-enlace">
+                    <div class="card-body d-flex align-items-center justify-content-center">
+                        <div class="flex-shrink-0 me-3">
+                            <i class="fas fa-tags fa-5x text-warning"></i>
+                        </div>
+                        <div>
+                            <h6 class="card-subtitle mb-1 text-muted">Categorías</h6>
+                            <h2 class="card-title mb-0"><?php echo $total_categorias->rowCount(); ?></h2>
+                        </div>
                     </div>
-                    <div>
-                        <h6 class="card-subtitle mb-1 text-muted">Categorías</h6>
-                        <h2 class="card-title mb-0"><?php echo $total_categorias->rowCount(); ?></h2>
-                    </div>
-                </div>
-            </a>
+                </a>
+            </div>
         </div>
-    </div>
 
-    <!-- Productos Card -->
-    <div class="col-md-4">
-        <div class="card card-yellow h-100 p-3">
-            <a href="<?php echo APP_URL; ?>productNew/" class="card-enlace">
-                <div class="card-body d-flex align-items-center justify-content-center">
-                    <div class="flex-shrink-0 me-3">
-                        <i class="fas fa-cubes fa-5x text-danger"></i>
+        <!-- Productos Card -->
+        <div class="col-md-4">
+            <div class="card card-yellow h-100 p-3">
+                <a href="<?php echo APP_URL; ?>productNew/" class="card-enlace">
+                    <div class="card-body d-flex align-items-center justify-content-center">
+                        <div class="flex-shrink-0 me-3">
+                            <i class="fas fa-cubes fa-5x text-danger"></i>
+                        </div>
+                        <div>
+                            <h6 class="card-subtitle mb-1 text-muted">Productos</h6>
+                            <h2 class="card-title mb-0"><?php echo $total_productos->rowCount(); ?></h2>
+                        </div>
                     </div>
-                    <div>
-                        <h6 class="card-subtitle mb-1 text-muted">Productos</h6>
-                        <h2 class="card-title mb-0"><?php echo $total_productos->rowCount(); ?></h2>
-                    </div>
-                </div>
-            </a>
+                </a>
+            </div>
         </div>
-    </div>
+        <?php } ?>
 
-<!-- Ventas Card -->
-    <div class="col-md-4">
-        <div class="card h-100 ">
-            <a href="<?php echo APP_URL; ?>saleList/" class="card-enlace">
-                <div class="card-body d-flex align-items-center justify-content-center">
-                    <div class="flex-shrink-0 me-3">
-                        <i class="fas fa-shopping-cart fa-5x text-success"></i>
+        <!-- Ventas Card -->
+        <div class="col-md-4">
+            <div class="card h-100 ">
+                <a href="<?php echo APP_URL; ?>saleList/" class="card-enlace">
+                    <div class="card-body d-flex align-items-center justify-content-center">
+                        <div class="flex-shrink-0 me-3">
+                            <i class="fas fa-shopping-cart fa-5x text-success"></i>
+                        </div>
+                        <div>
+                            <h6 class="card-subtitle mb-1 text-muted">Ventas</h6>
+                            <h2 class="card-title mb-0"><?php echo $total_ventas->rowCount(); ?></h2>
+                        </div>
                     </div>
-                    <div>
-                        <h6 class="card-subtitle mb-1 text-muted">Ventas</h6>
-                        <h2 class="card-title mb-0"><?php echo $total_ventas->rowCount(); ?></h2>
-                    </div>
-                </div>
-            </a>
+                </a>
+            </div>
         </div>
     </div>
-  </div>
 </div>
-
- 
-   
-    

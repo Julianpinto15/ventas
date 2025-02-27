@@ -25,19 +25,30 @@
             </div>
 
             <div class="row mb-4">
-                <div class="col-md-6 mb-3 mb-md-0">
-                    <label for="usuario_usuario" class="form-label">Nombre de Usuario</label>
+            <div class="col-md-4 mb-3 mb-md-0">
+            <label for="usuario_usuario" class="form-label">Nombre de Usuario</label>
                     <input type="text" class="form-control" id="usuario_usuario" name="usuario_usuario" 
                            pattern="[a-zA-Z0-9]{4,20}" maxlength="20" required
                            placeholder="Elija un nombre de usuario único">
                 </div>
-                <div class="col-md-6">
-                    <label for="usuario_email" class="form-label">Correo Electrónico</label>
+                <div class="col-md-4 mb-3 mb-md-0">
+                        <label for="usuario_email" class="form-label">Correo Electrónico</label>
                     <input type="email" class="form-control" id="usuario_email" name="usuario_email" 
                            maxlength="70" placeholder="ejemplo@dominio.com">
                 </div>
-            </div>
+                <div class="col-md-4 mb-3 mb-md-0">
+                <label for="usuario_cargo" class="form-label">Cargo <?php echo CAMPO_OBLIGATORIO; ?></label><br>
+				<div class="select" class="form-label"> 
+				  	<select class="form-control" id="usuario_cargo" name="usuario_cargo">">
+				    	<option value="" selected="" >Seleccione una opción</option>
+                        <option value="Administrador">Administrador</option>
+                        <option value="Cajero">Cajero</option>
+				  	</select>
+				</div>
+		  	</div>
+</div>
 
+            
             <div class="row mb-4">
                 <div class="col-md-4 mb-3 mb-md-0">
                     <label for="usuario_clave_1" class="form-label">Contraseña</label>
@@ -52,7 +63,6 @@
                            placeholder="Repita su contraseña">
                 </div>
         
-
             <div class="col-md-4">
                 <label for="usuario_caja" class="form-label">Caja de ventas <?php echo CAMPO_OBLIGATORIO; ?></label>
                 <select class="form-control" id="usuario_caja" name="usuario_caja">

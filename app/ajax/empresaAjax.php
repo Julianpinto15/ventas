@@ -17,6 +17,14 @@
 		if($_POST['modulo_empresa']=="actualizar"){
 			echo $insEmpresa->actualizarEmpresaControlador();
 		}
+
+		if($_POST['modulo_empresa']=="eliminarFoto"){
+			echo $insEmpresa->eliminarFotoEmpresaControlador();
+		}
+
+		if($_POST['modulo_empresa']=="actualizarFoto"){
+			echo $insEmpresa->actualizarFotoEmpresaControlador();
+		}
 		
 	}else{
 		session_destroy();

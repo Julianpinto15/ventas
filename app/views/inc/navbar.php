@@ -19,7 +19,8 @@
             <a class="navbar-item" href="<?php echo APP_URL; ?>dashboard/">Dashboard</a>
           </li>
           
-          <!-- Users dropdown -->
+          <!-- Users dropdown (solo para Administrador) -->
+          <?php if ($_SESSION['cargo'] == "Administrador") { ?>
           <li class="menu-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Usuarios
@@ -29,6 +30,7 @@
               <li><a class="dropdown-item" href="<?php echo APP_URL; ?>userList/">Lista</a></li>
             </ul>
           </li>
+          <?php } ?>
         </ul>
 
         <!-- User profile dropdown -->

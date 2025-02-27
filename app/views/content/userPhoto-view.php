@@ -3,6 +3,10 @@
             <center>
                 <?php 
                     $id=$insLogin->limpiarCadena($url[1]);
+                    
+                    if($_SESSION['cargo']=="Cajero" && $id!=$_SESSION['id']){
+                        include "./app/views/content/logOut-view.php";
+                    }
                     if($id==$_SESSION['id']){ 
                 ?>
                 <h1>Mi foto de perfil</h1>
@@ -15,6 +19,8 @@
         </div>
 
         <?php
+        		include "./app/views/inc/btn_back.php";
+
             $datos=$insLogin->seleccionarDatos("Unico","usuario","usuario_id",$id);
             if($datos->rowCount()==1){
                 $datos=$datos->fetch();
