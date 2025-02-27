@@ -1,18 +1,24 @@
 <?php include "./app/views/inc/admin_security.php"; ?>
-<div class="container is-fluid mb-6">
-	<h1 class="title">Reportes</h1>
-	<h2 class="subtitle"><i class="fas fa-hand-holding-usd fa-fw"></i> &nbsp; Reporte general de ventas</h2>
+<div class="container">
+   <div class="position-contenido">
+    <div></div>
+    <div>
+      <h1 class="display-5 text-titulo">Reportes</h1>
+      <h2 class="h5 text-muted"><i class="fas fa-hand-holding-usd fa-fw"></i> &nbsp; Reporte general de ventas</h2>
+    </div>
+   </div>
 </div>
 
-<div class="container is-fluid">
+
+<div class="container">
     <div id="today-sales">
-        <h4 class="title has-text-centered mt-6 mb-6">Estadísticas de ventas de hoy (<?php echo date("d-m-Y"); ?>)</h4>
-        <div class="table-container">
-            <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
-                <thead>
-                    <tr>
-                        <th class="has-text-centered">Ventas realizadas</th>
-                        <th class="has-text-centered">Total en ventas</th>
+        <h2 class="text-center my-5">Estadísticas de ventas de hoy (<?php echo date("d-m-Y"); ?>)</h2>
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover">
+                <thead class="table-dark">
+                    <tr class="text-center">
+                        <th class="text-th">Ventas realizadas</th>
+                        <th class="text-th">Total en ventas</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,13 +37,13 @@
                                 $total_ventas+=$ventas['venta_total'];
                             }
                     ?>
-                    <tr class="has-text-centered">
-                        <td><?php echo $ventas_totales; ?></td>
-                        <td><?php echo MONEDA_SIMBOLO.number_format($total_ventas,MONEDA_DECIMALES,MONEDA_SEPARADOR_DECIMAL,MONEDA_SEPARADOR_MILLAR).' '.MONEDA_NOMBRE; ?></td>
+                    <tr class="text-center">
+                        <td class="text-td"><?php echo $ventas_totales; ?></td>
+                        <td class="text-td"><?php echo MONEDA_SIMBOLO.number_format($total_ventas,MONEDA_DECIMALES,MONEDA_SEPARADOR_DECIMAL,MONEDA_SEPARADOR_MILLAR).' '.MONEDA_NOMBRE; ?></td>
                     </tr>
                     <?php }else{ ?>
-                    <tr class="has-text-centered">
-                        <td colspan="2">NO HAY VENTAS REALIZADAS EL DÍA DE HOY</td>
+                    <tr class="text-center">
+                        <td class="text-td" colspan="2">NO HAY VENTAS REALIZADAS EL DÍA DE HOY</td>
                     </tr>
                     <?php } ?>
                 </tbody>
@@ -45,45 +51,45 @@
         </div>
     </div>
     <hr>
-    <div class="container is-fluid">
-        <h4 class="title has-text-centered mt-6 mb-6">Generar reporte personalizado</h4>
-        <div class="container is-fluid">
-            <div class="columns">
-                <div class="column">
-                    <div class="field">
-                        <label for="fecha_inicio" class="label" >Fecha inicial (día/mes/año)</label>
-                        <input type="date" class="input" name="fecha_inicio" id="fecha_inicio" maxlength="30">
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="field">
-                        <label for="fecha_final" class="label" >Fecha final (día/mes/año)</label>
-                        <input type="date" class="input" name="fecha_final" id="fecha_final" maxlength="30">
-                    </div>
+   <div class="reporte-container">
+    <h2 class="reporte-titulo text-center">Generar reporte personalizado</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="fecha-grupo mb-3">
+                    <label for="fecha_inicio" class="fecha-label">Fecha inicial (día/mes/año)</label>
+                    <input type="date" class="fecha-input form-control" name="fecha_inicio" id="fecha_inicio" maxlength="30">
                 </div>
             </div>
-            <p class="has-text-centered mb-6">
-                <button type="button" class="button is-link is-outlined" onclick="generar_reporte()" ><i class="far fa-file-pdf"></i> &nbsp; GENERAR REPORTE</button>
-            </p>
+            <div class="col-md-6">
+                <div class="fecha-grupo mb-3">
+                    <label for="fecha_final" class="fecha-label">Fecha final (día/mes/año)</label>
+                    <input type="date" class="fecha-input form-control" name="fecha_final" id="fecha_final" maxlength="30">
+                </div>
+            </div>
         </div>
+        <p class="text-center mb-4">
+            <button type="button" class="btn-generar" onclick="generar_reporte()">
+                <i class="far fa-file-pdf"></i> GENERAR REPORTE
+            </button>
+        </p>
     </div>
+</div>
 </div>
 
 <script>
     function generar_reporte(){
-
         Swal.fire({
             title: '¿Quieres generar el reporte?',
             text: "La generación del reporte PDF puede tardar unos minutos para completarse",
             icon: 'question',
             showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-			confirmButtonText: 'Si, generar',
-			cancelButtonText: 'No, cancelar'
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, generar',
+            cancelButtonText: 'No, cancelar'
         }).then((result) => {
             if (result.isConfirmed){
-
                 let fecha_inicio=document.querySelector('#fecha_inicio').value;
                 let fecha_final=document.querySelector('#fecha_final').value;
 

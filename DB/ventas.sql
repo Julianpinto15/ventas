@@ -3,11 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
-<<<<<<< HEAD
--- Tiempo de generación: 11-02-2025 a las 12:52:53
-=======
 -- Tiempo de generación: 27-02-2025 a las 00:07:23
->>>>>>> main
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 8.1.10
 
@@ -39,8 +35,6 @@ CREATE TABLE `autor` (
   `paisorigen` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-<<<<<<< HEAD
-=======
 --
 -- Volcado de datos para la tabla `autor`
 --
@@ -48,7 +42,7 @@ CREATE TABLE `autor` (
 INSERT INTO `autor` (`idAutor`, `codigo`, `nombre`, `biografia`, `paisorigen`) VALUES
 (7, '22332', 'gabriel garcia marquez', 'Nació Aracataca en Magdalena', 'Colombia');
 
->>>>>>> main
+
 -- --------------------------------------------------------
 
 --
@@ -67,12 +61,10 @@ CREATE TABLE `caja` (
 --
 
 INSERT INTO `caja` (`caja_id`, `caja_numero`, `caja_nombre`, `caja_efectivo`) VALUES
-<<<<<<< HEAD
-(1, 1, 'Caja Principal', 0.00);
-=======
+
 (1, 1, 'Caja #1', 260000.00),
 (2, 2, 'Caja #2', 580000.00);
->>>>>>> main
+
 
 -- --------------------------------------------------------
 
@@ -86,8 +78,7 @@ CREATE TABLE `categoria` (
   `categoria_ubicacion` varchar(150) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish2_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish2_ci;
 
-<<<<<<< HEAD
-=======
+
 --
 -- Volcado de datos para la tabla `categoria`
 --
@@ -95,7 +86,6 @@ CREATE TABLE `categoria` (
 INSERT INTO `categoria` (`categoria_id`, `categoria_nombre`, `categoria_ubicacion`) VALUES
 (5, 'Realismo Mágico', 'Pasillo 3');
 
->>>>>>> main
 -- --------------------------------------------------------
 
 --
@@ -137,8 +127,6 @@ CREATE TABLE `editorial` (
   `pais` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-<<<<<<< HEAD
-=======
 --
 -- Volcado de datos para la tabla `editorial`
 --
@@ -146,7 +134,7 @@ CREATE TABLE `editorial` (
 INSERT INTO `editorial` (`idEditorial`, `codigo`, `nombre`, `informacioncontacto`, `pais`) VALUES
 (6, '223232', 'planeta', 'Bogota 21123123121', 'colombia');
 
->>>>>>> main
+
 -- --------------------------------------------------------
 
 --
@@ -166,13 +154,10 @@ CREATE TABLE `empresa` (
 -- Volcado de datos para la tabla `empresa`
 --
 
-<<<<<<< HEAD
-INSERT INTO `empresa` (`empresa_id`, `empresa_nombre`, `empresa_telefono`, `empresa_email`, `empresa_direccion`) VALUES
-(1, 'Allbooks', '3217696864', 'allboooks12@gmail.com', 'carrera 6 # 32-12');
-=======
+
 INSERT INTO `empresa` (`empresa_id`, `empresa_nombre`, `empresa_telefono`, `empresa_email`, `empresa_direccion`, `empresa_foto`) VALUES
 (1, 'Allbooks', '3217696864', 'allboooks12@gmail.com', 'carrera 6 # 32-12', 'R7M1B9Q7Q9-83.png');
->>>>>>> main
+
 
 -- --------------------------------------------------------
 
@@ -198,8 +183,7 @@ CREATE TABLE `producto` (
   `idEditorial` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish2_ci;
 
-<<<<<<< HEAD
-=======
+
 --
 -- Volcado de datos para la tabla `producto`
 --
@@ -208,7 +192,6 @@ INSERT INTO `producto` (`producto_id`, `producto_codigo`, `producto_nombre`, `pr
 (15, '82923', 'Cien años de seriedad', 43, 'Caja', 32000.00, 40000.00, 'planeta', '21321351', 'Habilitado', '82923_83.jpg', 5, 9, 7, 6),
 (16, '37271', 'el coronel', 86, 'Unidad', 32000.00, 40000.00, 'PLANETA', '3828712', 'Habilitado', '', 5, 9, 7, 6);
 
->>>>>>> main
 -- --------------------------------------------------------
 
 --
@@ -221,8 +204,6 @@ CREATE TABLE `subcategoria` (
   `categoria_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-<<<<<<< HEAD
-=======
 --
 -- Volcado de datos para la tabla `subcategoria`
 --
@@ -230,7 +211,7 @@ CREATE TABLE `subcategoria` (
 INSERT INTO `subcategoria` (`id_subcategoria`, `nombre`, `categoria_id`) VALUES
 (9, 'Realismo Ficcion', 5);
 
->>>>>>> main
+
 -- --------------------------------------------------------
 
 --
@@ -255,17 +236,14 @@ CREATE TABLE `usuario` (
 -- Volcado de datos para la tabla `usuario`
 --
 
-<<<<<<< HEAD
-INSERT INTO `usuario` (`usuario_id`, `usuario_nombre`, `usuario_apellido`, `usuario_email`, `usuario_usuario`, `usuario_clave`, `usuario_foto`, `caja_id`, `usuario_creado`, `usuario_actualizado`) VALUES
-(1, 'Administrador', 'Principal', 'admin@gmail.com', 'admin', '$2y$10$NeehrobdPdFUxG4T0sweo.S7vbbyVcEwzU8/fmeyhhO23I/FCOvCy', '', 1, '2025-02-11 12:49:19', '2025-02-11 12:49:19');
-=======
+
 INSERT INTO `usuario` (`usuario_id`, `usuario_nombre`, `usuario_apellido`, `usuario_email`, `usuario_usuario`, `usuario_clave`, `usuario_cargo`, `usuario_foto`, `caja_id`, `usuario_creado`, `usuario_actualizado`) VALUES
 (1, 'Administrador', 'Principal', 'admin@admin.com', 'Administrador', '$2y$10$od1ZIIaCTLIYjxcTY6zHYugid/SDtxxf5Ev2goOkhxQ1HBQhUzYnW', 'Administrador', '', 1, '2025-02-26 00:23:06', '2025-02-26 00:23:06'),
 (2, 'santiago', 'barbosa', 'santiago12@gmail.com', 'santi12', '$2y$10$lwnoIw/65DfRTr13PukeT.zPj9DeWOFCnrbUEWcdstS01/Z79rTMq', 'Administrador', 'santiago_94.jpg', 2, '2025-02-26 00:23:06', '2025-02-26 00:23:06'),
 (3, 'julian', 'pinto', 'admin123@gmail.com', 'admin123', '$2y$10$TmUaqFABQ6s8jXIE61zIZe1RM4M6Pr4NErwwwB1zHNb0nCQ0GyMta', 'Cajero', '', 1, '2025-02-26 00:23:06', '2025-02-26 00:23:06'),
 (5, 'Usuario administrador', 'usuarioadministrador', 'user12@gmail.com', 'user12', '$2y$10$CIlB0xBsoHzoGrWpE0Ub1OGX6.4MOEPYpDSf3yAAVYhZoaMAX4.Lu', 'Administrador', 'Usuario_administrador_16.png', 1, '2025-02-26 23:59:26', '2025-02-26 23:59:26'),
 (7, 'user cajero', 'user cajero', 'userca1@gmail.com', 'userca1', '$2y$10$u2UG6ZGSEhNDVrm3qoCPj.UEkuCsKHOIX/D4/BHsqlWe3IgPLRiRm', 'Cajero', 'user_cajero_73.png', 2, '2025-02-27 00:05:52', '2025-02-27 00:05:52');
->>>>>>> main
+
 
 -- --------------------------------------------------------
 
@@ -286,8 +264,6 @@ CREATE TABLE `venta` (
   `caja_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish2_ci;
 
-<<<<<<< HEAD
-=======
 --
 -- Volcado de datos para la tabla `venta`
 --
@@ -299,7 +275,7 @@ INSERT INTO `venta` (`venta_id`, `venta_codigo`, `venta_fecha`, `venta_hora`, `v
 (4, 'S5X2Q1F0Q2-4', '2025-02-26', '06:00 pm', 40000.00, 50000.00, 10000.00, 2, 1, 2),
 (5, 'R9I6S1V6R3-5', '2025-02-26', '06:26 pm', 120000.00, 130000.00, 10000.00, 2, 1, 2);
 
->>>>>>> main
+
 -- --------------------------------------------------------
 
 --
@@ -315,12 +291,6 @@ CREATE TABLE `venta_detalle` (
   `venta_detalle_descripcion` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish2_ci NOT NULL,
   `venta_codigo` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish2_ci NOT NULL,
   `producto_id` int NOT NULL,
-<<<<<<< HEAD
-  `autor` varchar(255) COLLATE utf8mb3_spanish2_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish2_ci;
-
---
-=======
   `autor` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_spanish2_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_spanish2_ci;
 
@@ -336,7 +306,6 @@ INSERT INTO `venta_detalle` (`venta_detalle_id`, `venta_detalle_cantidad`, `vent
 (8, 3, 32000.00, 40000.00, 120000.00, 'el coronel', 'R9I6S1V6R3-5', 16, 'gabriel garcia marquez');
 
 --
->>>>>>> main
 -- Índices para tablas volcadas
 --
 
@@ -426,11 +395,9 @@ ALTER TABLE `venta_detalle`
 -- AUTO_INCREMENT de la tabla `autor`
 --
 ALTER TABLE `autor`
-<<<<<<< HEAD
-  MODIFY `idAutor` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-=======
+
   MODIFY `idAutor` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
->>>>>>> main
+
 
 --
 -- AUTO_INCREMENT de la tabla `caja`
@@ -454,11 +421,9 @@ ALTER TABLE `cliente`
 -- AUTO_INCREMENT de la tabla `editorial`
 --
 ALTER TABLE `editorial`
-<<<<<<< HEAD
-  MODIFY `idEditorial` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-=======
+
   MODIFY `idEditorial` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
->>>>>>> main
+
 
 --
 -- AUTO_INCREMENT de la tabla `empresa`
@@ -470,51 +435,41 @@ ALTER TABLE `empresa`
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-<<<<<<< HEAD
-  MODIFY `producto_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-=======
+
   MODIFY `producto_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
->>>>>>> main
+
 
 --
 -- AUTO_INCREMENT de la tabla `subcategoria`
 --
 ALTER TABLE `subcategoria`
-<<<<<<< HEAD
-  MODIFY `id_subcategoria` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-=======
+
   MODIFY `id_subcategoria` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
->>>>>>> main
+
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-<<<<<<< HEAD
-  MODIFY `usuario_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
-=======
+
   MODIFY `usuario_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
->>>>>>> main
+
 
 --
 -- AUTO_INCREMENT de la tabla `venta`
 --
 ALTER TABLE `venta`
-<<<<<<< HEAD
-  MODIFY `venta_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3240;
-=======
+
   MODIFY `venta_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
->>>>>>> main
+
 
 --
 -- AUTO_INCREMENT de la tabla `venta_detalle`
 --
 ALTER TABLE `venta_detalle`
-<<<<<<< HEAD
-  MODIFY `venta_detalle_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-=======
+
   MODIFY `venta_detalle_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
->>>>>>> main
+
 
 --
 -- Restricciones para tablas volcadas

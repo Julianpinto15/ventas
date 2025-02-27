@@ -1,6 +1,6 @@
 <div class="container">
     <!-- Header with profile -->
-    <div class="text-center mb-5">
+    <div class="text-center mb-3">
         <h1 class="display-4 mb-4">Dashboard</h1>
         <div class="d-flex justify-content-center mb-3">
             <div class="rounded-circle overflow-hidden" style="width: 128px; height: 128px;">
