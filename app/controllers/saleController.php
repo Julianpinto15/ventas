@@ -5,6 +5,7 @@
 
 	class saleController extends mainModel{
 
+		
 		/*---------- Controlador buscar codigo de producto ----------*/
         public function buscarCodigoVentaControlador(){
 
@@ -1060,7 +1061,6 @@
 
 		    }
 
-
 		    $eliminarVenta=$this->eliminarRegistro("venta","venta_id",$id);
 
 		    if($eliminarVenta->rowCount()==1){
@@ -1082,6 +1082,79 @@
 		    }
 
 		    return json_encode($alerta);
+		}
+
+	
+
+	
+		/*----------  Controlador actualizar precio producto  ----------*/
+		public function actualizarPrecioProducto(){
+
+			/*== Recuperando datos del producto ==*/
+			$codigo=$this->limpiarCadena($_POST['producto_codigo']);
+			$precio=$this->limpiarCadena($_POST['producto_precio']);
+
+			if($codigo==""){
+                $alerta=[
+					"tipo"=>"simple",
+					"titulo"=>"Ocurrió un error inesperado",
+					"texto"=>"No se ha encontrado el código de barras del producto",
+					"icono"=>"error"
+				];
+				return json_encode($alerta);
+		        exit();
+            }
+
+            /*== Verificando integridad de los datos ==*/
+            if($this->verificarDatos("[a-zA-Z0-9- ]{1,70}",$codigo)){
+                $alerta=[
+					"tipo"=>"simple",
+					"titulo"=>"Ocurrió un error inesperado",
+					"texto"=>"El código de barras no coincide con el formato solicitado",
+					"icono"=>"error"
+				];
+				return json_encode($alerta);
+		        exit();
+            }
+
+            /*== comprobando producto en carrito ==*/
+            if(!empty($_SESSION['datos_producto_venta'][$codigo])){
+
+            	$precio=number_format($precio,MONEDA_DECIMALES,'.','');
+
+            	if($precio<$_SESSION['datos_producto_venta'][$codigo]['venta_detalle_precio_compra']){
+            		$alerta=[
+						"tipo"=>"simple",
+						"titulo"=>"Ocurrió un error inesperado",
+						"texto"=>"El precio de venta no puede ser menor al precio de compra (".MONEDA_SIMBOLO.$_SESSION['datos_producto_venta'][$codigo]['venta_detalle_precio_compra']." ".MONEDA_NOMBRE.")",
+						"icono"=>"error"
+					];
+					return json_encode($alerta);
+			        exit();
+            	}
+
+                $detalle_total=$_SESSION['datos_producto_venta'][$codigo]['venta_detalle_cantidad']*$precio;
+                $detalle_total=number_format($detalle_total,MONEDA_DECIMALES,'.','');
+
+                $_SESSION['datos_producto_venta'][$codigo]['venta_detalle_precio_venta']=$precio;
+                $_SESSION['datos_producto_venta'][$codigo]['venta_detalle_total']=$detalle_total;
+
+                $alerta=[
+					"tipo"=>"recargar",
+					"titulo"=>"¡Precio actualizado!",
+					"texto"=>"El precio del producto se actualizo correctamente para realizar la venta",
+					"icono"=>"success"
+				];
+
+            }else{
+                $alerta=[
+					"tipo"=>"simple",
+					"titulo"=>"Ocurrió un error inesperado",
+					"texto"=>"No hemos encontrado el producto que desea actualizar en el carrito",
+					"icono"=>"error"
+				];
+            }
+            return json_encode($alerta);
 		}
 
 	}

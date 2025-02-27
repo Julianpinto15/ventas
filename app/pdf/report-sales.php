@@ -15,14 +15,13 @@
     $fecha_inicio=$ins_venta->limpiarCadena($fecha_inicio);
     $fecha_final=$ins_venta->limpiarCadena($fecha_final);
     
-    if($ins_venta->verificarFecha($fecha_inicio) || $ins_venta->verificarFecha($fecha_final)){
-        $texto_error.="Ha introducido fechas que no son correctas. ";
-    }
+	if (empty($fecha_inicio) || empty($fecha_final)) {
+		die("Fechas no válidas.");
+	}
 
     if($fecha_inicio>$fecha_final){
         $texto_error.="La fecha de inicio no puede ser mayor que la fecha final. ";
     }
-
 
 	if($texto_error==""){
 

@@ -24,7 +24,7 @@
 
                 <!-- Sección de la imagen del logo -->
                 <div class="row mb-4">
-                    <div class="col-md-6 mb-3 mb-md-0 text-center">
+                    <div class="col-md-12 mb-3 mb-md-0 text-center">
                         <?php if (is_file("./app/views/img/" . $datos['empresa_foto'])) { ?>
                             <figure class="company-image">
                                 <img src="<?php echo APP_URL; ?>app/views/img/<?php echo $datos['empresa_foto']; ?>" 

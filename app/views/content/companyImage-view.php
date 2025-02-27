@@ -57,13 +57,13 @@
 
 				<div class="file has-name is-boxed is-justify-content-center mb-6">
 				  	<label class="file-label">
-						<input class="file-input" type="file" name="empresa_foto" accept=".png" >
+						<input class="file-input" type="file" name="empresa_foto" accept=".png">
 						<span class="file-cta">
 							<span class="file-label">
 								Seleccione una imagen
 							</span>
 						</span>
-						<span class="file-name">.PNG (MAX 5MB)</span>
+						<span class="file-name">.PNG  (MAX 5MB)</span>
 					</label>
 				</div>
 				<p class="has-text-centered">
