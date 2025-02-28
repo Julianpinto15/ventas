@@ -522,20 +522,20 @@
 			<table class="table table-striped table-bordered table-hover">
 				<thead class="table-dark">
 					<tr class="text-center">
-						<th class="text-th">Código</th>
-						<th class="text-th">Nombre</th>
-						<th class="text-th">Precio C</th>
-						<th class="text-th">Precio V</th>
-						<th class="text-th">Stock</th>
-						<th class="text-th">Tipo</th>
-						<th class="text-th">Proveedor</th>
-						<th class="text-th">Tel</th>
-						<th class="text-th">Categoria</th>
-						<th class="text-th">Subcategoria</th>
-						<th class="text-th">Autor</th>
-						<th class="text-th">Editorial</th>
-						<th class="text-th">Imagen</th>
-						<th class="text-th">Opciones</th>
+						<th class="text-th">Cod.</th>
+						<th class="text-th">Nom.</th>
+						<th class="text-th">P. C.</th>
+						<th class="text-th">P. V. </th>
+						<th class="text-th">Stk.</th>
+						<th class="text-th">Tip.</th>
+						<th class="text-th">Prov.</th>
+						<th class="text-th">Tel.</th>
+						<th class="text-th">Cat.</th>
+						<th class="text-th">Subcat.</th>
+						<th class="text-th">Aut.</th>
+						<th class="text-th">Ed.</th>
+						<th class="text-th">Img.</th>
+						<th class="text-th">Menú</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -560,7 +560,7 @@
 					<td class="text-td">' . $rows['autor_nombre'] . '</td>
 					<td class="text-td">' . $rows['editorial_nombre'] . '</td>
 					<td class="text-td">
-						<img src="' . APP_URL . 'app/views/productos/' . (!empty($rows['producto_foto']) ? $rows['producto_foto'] : 'default.png') . '" width="50">
+						<img src="' . APP_URL . 'app/views/productos/' . (!empty($rows['producto_foto']) ? $rows['producto_foto'] : 'default.jpg') . '" width="50">
 					</td>
 					<td class="text-td">
 						<button class="btn btn-success btn-sm rounded-pill" onclick="abrirModalEditarProducto({
@@ -722,7 +722,19 @@
 			$subcategoria = $this->limpiarCadena($_POST['producto_subcategoria']);
 			$autor = isset($_POST['idAutor']) ? $this->limpiarCadena($_POST['idAutor']) : "";
 			$editorial = isset($_POST['editorial_id']) ? $this->limpiarCadena($_POST['editorial_id']) : "";
-
+			$foto_actual = $this->limpiarCadena($_POST['producto_foto_actual']);
+    
+  			 // Verificar existencia del producto
+			$check_producto = $this->ejecutarConsulta("SELECT * FROM producto WHERE producto_id='$id'");
+			if($check_producto->rowCount()<=0){
+				$alerta = [
+					"tipo" => "simple",
+					"titulo" => "Error",
+					"texto" => "El producto no existe en la base de datos",
+					"icono" => "error"
+				];
+				return json_encode($alerta);
+			}
 
 		    # Verificando campos obligatorios #
             if($codigo=="" || $nombre=="" || $precio_compra=="" || $precio_venta=="" || $stock==""){
@@ -1153,150 +1165,142 @@
 			return json_encode($alerta);
 		}
 
+/*----------  Controlador actualizar foto producto  ----------*/
+public function actualizarFotoProductoControlador(){
 
-		/*----------  Controlador actualizar foto producto  ----------*/
-		public function actualizarFotoProductoControlador(){
+    $id = $this->limpiarCadena($_POST['producto_id']);
 
-			$id=$this->limpiarCadena($_POST['producto_id']);
+    # Verificando producto #
+    $datos = $this->ejecutarConsulta("SELECT * FROM producto WHERE producto_id='$id'");
+    if ($datos->rowCount() <= 0) {
+        $alerta = [
+            "tipo" => "simple",
+            "titulo" => "Ocurrió un error inesperado",
+            "texto" => "No hemos encontrado el producto en el sistema",
+            "icono" => "error"
+        ];
+        return json_encode($alerta);
+        exit();
+    } else {
+        $datos = $datos->fetch();
+    }
 
-			# Verificando producto #
-		    $datos=$this->ejecutarConsulta("SELECT * FROM producto WHERE producto_id='$id'");
-		    if($datos->rowCount()<=0){
-		        $alerta=[
-					"tipo"=>"simple",
-					"titulo"=>"Ocurrió un error inesperado",
-					"texto"=>"No hemos encontrado el producto en el sistema",
-					"icono"=>"error"
-				];
-				return json_encode($alerta);
-		        exit();
-		    }else{
-		    	$datos=$datos->fetch();
-		    }
+    # Directorio de imagenes #
+    $img_dir = "../views/productos/";
 
-		    # Directorio de imagenes #
-    		$img_dir="../views/productos/";
+    # Creando directorio #
+    if (!file_exists($img_dir)) {
+        if (!mkdir($img_dir, 0777)) {
+            $alerta = [
+                "tipo" => "simple",
+                "titulo" => "Ocurrió un error inesperado",
+                "texto" => "Error al crear el directorio",
+                "icono" => "error"
+            ];
+            return json_encode($alerta);
+            exit();
+        }
+    }
 
-    		# Comprobar si se selecciono una imagen #
-    		if($_FILES['producto_foto']['name']=="" && $_FILES['producto_foto']['size']<=0){
-    			$alerta=[
-					"tipo"=>"simple",
-					"titulo"=>"Ocurrió un error inesperado",
-					"texto"=>"No ha seleccionado una foto para el producto",
-					"icono"=>"error"
-				];
-				return json_encode($alerta);
-		        exit();
-    		}
+    # Inicializar la variable de la foto #
+    $foto = $datos['producto_foto']; // Mantener la foto actual por defecto
 
-    		# Creando directorio #
-	        if(!file_exists($img_dir)){
-	            if(!mkdir($img_dir,0777)){
-	                $alerta=[
-						"tipo"=>"simple",
-						"titulo"=>"Ocurrió un error inesperado",
-						"texto"=>"Error al crear el directorio",
-						"icono"=>"error"
-					];
-					return json_encode($alerta);
-	                exit();
-	            } 
-	        }
+    # Verificar si se seleccionó una nueva imagen #
+    if ($_FILES['producto_foto']['name'] != "" && $_FILES['producto_foto']['size'] > 0) {
+        # Verificando formato de imagenes #
+        if (mime_content_type($_FILES['producto_foto']['tmp_name']) != "image/jpeg" && mime_content_type($_FILES['producto_foto']['tmp_name']) != "image/png") {
+            $alerta = [
+                "tipo" => "simple",
+                "titulo" => "Ocurrió un error inesperado",
+                "texto" => "La imagen que ha seleccionado es de un formato no permitido",
+                "icono" => "error"
+            ];
+            return json_encode($alerta);
+            exit();
+        }
 
-	        # Verificando formato de imagenes #
-	        if(mime_content_type($_FILES['producto_foto']['tmp_name'])!="image/jpeg" && mime_content_type($_FILES['producto_foto']['tmp_name'])!="image/png"){
-	            $alerta=[
-					"tipo"=>"simple",
-					"titulo"=>"Ocurrió un error inesperado",
-					"texto"=>"La imagen que ha seleccionado es de un formato no permitido",
-					"icono"=>"error"
-				];
-				return json_encode($alerta);
-	            exit();
-	        }
+        # Verificando peso de imagen #
+        if (($_FILES['producto_foto']['size'] / 1024) > 5120) {
+            $alerta = [
+                "tipo" => "simple",
+                "titulo" => "Ocurrió un error inesperado",
+                "texto" => "La imagen que ha seleccionado supera el peso permitido",
+                "icono" => "error"
+            ];
+            return json_encode($alerta);
+            exit();
+        }
 
-	        # Verificando peso de imagen #
-	        if(($_FILES['producto_foto']['size']/1024)>5120){
-	            $alerta=[
-					"tipo"=>"simple",
-					"titulo"=>"Ocurrió un error inesperado",
-					"texto"=>"La imagen que ha seleccionado supera el peso permitido",
-					"icono"=>"error"
-				];
-				return json_encode($alerta);
-	            exit();
-	        }
+        # Nombre de la foto #
+        if ($datos['producto_foto'] != "") {
+            $foto = explode(".", $datos['producto_foto']);
+            $foto = $foto[0];
+        } else {
+            $foto = $datos['producto_codigo'] . "_" . rand(0, 100);
+        }
 
-	        # Nombre de la foto #
-	        if($datos['producto_foto']!=""){
-		        $foto=explode(".", $datos['producto_foto']);
-		        $foto=$foto[0];
-	        }else{
-	        	$foto=$datos['producto_codigo']."_".rand(0,100);
-	        }
-	        
+        # Extension de la imagen #
+        switch (mime_content_type($_FILES['producto_foto']['tmp_name'])) {
+            case 'image/jpeg':
+                $foto = $foto . ".jpg";
+                break;
+            case 'image/png':
+                $foto = $foto . ".png";
+                break;
+        }
 
-	        # Extension de la imagen #
-	        switch(mime_content_type($_FILES['producto_foto']['tmp_name'])){
-	            case 'image/jpeg':
-	                $foto=$foto.".jpg";
-	            break;
-	            case 'image/png':
-	                $foto=$foto.".png";
-	            break;
-	        }
+        chmod($img_dir, 0777);
 
-	        chmod($img_dir,0777);
+        # Moviendo imagen al directorio #
+        if (!move_uploaded_file($_FILES['producto_foto']['tmp_name'], $img_dir . $foto)) {
+            $alerta = [
+                "tipo" => "simple",
+                "titulo" => "Ocurrió un error inesperado",
+                "texto" => "No podemos subir la imagen al sistema en este momento",
+                "icono" => "error"
+            ];
+            return json_encode($alerta);
+            exit();
+        }
 
-	        # Moviendo imagen al directorio #
-	        if(!move_uploaded_file($_FILES['producto_foto']['tmp_name'],$img_dir.$foto)){
-	            $alerta=[
-					"tipo"=>"simple",
-					"titulo"=>"Ocurrió un error inesperado",
-					"texto"=>"No podemos subir la imagen al sistema en este momento",
-					"icono"=>"error"
-				];
-				return json_encode($alerta);
-	            exit();
-	        }
+        # Eliminando imagen anterior #
+        if (is_file($img_dir . $datos['producto_foto']) && $datos['producto_foto'] != $foto) {
+            chmod($img_dir . $datos['producto_foto'], 0777);
+            unlink($img_dir . $datos['producto_foto']);
+        }
+    }
 
-	        # Eliminando imagen anterior #
-	        if(is_file($img_dir.$datos['producto_foto']) && $datos['producto_foto']!=$foto){
-		        chmod($img_dir.$datos['producto_foto'], 0777);
-		        unlink($img_dir.$datos['producto_foto']);
-		    }
+    # Actualizar la foto en la base de datos #
+    $producto_datos_up = [
+        [
+            "campo_nombre" => "producto_foto",
+            "campo_marcador" => ":Foto",
+            "campo_valor" => $foto
+        ]
+    ];
 
-		    $producto_datos_up=[
-				[
-					"campo_nombre"=>"producto_foto",
-					"campo_marcador"=>":Foto",
-					"campo_valor"=>$foto
-				]
-			];
+    $condicion = [
+        "condicion_campo" => "producto_id",
+        "condicion_marcador" => ":ID",
+        "condicion_valor" => $id
+    ];
 
-			$condicion=[
-				"condicion_campo"=>"producto_id",
-				"condicion_marcador"=>":ID",
-				"condicion_valor"=>$id
-			];
+    if ($this->actualizarDatos("producto", $producto_datos_up, $condicion)) {
+        $alerta = [
+            "tipo" => "recargar",
+            "titulo" => "Foto actualizada",
+            "texto" => "La foto del producto '" . $datos['producto_nombre'] . "' se actualizó correctamente",
+            "icono" => "success"
+        ];
+    } else {
+        $alerta = [
+            "tipo" => "recargar",
+            "titulo" => "Foto actualizada",
+            "texto" => "No hemos podido actualizar algunos datos del producto '" . $datos['producto_nombre'] . "', sin embargo la foto ha sido actualizada",
+            "icono" => "warning"
+        ];
+    }
 
-			if($this->actualizarDatos("producto",$producto_datos_up,$condicion)){
-				$alerta=[
-					"tipo"=>"recargar",
-					"titulo"=>"Foto actualizada",
-					"texto"=>"La foto del producto '".$datos['producto_nombre']."' se actualizo correctamente",
-					"icono"=>"success"
-				];
-			}else{
-
-				$alerta=[
-					"tipo"=>"recargar",
-					"titulo"=>"Foto actualizada",
-					"texto"=>"No hemos podido actualizar algunos datos del producto '".$datos['producto_nombre']."', sin embargo la foto ha sido actualizada",
-					"icono"=>"warning"
-				];
-			}
-
-			return json_encode($alerta);
-		}
+    return json_encode($alerta);
+}
 	}

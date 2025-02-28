@@ -55,25 +55,25 @@
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Número de documento</label>
-                                <input class="form-control text-model_input" type="text" name="cliente_numero_documento" 
+                                <input class="form-control text-model_input" type="text" name="cliente_numero_documento"  placeholder="Ingrese su documento (7-30 caracteres)"
                                        pattern="[a-zA-Z0-9-]{7,30}" maxlength="30" required>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Nombres</label>
-                                <input class="form-control text-model_input" type="text" name="cliente_nombre" 
+                                <input class="form-control text-model_input" type="text" name="cliente_nombre"  placeholder="Ingrese sus nombres"
                                        pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,40}" maxlength="40" required>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Apellidos</label>
-                                <input class="form-control text-model_input" type="text" name="cliente_apellido" 
+                                <input class="form-control text-model_input" type="text" name="cliente_apellido" placeholder="Ingrese sus apellidos"
                                        pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,40}" maxlength="40" required>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Email</label>
-                                <input class="form-control text-model" type="email" name="cliente_email" maxlength="70">
+                                <input class="form-control text-model" type="email" name="cliente_email"  placeholder="ejemplo@correo.com"  maxlength="70">
                                </div>
                         </div>
 
@@ -82,24 +82,24 @@
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Teléfono</label>
                                 <input class="form-control text-model_input" type="text" name="cliente_telefono" 
-                                       pattern="[0-9\\(\\)\\+]{8,20}" maxlength="20">
+                                       pattern="[0-9\\(\\)\\+]{8,20}" placeholder="Ingrese su número de teléfono"  maxlength="20">
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Provincia</label>
-                                <input class="form-control text-model_input" type="text" name="cliente_provincia" 
+                                <input class="form-control text-model_input" type="text" name="cliente_provincia"   placeholder="Ingrese su provincia"
                                        pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{4,30}" maxlength="30" required>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Ciudad</label>
-                                <input class="form-control text-model_input" type="text" name="cliente_ciudad" 
+                                <input class="form-control text-model_input" type="text" name="cliente_ciudad"  placeholder="Ingrese su ciudad"
                                        pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{4,30}" maxlength="30" required>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Dirección</label>
-                                <input class="form-control text-model_input" type="text" name="cliente_direccion"
+                                <input class="form-control text-model_input" type="text" name="cliente_direccion" placeholder="Ej: Calle 123, #45-67, Apt 3B" 
                                        pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{4,70}" maxlength="70" required>
                             </div>
                         </div>
@@ -143,25 +143,25 @@
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Número de documento</label>
-                                <input id="edit_cliente_numero_documento" class="form-control text-model_input" 
+                                <input id="edit_cliente_numero_documento" class="form-control text-model_input"  placeholder="Ingrese su documento (7-30 caracteres)"
                                        type="text" name="cliente_numero_documento" pattern="[a-zA-Z0-9-]{7,30}" maxlength="30" required>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Nombres</label>
-                                <input id="edit_cliente_nombre" class="form-control text-model_input" 
+                                <input id="edit_cliente_nombre" class="form-control text-model_input"   placeholder="Ingrese sus nombres"
                                        type="text" name="cliente_nombre" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,40}" maxlength="40" required>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Apellidos</label>
-                                <input id="edit_cliente_apellido" class="form-control text-model_input" 
+                                <input id="edit_cliente_apellido" class="form-control text-model_input"   placeholder="Ingrese sus apellidos" 
                                        type="text" name="cliente_apellido" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,40}" maxlength="40" required>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Email</label>
-                                <input id="edit_cliente_email" class="form-control text-model" 
+                                <input id="edit_cliente_email" class="form-control text-model"  placeholder="ejemplo@correo.com"
                                        type="email" name="cliente_email" maxlength="70">
                             </div>
                         </div>
@@ -170,25 +170,25 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Teléfono</label>
-                                <input id="edit_cliente_telefono" class="form-control text-model_input" type="text" 
+                                <input id="edit_cliente_telefono" class="form-control text-model_input" type="text"  placeholder="Ingrese su número de teléfono" 
                                        name="cliente_telefono" pattern="[0-9\\(\\)\\+]{8,20}" maxlength="20">
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Provincia</label>
-                                <input id="edit_cliente_provincia" class="form-control text-model_input" type="text" 
+                                <input id="edit_cliente_provincia" class="form-control text-model_input" type="text"  placeholder="Ingrese su provincia"
                                        name="cliente_provincia" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{4,30}" maxlength="30" required>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Ciudad</label>
-                                <input id="edit_cliente_ciudad" class="form-control text-model_input" type="text" 
+                                <input id="edit_cliente_ciudad" class="form-control text-model_input" type="text" placeholder="Ingrese su ciudad"
                                        name="cliente_ciudad" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{4,30}" maxlength="30" required>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Dirección</label>
-                                <input id="edit_cliente_direccion" class="form-control text-model_input" type="text" 
+                                <input id="edit_cliente_direccion" class="form-control text-model_input" type="text" placeholder="Ej: Calle 123, #45-67, Apt 3B"
                                        name="cliente_direccion" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{4,70}" maxlength="70" required>
                             </div>
                         </div>

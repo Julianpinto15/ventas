@@ -346,17 +346,19 @@
                 ?>
             </select>
         </div>
-        <div class="col-md-8">
-            <label class="form-label fw-semibold text-model">Imagen del Producto</label>
-            <input class="form-control text-model_input" type="file" id="edit_producto_foto" name="producto_foto" accept=".jpg, .png, .jpeg">
-            <small class="text-muted">Formatos permitidos: JPG, JPEG, PNG. (MAX 5MB)</small>
-        </div>
+       <!-- Otros campos del formulario -->
+    <div class="col-md-8">
+        <label class="form-label fw-semibold text-model">Imagen del Producto</label>
+        <input class="form-control text-model_input" type="file" id="edit_producto_foto" name="producto_foto" accept=".jpg, .png, .jpeg">
+        <small class="text-muted">Formatos permitidos: JPG, JPEG, PNG. (MAX 5MB)</small>
+        <!-- Campo oculto para almacenar la imagen actual -->
+        <input type="hidden" id="edit_producto_foto_actual" name="producto_foto_actual">
     </div>
     <!-- Botón para Actualizar -->
-        <div class="mb-3">
-            <button type="submit" class="btn btn-success text-model">Actualizar Producto</button>
-        </div>
-    </form>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-success text-model">Actualizar Producto</button>
+    </div>
+</form>
                 </div>
             </div>
         </div>
@@ -393,6 +395,7 @@ function abrirModalEditarProducto(producto) {
         document.getElementById('edit_producto_subcategoria').value = producto.id_subcategoria;
         document.getElementById('edit_idAutor').value = producto.idAutor;
         document.getElementById('edit_editorial_id').value = producto.idEditorial;
+        document.getElementById('edit_producto_foto_actual').value = producto.producto_foto;
 
         // Abrir el modal
         const modalElement = document.getElementById('modal-editar-producto');
@@ -472,41 +475,81 @@ $('#form-registro-producto').on('submit', function(e) {
     });
 });
 
-// Edit form handler with SweetAlert2
 $('#form-edicion-producto').on('submit', function(e) {
-    e.preventDefault();
-    let formData = new FormData(this);
-    formData.append('modulo_producto', 'actualizar');
-    
+    e.preventDefault(); // Evita que el formulario se envíe de forma tradicional
+
+    let formData = new FormData(this); // Crea un objeto FormData con los datos del formulario
+    formData.append('modulo_producto', 'actualizarFoto'); // Añade el tipo de acción
+
     $.ajax({
-        url: '<?= APP_URL ?>app/ajax/productoAjax.php',
+        url: '<?= APP_URL ?>app/ajax/productoAjax.php', // URL a donde se envía el formulario
         type: 'POST',
         data: formData,
-        processData: false,
-        contentType: false,
+        processData: false, // Importante: no procesar los datos
+        contentType: false, // Importante: no establecer el tipo de contenido
         success: function(response) {
-            const resp = JSON.parse(response);
+            console.log("Datos recibidos:", response); // Muestra la respuesta en la consola
+
+            try {
+                // Parsear la respuesta JSON
+                const data = JSON.parse(response);
+
+                // Verificar el tipo de respuesta
+                if (data.tipo === 'recargar') {
+                    // SweetAlert2 para éxito
+                    Swal.fire({
+                        icon: data.icono,
+                        title: data.titulo,
+                        text: data.texto,
+                        confirmButtonText: 'Aceptar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Recargar la página si es necesario
+                            if (data.tipo === 'recargar') {
+                                location.reload(); // Recargar la página
+                            }
+                        }
+                    });
+                } else if (data.tipo === 'simple') {
+                    // SweetAlert2 para errores
+                    Swal.fire({
+                        icon: data.icono,
+                        title: data.titulo,
+                        text: data.texto,
+                        confirmButtonText: 'Aceptar'
+                    });
+                } else {
+                    // Respuesta inesperada
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Respuesta inesperada del servidor',
+                        confirmButtonText: 'Aceptar'
+                    });
+                }
+            } catch (error) {
+                console.error("Error al parsear la respuesta:", error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Hubo un error al procesar la respuesta del servidor',
+                    confirmButtonText: 'Aceptar'
+                });
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("Error en la solicitud:", error); // Muestra errores en la consola
+
+            // SweetAlert2 para errores de conexión
             Swal.fire({
-                icon: resp.icono || 'info',
-                title: resp.titulo,
-                text: resp.texto,
-                width: '400px',
-                padding: '2em',
-                customClass: {
-                    title: 'fs-4',
-                    htmlContainer: 'fs-4',
-                    confirmButton: 'fs-5'
-                }
-            }).then((result) => {
-                if (resp.tipo === "recargar") {
-                    cerrarModalEditarproducto();
-                    cargarProductos();
-                }
+                icon: 'error',
+                title: 'Error',
+                text: 'Hubo un error al enviar la solicitud al servidor',
+                confirmButtonText: 'Aceptar'
             });
         }
     });
 });
-
 
 // Function to delete producto with SweetAlert2
 function eliminarProducto(id) {
