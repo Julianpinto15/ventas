@@ -475,11 +475,19 @@ $('#form-registro-producto').on('submit', function(e) {
     });
 });
 
+
 $('#form-edicion-producto').on('submit', function(e) {
     e.preventDefault(); // Evita que el formulario se envíe de forma tradicional
 
     let formData = new FormData(this); // Crea un objeto FormData con los datos del formulario
-    formData.append('modulo_producto', 'actualizarFoto'); // Añade el tipo de acción
+
+    // Verifica si se ha seleccionado una nueva imagen
+    const nuevaFoto = document.getElementById('edit_producto_foto').files[0];
+    if (nuevaFoto) {
+        formData.append('modulo_producto', 'actualizarFoto'); // Actualizar foto
+    } else {
+        formData.append('modulo_producto', 'actualizar'); // Actualizar otros campos
+    }
 
     $.ajax({
         url: '<?= APP_URL ?>app/ajax/productoAjax.php', // URL a donde se envía el formulario
@@ -487,6 +495,7 @@ $('#form-edicion-producto').on('submit', function(e) {
         data: formData,
         processData: false, // Importante: no procesar los datos
         contentType: false, // Importante: no establecer el tipo de contenido
+
         success: function(response) {
             console.log("Datos recibidos:", response); // Muestra la respuesta en la consola
 
