@@ -4,10 +4,8 @@ require_once "../views/inc/session_start.php";
 require_once "../../autoload.php";
 
 use app\controllers\productController;
-
 if (isset($_POST['modulo_producto'])) {
     $insProducto = new productController();
-
     // Verifica si se deben realizar ambas acciones
     if ($_POST['modulo_producto'] == "actualizar" || $_POST['modulo_producto'] == "actualizarFoto") {
         // Si se envía "actualizar" o "actualizarFoto", ejecuta ambas acciones
