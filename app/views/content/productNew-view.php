@@ -14,9 +14,95 @@
             </div>
         </div>
     </div>
+    <div class="row mb-4">
+    <div class="col-md-12">
+        <form id="form-busqueda-filtros" class="row g-3 align-items-end">
+            <!-- Buscador por Nombre o Código -->
+            <div class="col-md">
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                    <input type="text" class="form-control" id="busqueda" name="busqueda" placeholder="Buscar por Nombre o Código">
+                </div>
+            </div>
 
+            <!-- Filtro por Categoría -->
+            <div class="col-md">
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-folder"></i></span>
+                    <select class="form-select" id="categoria" name="categoria">
+                        <option value="">Categoría: Todas</option>
+                        <?php
+                            $datos_categorias = $insLogin->seleccionarDatos("Normal", "categoria", "*", 0);
+                            while ($categoria = $datos_categorias->fetch()) {
+                                echo "<option value='{$categoria['categoria_id']}'>{$categoria['categoria_nombre']}</option>";
+                            }
+                        ?>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Filtro por Subcategoría -->
+            <div class="col-md">
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-tag"></i></span>
+                    <select class="form-select" id="subcategoria" name="subcategoria">
+                        <option value="">Subcategoría: Todas</option>
+                        <?php
+                            $datos_subcategorias = $insLogin->seleccionarDatos("Normal", "subcategoria", "*", 0);
+                            while ($subcategoria = $datos_subcategorias->fetch()) {
+                                echo "<option value='{$subcategoria['id_subcategoria']}'>{$subcategoria['nombre']}</option>";
+                            }
+                        ?>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Filtro por Autor -->
+            <div class="col-md">
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                    <select class="form-select" id="autor" name="autor">
+                        <option value="">Autor: Todos</option>
+                        <?php
+                            $datos_autores = $insLogin->seleccionarDatos("Normal", "autor", "*", 0);
+                            while ($autor = $datos_autores->fetch()) {
+                                echo "<option value='{$autor['idAutor']}'>{$autor['nombre']}</option>";
+                            }
+                        ?>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Filtro por Editorial -->
+            <div class="col-md">
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-book"></i></span>
+                    <select class="form-select" id="editorial" name="editorial">
+                        <option value="">Editorial: Todas</option>
+                        <?php
+                            $datos_editoriales = $insLogin->seleccionarDatos("Normal", "editorial", "*", 0);
+                            while ($editorial = $datos_editoriales->fetch()) {
+                                echo "<option value='{$editorial['idEditorial']}'>{$editorial['nombre']}</option>";
+                            }
+                        ?>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Botones de búsqueda y reset -->
+            <div class="col-md-auto">
+                <div class="d-flex gap-2">
+                    <button type="reset" class="btn btn-secondary" id="btn-reset">
+                        <i class="bi bi-arrow-counterclockwise"></i> Reset
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
     <!-- Listado de Productos -->
     <div id="lista-productos" class="mt-4">
+        
         <!-- Aquí se cargará la lista de productos -->
     </div>
 
@@ -478,4 +564,124 @@ function eliminarProducto(id) {
 $(document).ready(function() {
     cargarProductos();
 });
+
+
+function cargarProductos(pagina = 1, registros = 10, busqueda = "", categoria = 0, subcategoria = 0, autor = 0, editorial = 0) {
+    $.ajax({
+        url: '<?= APP_URL ?>app/ajax/productoAjax.php',
+        type: 'POST',
+        data: {
+            modulo_producto: 'listar',
+            pagina: pagina,
+            registros: registros,
+            busqueda: busqueda,
+            categoria: categoria,
+            subcategoria: subcategoria,
+            autor: autor,
+            editorial: editorial
+        },
+        success: function(response) {
+            $('#lista-productos').html(response);
+        }
+    });
+}
+
+
+$(document).ready(function() {
+    // Cargar productos al cargar la página
+    cargarProductos();
+
+    // Búsqueda en tiempo real
+    $('#busqueda').on('input', function() {
+        const busqueda = $(this).val();
+        const categoria = $('#categoria').val();
+        const subcategoria = $('#subcategoria').val();
+        const autor = $('#autor').val();
+        const editorial = $('#editorial').val();
+
+        cargarProductos(1, 10, busqueda, categoria, subcategoria, autor, editorial);
+    });
+
+    // Filtros dinámicos
+    $('#categoria, #subcategoria, #autor, #editorial').on('change', function() {
+        const busqueda = $('#busqueda').val();
+        const categoria = $('#categoria').val();
+        const subcategoria = $('#subcategoria').val();
+        const autor = $('#autor').val();
+        const editorial = $('#editorial').val();
+
+        cargarProductos(1, 10, busqueda, categoria, subcategoria, autor, editorial);
+    });
+});
+
+
+// Función debounce
+function debounce(func, wait) {
+    let timeout;
+    return function(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
+    };
+}
+
+function cargarProductos(pagina = 1, registros = 10) {
+    const busqueda = $('#busqueda').val();
+    const categoria = $('#categoria').val();
+    const subcategoria = $('#subcategoria').val();
+    const autor = $('#autor').val();
+    const editorial = $('#editorial').val();
+
+    $.ajax({
+        url: '<?= APP_URL ?>app/ajax/productoAjax.php',
+        type: 'POST',
+        data: {
+            modulo_producto: 'listar',
+            pagina: pagina,
+            registros: registros,
+            busqueda: busqueda,
+            categoria: categoria,
+            subcategoria: subcategoria,
+            autor: autor,
+            editorial: editorial
+        },
+        success: function(response) {
+            $('#lista-productos').html(response);
+        }
+    });
+}
+
+// Aplicar filtros cuando cambie cualquier dropdown o campo de búsqueda
+$(document).ready(function() {
+    // Cargar productos inicialmente
+    cargarProductos();
+    
+    // Event listeners para todos los campos de filtro
+    $('#busqueda, #categoria, #subcategoria, #autor, #editorial').on('change input', debounce(function() {
+        cargarProductos();
+    }, 300));
+    
+    // También necesitamos manejar la paginación
+    $(document).on('click', '.pagination a', function(e) {
+        e.preventDefault();
+        let pagina = $(this).attr('href').split('/')[1] || 1;
+        cargarProductos(pagina);
+    });
+});
+
+// Asegurarse de que el botón de reset también recargue los productos
+$(document).ready(function() {
+    $('#btn-reset').on('click', function() {
+        // Reiniciar todos los campos del formulario
+        $('#form-busqueda-filtros')[0].reset();
+        
+        // Cargar productos sin filtros
+        cargarProductos();
+    });
+
+    // El resto de tu JavaScript existente para manejar filtros
+    $('#busqueda, #categoria, #subcategoria, #autor, #editorial').on('change input', debounce(function() {
+        cargarProductos();
+    }, 300));
+});
+
 </script>

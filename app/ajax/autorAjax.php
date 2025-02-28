@@ -26,7 +26,12 @@
         // Cambio aquí: usando el nombre correcto del método
         echo $insAutor->listarAutorControlador(1, 15, "", "");
     }
-		
+		 // Nuevo caso para manejar la búsqueda en tiempo real
+		 if ($_POST['modulo_autor'] == "buscar") {
+			$busqueda = $_POST['busqueda']; // Obtener el término de búsqueda
+			echo $insAutor->buscarAutorControlador($busqueda); // Método para buscar
+		}
+	
 	}else{
 		session_destroy();
 		header("Location: ".APP_URL."login/");

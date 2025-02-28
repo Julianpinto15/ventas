@@ -30,18 +30,19 @@
 			echo $insProducto->actualizarFotoProductoControlador();
 		}
 
-
 		if ($_POST['modulo_producto'] == "listar") {
-			$pagina = isset($_POST['pagina']) ? $_POST['pagina'] : 1;
-			$registros = isset($_POST['registros']) ? $_POST['registros'] : 10;
+			$pagina = isset($_POST['pagina']) ? (int)$_POST['pagina'] : 1;
+			$registros = isset($_POST['registros']) ? (int)$_POST['registros'] : 10;
 			$busqueda = isset($_POST['busqueda']) ? $_POST['busqueda'] : "";
-			$categoria = isset($_POST['categoria']) ? $_POST['categoria'] : 0;
-		
-			echo $insProducto->listarProductoControlador($pagina, $registros, "productList", $busqueda, $categoria);
+			$categoria = isset($_POST['categoria']) ? (int)$_POST['categoria'] : 0;
+			$subcategoria = isset($_POST['subcategoria']) ? (int)$_POST['subcategoria'] : 0;
+			$autor = isset($_POST['autor']) ? (int)$_POST['autor'] : 0;
+			$editorial = isset($_POST['editorial']) ? (int)$_POST['editorial'] : 0;
+			
+			// Pass all filter parameters to the controller
+			echo $insProducto->listarProductoControlador($pagina, $registros, "productList", $busqueda, $categoria, $subcategoria, $autor, $editorial);
 		}
-		
-		
-	}else{
+	} else {
 		session_destroy();
 		header("Location: ".APP_URL."login/");
 	}

@@ -13,7 +13,17 @@
             </div>
         </div>
     </div>
-
+<!-- Buscador elegante y centrado para cajas -->
+<div class="row justify-content-center mb-4">
+    <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-text bg-primary text-white">
+                <i class="bi bi-search"></i>
+            </span>
+            <input type="text" id="buscador-caja" class="form-control form-control-sm" placeholder="Buscar caja por número, nombre...">
+        </div>
+    </div>
+</div>
     <!-- Lista de Cajas -->
     <div id="lista-cajas" class="mt-4">
         <!-- Aquí se cargará la lista de cajas -->
@@ -271,4 +281,12 @@
     $(document).ready(function() {
         cargarCajas();
     });
+
+    // Buscador en tiempo real para cajas
+$("#buscador-caja").on("keyup", function() {
+    var valor = $(this).val().toLowerCase();
+    $("#lista-cajas table tbody tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(valor) > -1);
+    });
+});
 </script>

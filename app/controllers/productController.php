@@ -447,163 +447,184 @@
 
 
 		/*----------  Controlador listar producto  ----------*/
-		public function listarProductoControlador($pagina, $registros, $url, $busqueda, $categoria) {
-			$pagina = $this->limpiarCadena($pagina);
-			$registros = $this->limpiarCadena($registros);
-			$categoria = $this->limpiarCadena($categoria);
-		
-			$url = $this->limpiarCadena($url);
-			$url = ($categoria > 0) ? APP_URL . $url . "/" . $categoria . "/" : APP_URL . $url . "/";
-		
-			$busqueda = $this->limpiarCadena($busqueda);
-			$tabla = "";
-		
-			$pagina = (isset($pagina) && $pagina > 0) ? (int) $pagina : 1;
-			$inicio = ($pagina > 0) ? (($pagina * $registros) - $registros) : 0;
-		
-			$campos = "producto.producto_id, producto.producto_codigo, producto.producto_nombre, producto.producto_stock_total, 
-			producto.producto_precio_venta, producto.producto_foto, categoria.categoria_nombre, 
-			IFNULL(subcategoria.nombre, 'Sin subcategoría') AS subcategoria_nombre, 
-			IFNULL(autor.nombre, 'Sin autor') AS autor_nombre, 
-			IFNULL(editorial.nombre, 'Sin editorial') AS editorial_nombre";
-
-			if (!empty($busqueda)) {
-				$consulta_datos = "SELECT $campos 
-					FROM producto 
-					INNER JOIN categoria ON producto.categoria_id = categoria.categoria_id 
-					LEFT JOIN subcategoria ON producto.id_subcategoria = subcategoria.id_subcategoria 
-					LEFT JOIN autor ON producto.idAutor = autor.idAutor 
-					LEFT JOIN editorial ON producto.idEditorial = editorial.idEditorial 
-					WHERE producto.producto_codigo LIKE '%$busqueda%' 
-					OR producto.producto_nombre LIKE '%$busqueda%' 
-					ORDER BY producto.producto_nombre ASC 
-					LIMIT $inicio, $registros";
-			
-				$consulta_total = "SELECT COUNT(producto_id) FROM producto 
-								   WHERE producto_codigo LIKE '%$busqueda%' 
-								   OR producto_nombre LIKE '%$busqueda%'";
-			} elseif ($categoria > 0) {
-				$consulta_datos = "SELECT $campos 
-					FROM producto 
-					INNER JOIN categoria ON producto.categoria_id = categoria.categoria_id 
-					LEFT JOIN subcategoria ON producto.id_subcategoria = subcategoria.id_subcategoria 
-					LEFT JOIN autor ON producto.idAutor = autor.idAutor 
-					LEFT JOIN editorial ON producto.idEditorial = editorial.idEditorial 
-					WHERE producto.categoria_id = '$categoria' 
-					ORDER BY producto.producto_nombre ASC 
-					LIMIT $inicio, $registros";
-			
-				$consulta_total = "SELECT COUNT(producto_id) FROM producto WHERE categoria_id='$categoria'";
-			} else {
-				$consulta_datos = "SELECT $campos 
-					FROM producto 
-					INNER JOIN categoria ON producto.categoria_id = categoria.categoria_id 
-					LEFT JOIN subcategoria ON producto.id_subcategoria = subcategoria.id_subcategoria 
-					LEFT JOIN autor ON producto.idAutor = autor.idAutor 
-					LEFT JOIN editorial ON producto.idEditorial = editorial.idEditorial 
-					ORDER BY producto.producto_nombre ASC 
-					LIMIT $inicio, $registros";
-			
-				$consulta_total = "SELECT COUNT(producto_id) FROM producto";
-			}
-			
-			$datos = $this->ejecutarConsulta($consulta_datos)->fetchAll();
-			$total = (int) $this->ejecutarConsulta($consulta_total)->fetchColumn();
-			$numeroPaginas = ceil($total / $registros);
-		
-			// Inicia la tabla
-			$tabla .= '
-			<div class="table-responsive">
-				<table class="table table-striped table-bordered table-hover">
-					<thead class="table-dark">
-						<tr class="text-center">
-							<th class="text-th">Código</th>
-							<th class="text-th">Nombre</th>
-							<th class="text-th">Precio</th>
-							<th class="text-th">Stock</th>
-							<th class="text-th">Categoría</th>
-							<th class="text-th">Subcategoría</th>
-							<th class="text-th">Autor</th>
-							<th class="text-th">Editorial</th>
-							<th class="text-th">Imagen</th>
-							<th class="text-th">Opciones</th>
-						</tr>
-					</thead>
-					<tbody>
-			';
-			
-			if ($total >= 1 && $pagina <= $numeroPaginas) {
-				$contador = 1; // Se inicializa el contador
-				$pag_inicio = $contador; // Se inicializa el valor de pag_inicio
-				foreach ($datos as $rows) {
-					$tabla .= '
-					<tr class="tr-main text-center">
-						<td class="text-td">' . $rows['producto_codigo'] . '</td>
-						<td class="text-td">' . $rows['producto_nombre'] . '</td>
-						<td class="text-td">$' . number_format($rows['producto_precio_venta'], 2) . '</td>
-						<td class="text-td">' . $rows['producto_stock_total'] . '</td>
-						<td class="text-td">' . $rows['categoria_nombre'] . '</td>
-						<td class="text-td">' . $rows['subcategoria_nombre'] . '</td>
-						<td class="text-td">' . $rows['autor_nombre'] . '</td>
-						<td class="text-td">' . $rows['editorial_nombre'] . '</td>
-					
-						<td class="text-td">
-							<img src="' . APP_URL . 'app/views/productos/' . (!empty($rows['producto_foto']) ? $rows['producto_foto'] : 'default.png') . '" width="50">
-						</td>
-						<td class="text-td">
-							<button class="btn btn-success btn-sm rounded-pill" onclick="abrirModalEditarProducto({
-								producto_id: \'' . $rows['producto_id'] . '\',
-								producto_nombre: \'' . addslashes($rows['producto_nombre']) . '\',
-								producto_precio: \'' . $rows['producto_precio_venta'] . '\',
-								producto_stock: \'' . $rows['producto_stock_total'] . '\',
-								categoria: \'' . $rows['categoria_nombre'] . '\',
-								subcategoria: \'' . $rows['subcategoria_nombre'] . '\',
-								autor: \'' . $rows['autor_nombre'] . '\',
-								editorial: \'' . $rows['editorial_nombre'] . '\'
-							})">
-								<i class="bi bi-arrow-repeat"></i> 
-							</button>
-			
-							<button onclick="eliminarProducto(' . $rows['producto_id'] . ')" class="btn btn-danger btn-sm rounded-pill">
-								<i class="bi bi-trash"></i> 
-							</button>
-						</td>
-					</tr>';
-					$contador++;
-				}
-				$pag_final = $contador - 1;
-			} else {
-				if ($total >= 1) {
-					$tabla .= '
-					<tr class="has-text-centered text-td">
-						<td colspan="7">
-							<a href="' . $url . '1/" class="btn btn-link">
-								Haga clic acá para recargar el listado
-							</a>
-						</td>
-					</tr>
-					';
-				} else {
-					$tabla .= '
-					<tr class="has-text-centered text-td">
-						<td colspan="7">
-							No hay productos registrados en esta categoría
-						</td>
-					</tr>
-					';
-				}
-			}
-		
-			$tabla .= '</tbody></table></div>';
-		
-			// Paginación
-			if ($total > 0 && $pagina <= $numeroPaginas) {
-				$tabla .= '<p class="has-text-right">Mostrando productos <strong>' . $pag_inicio . '</strong> al <strong>' . $pag_final . '</strong> de un <strong>total de ' . $total . '</strong></p>';
-				$tabla .= $this->paginadorTablas($pagina, $numeroPaginas, $url, 7);
-			}
-		
-			return $tabla;
+	/*----------  Controlador listar producto  ----------*/
+	public function listarProductoControlador($pagina, $registros, $url, $busqueda, $categoria, $subcategoria = 0, $autor = 0, $editorial = 0) {
+		// Limpiar y validar datos
+		$pagina = $this->limpiarCadena($pagina);
+		$registros = $this->limpiarCadena($registros);
+		$categoria = $this->limpiarCadena($categoria);
+		$subcategoria = $this->limpiarCadena($subcategoria);
+		$autor = $this->limpiarCadena($autor);
+		$editorial = $this->limpiarCadena($editorial);
+		$url = $this->limpiarCadena($url);
+		$busqueda = $this->limpiarCadena($busqueda);
+	
+		// Construir URL base
+		$url = ($categoria > 0) ? APP_URL . $url . "/" . $categoria . "/" : APP_URL . $url . "/";
+	
+		// Calcular paginación
+		$pagina = (isset($pagina) && $pagina > 0) ? (int) $pagina : 1;
+		$inicio = ($pagina > 0) ? (($pagina * $registros) - $registros) : 0;
+	
+		// Campos a seleccionar
+		$campos = "producto.producto_id, producto.producto_codigo, producto.producto_nombre, 
+		producto.producto_stock_total, producto.producto_tipo_unidad, 
+		producto.producto_precio_compra, producto.producto_precio_venta, 
+		producto.producto_marca, producto.producto_modelo, producto.producto_estado, 
+		producto.producto_foto, 
+		categoria.categoria_id, categoria.categoria_nombre, 
+		subcategoria.id_subcategoria, IFNULL(subcategoria.nombre, 'Sin subcategoría') AS subcategoria_nombre, 
+		autor.idAutor, IFNULL(autor.nombre, 'Sin autor') AS autor_nombre, 
+		editorial.idEditorial, IFNULL(editorial.nombre, 'Sin editorial') AS editorial_nombre";
+	
+		// Consulta base
+		$baseQuery = "FROM producto 
+					  INNER JOIN categoria ON producto.categoria_id = categoria.categoria_id 
+					  LEFT JOIN subcategoria ON producto.id_subcategoria = subcategoria.id_subcategoria 
+					  LEFT JOIN autor ON producto.idAutor = autor.idAutor 
+					  LEFT JOIN editorial ON producto.idEditorial = editorial.idEditorial";
+	
+		// Construir condiciones WHERE
+		$whereConditions = [];
+		if (!empty($busqueda)) {
+			$whereConditions[] = "(producto.producto_codigo LIKE '%$busqueda%' OR producto.producto_nombre LIKE '%$busqueda%')";
 		}
+		if ($categoria > 0) {
+			$whereConditions[] = "producto.categoria_id = '$categoria'";
+		}
+		if ($subcategoria > 0) {
+			$whereConditions[] = "producto.id_subcategoria = '$subcategoria'";
+		}
+		if ($autor > 0) {
+			$whereConditions[] = "producto.idAutor = '$autor'";
+		}
+		if ($editorial > 0) {
+			$whereConditions[] = "producto.idEditorial = '$editorial'";
+		}
+	
+		// Combinar condiciones WHERE
+		$whereClause = !empty($whereConditions) ? "WHERE " . implode(" AND ", $whereConditions) : "";
+	
+		// Consulta para obtener datos
+		$consulta_datos = "SELECT $campos $baseQuery $whereClause ORDER BY producto.producto_nombre ASC LIMIT $inicio, $registros";
+	
+		// Consulta para contar el total de registros
+		$consulta_total = "SELECT COUNT(producto.producto_id) $baseQuery $whereClause";
+	
+		// Ejecutar consultas
+		$datos = $this->ejecutarConsulta($consulta_datos)->fetchAll();
+		$total = (int) $this->ejecutarConsulta($consulta_total)->fetchColumn();
+		$numeroPaginas = ceil($total / $registros);
+	
+		// Iniciar la tabla
+		$tabla = '
+		<div class="table-responsive">
+			<table class="table table-striped table-bordered table-hover">
+				<thead class="table-dark">
+					<tr class="text-center">
+						<th class="text-th">Código</th>
+						<th class="text-th">Nombre</th>
+						<th class="text-th">Precio C</th>
+						<th class="text-th">Precio V</th>
+						<th class="text-th">Stock</th>
+						<th class="text-th">Tipo</th>
+						<th class="text-th">Proveedor</th>
+						<th class="text-th">Tel</th>
+						<th class="text-th">Categoria</th>
+						<th class="text-th">Subcategoria</th>
+						<th class="text-th">Autor</th>
+						<th class="text-th">Editorial</th>
+						<th class="text-th">Imagen</th>
+						<th class="text-th">Opciones</th>
+					</tr>
+				</thead>
+				<tbody>
+		';
+	
+		if ($total >= 1 && $pagina <= $numeroPaginas) {
+			$contador = 1; // Inicializar contador
+			$pag_inicio = $contador; // Inicializar valor de pag_inicio
+			foreach ($datos as $rows) {
+				$tabla .= '
+				<tr class="tr-main text-center">
+					<td class="text-td">' . $rows['producto_codigo'] . '</td>
+					<td class="text-td">' . $rows['producto_nombre'] . '</td>
+					<td class="text-td">$' . number_format($rows['producto_precio_compra'], 2) . '</td>
+					<td class="text-td">$' . number_format($rows['producto_precio_venta'], 2) . '</td>
+					<td class="text-td">' . $rows['producto_stock_total'] . '</td>
+					<td class="text-td">' . $rows['producto_tipo_unidad'] . '</td>
+					<td class="text-td">' . $rows['producto_marca'] . '</td>
+					<td class="text-td">' . $rows['producto_modelo'] . '</td>
+					<td class="text-td">' . $rows['categoria_nombre'] . '</td>
+					<td class="text-td">' . $rows['subcategoria_nombre'] . '</td>
+					<td class="text-td">' . $rows['autor_nombre'] . '</td>
+					<td class="text-td">' . $rows['editorial_nombre'] . '</td>
+					<td class="text-td">
+						<img src="' . APP_URL . 'app/views/productos/' . (!empty($rows['producto_foto']) ? $rows['producto_foto'] : 'default.png') . '" width="50">
+					</td>
+					<td class="text-td">
+						<button class="btn btn-success btn-sm rounded-pill" onclick="abrirModalEditarProducto({
+						  	producto_id: \'' . $rows['producto_id'] . '\',
+							producto_codigo: \'' . $rows['producto_codigo'] . '\',
+							producto_nombre: \'' . addslashes($rows['producto_nombre']) . '\',
+							producto_precio_compra: \'' . $rows['producto_precio_compra'] . '\',
+							producto_precio_venta: \'' . $rows['producto_precio_venta'] . '\',
+							producto_stock_total: \'' . $rows['producto_stock_total'] . '\',
+							producto_tipo_unidad: \'' . $rows['producto_tipo_unidad'] . '\',
+							producto_marca: \'' . $rows['producto_marca'] . '\',
+							producto_modelo: \'' . $rows['producto_modelo'] . '\',
+							categoria_id: \'' . $rows['categoria_id'] . '\',
+							categoria_nombre: \'' . $rows['categoria_nombre'] . '\',
+							id_subcategoria: \'' . $rows['id_subcategoria'] . '\',
+							subcategoria_nombre: \'' . $rows['subcategoria_nombre'] . '\',
+							idAutor: \'' . $rows['idAutor'] . '\',
+							autor_nombre: \'' . $rows['autor_nombre'] . '\',
+							idEditorial: \'' . $rows['idEditorial'] . '\',
+							editorial_nombre: \'' . $rows['editorial_nombre'] . '\',
+							producto_foto: \'' . $rows['producto_foto'] . '\'
+						})">
+							<i class="bi bi-arrow-repeat"></i> 
+						</button>
+						<button onclick="eliminarProducto(' . $rows['producto_id'] . ')" class="btn btn-danger btn-sm rounded-pill">
+							<i class="bi bi-trash"></i> 
+						</button>
+					</td>
+				</tr>';
+				$contador++;
+			}
+			$pag_final = $contador - 1;
+		} else {
+			if ($total >= 1) {
+				$tabla .= '
+				<tr class="has-text-centered text-td">
+					<td colspan="14">
+						<a href="' . $url . '1/" class="btn btn-link">
+							Haga clic acá para recargar el listado
+						</a>
+					</td>
+				</tr>
+				';
+			} else {
+				$tabla .= '
+				<tr class="has-text-centered text-td">
+					<td colspan="14">
+						No hay productos registrados con los filtros seleccionados
+					</td>
+				</tr>
+				';
+			}
+		}
+	
+		$tabla .= '</tbody></table></div>';
+	
+		// Paginación
+		if ($total > 0 && $pagina <= $numeroPaginas) {
+			$tabla .= '<p class="has-text-right">Mostrando productos <strong>' . $pag_inicio . '</strong> al <strong>' . $pag_final . '</strong> de un <strong>total de ' . $total . '</strong></p>';
+			$tabla .= $this->paginadorTablas($pagina, $numeroPaginas, $url, 7);
+		}
+	
+		return $tabla;
+	}
 		
 
 

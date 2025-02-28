@@ -11,6 +11,7 @@
     <div class="container-fluid mb-4">
     <h1 class="text-titulo">Autores</h1>
     <h2 class="h5 text-muted">Gestión de Autores</h2>
+    
 </div>
   </div>
 
@@ -18,6 +19,17 @@
 
    
 
+<!-- Buscador elegante y centrado -->
+<div class="row justify-content-center mb-4">
+    <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-text bg-primary text-white">
+                <i class="bi bi-search"></i>
+            </span>
+            <input type="text" id="buscador-simple" class="form-control form-control-sm" placeholder="Buscar autor por nombre, codigo,biografia...">
+        </div>
+    </div>
+</div>
     <!-- Lista de Autores -->
     <div id="lista-autores" class="mt-4">
         <!-- Aquí se cargará la lista de autores -->
@@ -297,4 +309,15 @@ $('#form-edicion-autor').on('submit', function(e) {
     $(document).ready(function() {
         cargarAutores();
     });
+
+// Buscador en tiempo real sin AJAX
+$(document).ready(function() {
+    $("#buscador-simple").on("keyup", function() {
+        var valor = $(this).val().toLowerCase();
+        $("#lista-autores table tbody tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(valor) > -1);
+        });
+    });
+});
+    
 </script>

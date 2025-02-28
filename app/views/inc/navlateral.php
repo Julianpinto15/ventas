@@ -1,10 +1,5 @@
 <div class="sidebar">
 
-    <!-- Dashboard -->
-    <a class="menu-item" href="<?php echo APP_URL; ?>dashboard/">
-        <span class="emoji"><i class="fab fa-dashcube"></i></span>
-        <span class="menu-text">Inicio</span>
-    </a>
 
     <!-- Ventas -->
     <div class="menu-item has-dropdown">

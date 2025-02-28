@@ -14,6 +14,17 @@
         </div>
     </div>
 
+    <!-- Buscador elegante y centrado para categorías -->
+<div class="row justify-content-center mb-4">
+    <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-text bg-primary text-white">
+                <i class="bi bi-search"></i>
+            </span>
+            <input type="text" id="buscador-categoria" class="form-control form-control-sm" placeholder="Buscar categoría por nombre o ubicación...">
+        </div>
+    </div>
+</div>
     <!-- Lista de Categorías -->
     <div id="lista-categorias" class="mt-4">
         <!-- Aquí se cargará la lista de categorías -->
@@ -264,5 +275,13 @@
     $(document).ready(function() {
         cargarCategorias();
     });
+
+    // Buscador en tiempo real para categorías
+$("#buscador-categoria").on("keyup", function() {
+    var valor = $(this).val().toLowerCase();
+    $("#lista-categorias table tbody tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(valor) > -1);
+    });
+});
 </script>
 ```

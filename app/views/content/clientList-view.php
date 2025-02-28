@@ -64,7 +64,7 @@
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Email</label>
-                                <input class="form-control text-model_input" type="email" name="cliente_email" maxlength="70">
+                                <input class="form-control text-model" type="email" name="cliente_email" maxlength="70">
                                </div>
                         </div>
 
@@ -152,7 +152,7 @@
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Email</label>
-                                <input id="edit_cliente_email" class="form-control text-model_input" 
+                                <input id="edit_cliente_email" class="form-control text-model" 
                                        type="email" name="cliente_email" maxlength="70">
                             </div>
                         </div>
@@ -197,6 +197,22 @@
 </div>
 
 <script>
+
+    // Función para mostrar alertas con SweetAlert
+function mostrarAlerta(icono, titulo, texto) {
+    Swal.fire({
+        icon: icono,
+        title: titulo,
+        text: texto,
+        width: '400px',
+        padding: '2em',
+        customClass: {
+            title: 'fs-4',
+            htmlContainer: 'fs-5',
+            confirmButton: 'fs-5'
+        }
+    });
+}
     // Función para abrir el Modal de Registro de Cliente
     function abrirModalRegistroCliente() {
         var modal = new bootstrap.Modal(document.getElementById('registroClienteModal'));
@@ -252,146 +268,116 @@
     }
 
     // Manejador para el formulario de registro
-    $('#form-registro-cliente').on('submit', function(e) {
+// Manejador para el formulario de registro
+$('#form-registro-cliente').on('submit', function(e) {
     e.preventDefault();
     $.ajax({
         url: '<?= APP_URL ?>app/ajax/clienteAjax.php',
         type: 'POST',
         data: $(this).serialize(),
         success: function(response) {
-            // Agregar log de la respuesta
-            console.log("Respuesta del servidor:", response);
-            
             try {
                 const resp = JSON.parse(response);
-                console.log("JSON parseado:", resp);
-                
                 if (resp.tipo === "limpiar") {
                     cerrarModalRegistroCliente();
                     cargarClientes();
-                    
-                    Swal.fire({
-                        icon: resp.icono || 'info',
-                        title: resp.titulo,
-                        text: resp.texto,
-                        width: '400px',
-                        padding: '2em',
-                        customClass: {
-                            title: 'fs-4',
-                            htmlContainer: 'fs-4',
-                            confirmButton: 'fs-5'
-                        },
-                        timer: 2000,
-                        timerProgressBar: true
-                    });
+                    mostrarAlerta(resp.icono || 'success', resp.titulo, resp.texto);
+                } else if (resp.tipo === "error") {
+                    mostrarAlerta(resp.icono || 'error', resp.titulo, resp.texto);
                 }
             } catch (e) {
                 console.error("Error al parsear JSON:", e);
-                console.log("Respuesta cruda:", response);
-                
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error de respuesta',
-                    text: 'La respuesta del servidor no es válida',
-                    width: '400px',
-                    padding: '2em'
-                });
+                mostrarAlerta('error', 'Error de respuesta', 'La respuesta del servidor no es válida');
             }
         },
         error: function(xhr, status, error) {
-            console.error("Error AJAX:", {
-                status: status,
-                error: error,
-                response: xhr.responseText
-            });
+            console.error("Error AJAX:", { status: status, error: error, response: xhr.responseText });
+            mostrarAlerta('error', 'Error de conexión', 'Hubo un problema al conectar con el servidor');
         }
     });
 });
 
-    // Manejador para el formulario de edición
-    $('#form-edicion-cliente').on('submit', function(e) {
-        e.preventDefault();
-        const formData = $(this).serialize();
-        
-        $.ajax({
-            url: '<?= APP_URL ?>app/ajax/clienteAjax.php',
-            type: 'POST',
-            data: formData,
-            success: function(response) {
+
+// Manejador para el formulario de edición
+$('#form-edicion-cliente').on('submit', function(e) {
+    e.preventDefault();
+    const formData = $(this).serialize();
+    $.ajax({
+        url: '<?= APP_URL ?>app/ajax/clienteAjax.php',
+        type: 'POST',
+        data: formData,
+        success: function(response) {
+            try {
                 const resp = JSON.parse(response);
                 if (resp.tipo === "recargar") {
                     cerrarModalEditarCliente();
                     cargarClientes();
-                    
-                    Swal.fire({
-                        icon: resp.icono || 'info',
-                        title: resp.titulo,
-                        text: resp.texto,
-                        width: '400px',
-                        padding: '2em',
-                        customClass: {
-                            title: 'fs-4',
-                            htmlContainer: 'fs-5',
-                            confirmButton: 'fs-5'
-                        }
-                    });
+                    mostrarAlerta(resp.icono || 'success', resp.titulo, resp.texto);
+                } else if (resp.tipo === "error") {
+                    mostrarAlerta(resp.icono || 'error', resp.titulo, resp.texto);
                 }
+            } catch (e) {
+                console.error("Error al parsear JSON:", e);
+                mostrarAlerta('error', 'Error de respuesta', 'La respuesta del servidor no es válida');
             }
-        });
+        },
+        error: function(xhr, status, error) {
+            console.error("Error AJAX:", { status: status, error: error, response: xhr.responseText });
+            mostrarAlerta('error', 'Error de conexión', 'Hubo un problema al conectar con el servidor');
+        }
     });
+});
 
     // Función para eliminar un cliente
-    function eliminarCliente(id) {
-        Swal.fire({
-            title: '¿Está seguro?',
-            text: "¿Desea eliminar este cliente?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí, eliminar',
-            cancelButtonText: 'Cancelar',
-            width: '400px',
-            padding: '2em',
-            customClass: {
-                title: 'fs-4',
-                htmlContainer: 'fs-5',
-                confirmButton: 'fs-5',
-                cancelButton: 'fs-5'
-            }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: '<?= APP_URL ?>app/ajax/clienteAjax.php',
-                    type: 'POST',
-                    data: {
-                        modulo_cliente: 'eliminar',
-                        cliente_id: id
-                    },
-                    success: function(response) {
+function eliminarCliente(id) {
+    Swal.fire({
+        title: '¿Está seguro?',
+        text: "¿Desea eliminar este cliente?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+        width: '400px',
+        padding: '2em',
+        customClass: {
+            title: 'fs-4',
+            htmlContainer: 'fs-5',
+            confirmButton: 'fs-5',
+            cancelButton: 'fs-5'
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: '<?= APP_URL ?>app/ajax/clienteAjax.php',
+                type: 'POST',
+                data: {
+                    modulo_cliente: 'eliminar',
+                    cliente_id: id
+                },
+                success: function(response) {
+                    try {
                         const resp = JSON.parse(response);
-                        Swal.fire({
-                            icon: resp.icono || 'info',
-                            title: resp.titulo,
-                            text: resp.texto,
-                            width: '400px',
-                            padding: '2em',
-                            customClass: {
-                                title: 'fs-4',
-                                htmlContainer: 'fs-5',
-                                confirmButton: 'fs-5'
-                            }
-                        }).then(() => {
-                            if (resp.tipo === "recargar") {
-                                cargarClientes();
-                            }
-                        });
+                        if (resp.tipo === "recargar") {
+                            cargarClientes();
+                            mostrarAlerta(resp.icono || 'success', resp.titulo, resp.texto);
+                        } else if (resp.tipo === "error") {
+                            mostrarAlerta(resp.icono || 'error', resp.titulo, resp.texto);
+                        }
+                    } catch (e) {
+                        console.error("Error al parsear JSON:", e);
+                        mostrarAlerta('error', 'Error de respuesta', 'La respuesta del servidor no es válida');
                     }
-                });
-            }
-        });
-    }
-
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error AJAX:", { status: status, error: error, response: xhr.responseText });
+                    mostrarAlerta('error', 'Error de conexión', 'Hubo un problema al conectar con el servidor');
+                }
+            });
+        }
+    });
+}
     // Cargar la lista de clientes al cargar la página
     $(document).ready(function() {
         cargarClientes();
