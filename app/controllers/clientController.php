@@ -549,6 +549,7 @@
 			}
 
 			# Verificando email #
+# Verificando email #
 if($email!=""){
     if(filter_var($email, FILTER_VALIDATE_EMAIL)){
         if (ctype_upper($email[0])) {
@@ -561,16 +562,20 @@ if($email!=""){
             return json_encode($alerta);
             exit();
         }
-        $check_email=$this->ejecutarConsulta("SELECT cliente_email FROM cliente WHERE cliente_email='$email'");
-        if($check_email->rowCount()>0){
-            $alerta=[
-                "tipo"=>"simple",
-                "titulo"=>"Ocurrió un error inesperado",
-                "texto"=>"El EMAIL que acaba de ingresar ya se encuentra registrado en el sistema, por favor verifique e intente nuevamente",
-                "icono"=>"error"
-            ];
-            return json_encode($alerta);
-            exit();
+        
+        // Only check for duplicate email if it's different from current user's email
+        if($email != $datos['cliente_email']) {
+            $check_email=$this->ejecutarConsulta("SELECT cliente_email FROM cliente WHERE cliente_email='$email' AND cliente_id!='$id'");
+            if($check_email->rowCount()>0){
+                $alerta=[
+                    "tipo"=>"simple",
+                    "titulo"=>"Ocurrió un error inesperado",
+                    "texto"=>"El EMAIL que acaba de ingresar ya se encuentra registrado en el sistema, por favor verifique e intente nuevamente",
+                    "icono"=>"error"
+                ];
+                return json_encode($alerta);
+                exit();
+            }
         }
     }else{
         $alerta=[

@@ -13,7 +13,16 @@
             </div>
         </div>
     </div>
-
+    <div class="row justify-content-center mb-4">
+    <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-text bg-primary text-white">
+                <i class="bi bi-search"></i>
+            </span>
+            <input type="text" id="buscador-cliente" class="form-control form-control-sm" placeholder="Buscar categoría por nombre o ubicación...">
+        </div>
+    </div>
+</div>
     <!-- Lista de Clientes -->
     <div id="lista-clientes" class="mt-4">
         <!-- Aquí se cargará la lista de clientes -->
@@ -73,7 +82,7 @@
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Teléfono</label>
                                 <input class="form-control text-model_input" type="text" name="cliente_telefono" 
-                                       pattern="[0-9()+]{8,20}" maxlength="20">
+                                       pattern="[0-9\\(\\)\\+]{8,20}" maxlength="20">
                             </div>
 
                             <div class="mb-3">
@@ -162,7 +171,7 @@
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Teléfono</label>
                                 <input id="edit_cliente_telefono" class="form-control text-model_input" type="text" 
-                                       name="cliente_telefono" pattern="[0-9()+]{8,20}" maxlength="20">
+                                       name="cliente_telefono" pattern="[0-9\\(\\)\\+]{8,20}" maxlength="20">
                             </div>
 
                             <div class="mb-3">
@@ -382,4 +391,12 @@ function eliminarCliente(id) {
     $(document).ready(function() {
         cargarClientes();
     });
+
+        // Buscador en tiempo real para categorías
+$("#buscador-cliente").on("keyup", function() {
+    var valor = $(this).val().toLowerCase();
+    $("#lista-clientes table tbody tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(valor) > -1);
+    });
+});
 </script>
