@@ -15,7 +15,17 @@
       </div>
   </div>
  </div>
-
+<!-- Buscador elegante y centrado para editoriales -->
+<div class="row justify-content-center mb-4">
+    <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-text bg-primary text-white">
+                <i class="bi bi-search"></i>
+            </span>
+            <input type="text" id="buscador-editorial" class="form-control form-control-sm" placeholder="Buscar editorial por nombre, codigo , país ...">
+        </div>
+    </div>
+</div>
     <!-- Listado de Editoriales -->
     <div id="lista-editoriales" class="mt-4">
         <!-- Aquí se cargará la lista de editoriales -->
@@ -299,5 +309,14 @@ function eliminarEditorial(id) {
 // Load editorials when page is ready
 $(document).ready(function() {
     cargarEditoriales();
+});
+
+
+// Buscador en tiempo real para editoriales
+$("#buscador-editorial").on("keyup", function() {
+    var valor = $(this).val().toLowerCase();
+    $("#lista-editoriales table tbody tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(valor) > -1);
+    });
 });
 </script>

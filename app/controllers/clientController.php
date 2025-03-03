@@ -6,33 +6,46 @@
 	class clientController extends mainModel{
 
 		/*----------  Controlador registrar cliente  ----------*/
-		public function registrarClienteControlador(){
-
-			# Almacenando datos#
-		    $tipo_documento=$this->limpiarCadena($_POST['cliente_tipo_documento']);
-		    $numero_documento=$this->limpiarCadena($_POST['cliente_numero_documento']);
-		    $nombre=$this->limpiarCadena($_POST['cliente_nombre']);
-		    $apellido=$this->limpiarCadena($_POST['cliente_apellido']);
-
-		    $provincia=$this->limpiarCadena($_POST['cliente_provincia']);
-		    $ciudad=$this->limpiarCadena($_POST['cliente_ciudad']);
-		    $direccion=$this->limpiarCadena($_POST['cliente_direccion']);
-
-		    $telefono=$this->limpiarCadena($_POST['cliente_telefono']);
-		    $email=$this->limpiarCadena($_POST['cliente_email']);
-
-		    # Verificando campos obligatorios #
-            if($numero_documento=="" || $nombre=="" || $apellido=="" || $provincia=="" || $ciudad=="" || $direccion==""){
-            	$alerta=[
-					"tipo"=>"simple",
-					"titulo"=>"Ocurrió un error inesperado",
-					"texto"=>"No has llenado todos los campos que son obligatorios",
-					"icono"=>"error"
+		public function registrarClienteControlador() {
+			# Almacenando datos
+			$tipo_documento = isset($_POST['cliente_tipo_documento']) ? $this->limpiarCadena($_POST['cliente_tipo_documento']) : '';
+			$numero_documento = isset($_POST['cliente_numero_documento']) ? $this->limpiarCadena($_POST['cliente_numero_documento']) : '';
+			$nombre = isset($_POST['cliente_nombre']) ? $this->limpiarCadena($_POST['cliente_nombre']) : '';
+			$apellido = isset($_POST['cliente_apellido']) ? $this->limpiarCadena($_POST['cliente_apellido']) : '';
+			$provincia = isset($_POST['cliente_provincia']) ? $this->limpiarCadena($_POST['cliente_provincia']) : '';
+			$ciudad = isset($_POST['cliente_ciudad']) ? $this->limpiarCadena($_POST['cliente_ciudad']) : '';
+			$direccion = isset($_POST['cliente_direccion']) ? $this->limpiarCadena($_POST['cliente_direccion']) : '';
+			$telefono = isset($_POST['cliente_telefono']) ? $this->limpiarCadena($_POST['cliente_telefono']) : '';
+			$email = isset($_POST['cliente_email']) ? $this->limpiarCadena($_POST['cliente_email']) : '';
+		
+			# Verificando campos obligatorios
+			if ($numero_documento == "" || $nombre == "" || $apellido == "" || $provincia == "" || $ciudad == "" || $direccion == "") {
+				$alerta = [
+					"tipo" => "simple",
+					"titulo" => "Ocurrió un error inesperado",
+					"texto" => "No has llenado todos los campos que son obligatorios",
+					"icono" => "error"
 				];
 				return json_encode($alerta);
-		        exit();
-            }
-
+				exit();
+			}
+		
+			# Verificando email
+			if ($email != "") {
+				if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+					$alerta = [
+						"tipo" => "simple",
+						"titulo" => "Ocurrió un error inesperado",
+						"texto" => "Ha ingresado un correo electrónico no válido",
+						"icono" => "error"
+					];
+					return json_encode($alerta);
+					exit();
+				}
+			}
+		
+			# Resto de la lógica del controlador...
+		
             # Verificando integridad de los datos #
 		    if($this->verificarDatos("[a-zA-Z0-9-]{7,30}",$numero_documento)){
 		    	$alerta=[
@@ -125,31 +138,6 @@
 		        exit();
 			}
 
-		    # Verificando email #
-		    if($email!=""){
-				if(filter_var($email, FILTER_VALIDATE_EMAIL)){
-					$check_email=$this->ejecutarConsulta("SELECT cliente_email FROM cliente WHERE cliente_email='$email'");
-					if($check_email->rowCount()>0){
-						$alerta=[
-							"tipo"=>"simple",
-							"titulo"=>"Ocurrió un error inesperado",
-							"texto"=>"El EMAIL que acaba de ingresar ya se encuentra registrado en el sistema, por favor verifique e intente nuevamente",
-							"icono"=>"error"
-						];
-						return json_encode($alerta);
-						exit();
-					}
-				}else{
-					$alerta=[
-						"tipo"=>"simple",
-						"titulo"=>"Ocurrió un error inesperado",
-						"texto"=>"Ha ingresado un correo electrónico no valido",
-						"icono"=>"error"
-					];
-					return json_encode($alerta);
-					exit();
-				}
-            }
 
             # Comprobando documento #
 		    $check_documento=$this->ejecutarConsulta("SELECT cliente_id FROM cliente WHERE cliente_tipo_documento='$tipo_documento' AND cliente_numero_documento='$numero_documento'");
@@ -275,6 +263,7 @@
                 <th class="text-th">Documento</th>
                 <th class="text-th">Nombre</th>
                 <th class="text-th">Email</th>
+				<th class="text-th">Telefono</th>
                 <th class="text-th">Opciones</th>
             </tr>
         </thead>
@@ -290,7 +279,8 @@
                     <td class="text-td">'.$contador.'</td>
                     <td class="text-td">'.$rows['cliente_tipo_documento'].': '.$rows['cliente_numero_documento'].'</td>
                     <td class="text-td">'.$rows['cliente_nombre'].' '.$rows['cliente_apellido'].'</td>
-                    <td class="text-td">'.$rows['cliente_email'].'</td>
+     				<td class="text-td" style="text-transform: none;">'.$rows['cliente_email'].'</td>
+                    <td class="text-td">'.$rows['cliente_telefono'].'</td>
                     <td class="text-td">
                         <button class="text-td btn btn-success btn-sm rounded-pill" onclick="abrirModalEditarCliente({
                             cliente_id: \''.$rows['cliente_id'].'\',
@@ -298,7 +288,9 @@
                             cliente_numero_documento: \''.$rows['cliente_numero_documento'].'\',
                             cliente_nombre: \''.addslashes($rows['cliente_nombre']).'\',
                             cliente_apellido: \''.addslashes($rows['cliente_apellido']).'\',
-                            cliente_email: \''.$rows['cliente_email'].'\',
+							cliente_email: \''.$rows['cliente_email'].'\',
+							cliente_telefono: \''.$rows['cliente_telefono'].'\',
+							cliente_direccion: \''.$rows['cliente_direccion'].'\',
                             cliente_provincia: \''.$rows['cliente_provincia'].'\',
                             cliente_ciudad: \''.$rows['cliente_ciudad'].'\'
                         })"><i class="bi bi-arrow-repeat"></i>
@@ -557,30 +549,45 @@
 			}
 
 			# Verificando email #
-		    if($email!="" && $datos['cliente_email']!=$email){
-				if(filter_var($email, FILTER_VALIDATE_EMAIL)){
-					$check_email=$this->ejecutarConsulta("SELECT cliente_email FROM cliente WHERE cliente_email='$email'");
-					if($check_email->rowCount()>0){
-						$alerta=[
-							"tipo"=>"simple",
-							"titulo"=>"Ocurrió un error inesperado",
-							"texto"=>"El EMAIL que acaba de ingresar ya se encuentra registrado en el sistema, por favor verifique e intente nuevamente",
-							"icono"=>"error"
-						];
-						return json_encode($alerta);
-						exit();
-					}
-				}else{
-					$alerta=[
-						"tipo"=>"simple",
-						"titulo"=>"Ocurrió un error inesperado",
-						"texto"=>"Ha ingresado un correo electrónico no valido",
-						"icono"=>"error"
-					];
-					return json_encode($alerta);
-					exit();
-				}
+# Verificando email #
+if($email!=""){
+    if(filter_var($email, FILTER_VALIDATE_EMAIL)){
+        if (ctype_upper($email[0])) {
+            $alerta=[
+                "tipo"=>"simple",
+                "titulo"=>"Ocurrió un error inesperado",
+                "texto"=>"El correo electrónico no debe comenzar con una letra mayúscula",
+                "icono"=>"error"
+            ];
+            return json_encode($alerta);
+            exit();
+        }
+        
+        // Only check for duplicate email if it's different from current user's email
+        if($email != $datos['cliente_email']) {
+            $check_email=$this->ejecutarConsulta("SELECT cliente_email FROM cliente WHERE cliente_email='$email' AND cliente_id!='$id'");
+            if($check_email->rowCount()>0){
+                $alerta=[
+                    "tipo"=>"simple",
+                    "titulo"=>"Ocurrió un error inesperado",
+                    "texto"=>"El EMAIL que acaba de ingresar ya se encuentra registrado en el sistema, por favor verifique e intente nuevamente",
+                    "icono"=>"error"
+                ];
+                return json_encode($alerta);
+                exit();
             }
+        }
+    }else{
+        $alerta=[
+            "tipo"=>"simple",
+            "titulo"=>"Ocurrió un error inesperado",
+            "texto"=>"Ha ingresado un correo electrónico no valido",
+            "icono"=>"error"
+        ];
+        return json_encode($alerta);
+        exit();
+    }
+}
 
             # Comprobando documento #
             if($tipo_documento!=$datos['cliente_tipo_documento'] || $numero_documento!=$datos['cliente_numero_documento']){

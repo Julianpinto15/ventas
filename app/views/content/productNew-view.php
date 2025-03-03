@@ -14,9 +14,95 @@
             </div>
         </div>
     </div>
+    <div class="row mb-4">
+    <div class="col-md-12">
+        <form id="form-busqueda-filtros" class="row g-3 align-items-end">
+            <!-- Buscador por Nombre o Código -->
+            <div class="col-md">
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                    <input type="text" class="form-control" id="busqueda" name="busqueda" placeholder="Buscar por Nombre o Código">
+                </div>
+            </div>
 
+            <!-- Filtro por Categoría -->
+            <div class="col-md">
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-folder"></i></span>
+                    <select class="form-select" id="categoria" name="categoria">
+                        <option value="">Categoría: Todas</option>
+                        <?php
+                            $datos_categorias = $insLogin->seleccionarDatos("Normal", "categoria", "*", 0);
+                            while ($categoria = $datos_categorias->fetch()) {
+                                echo "<option value='{$categoria['categoria_id']}'>{$categoria['categoria_nombre']}</option>";
+                            }
+                        ?>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Filtro por Subcategoría -->
+            <div class="col-md">
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-tag"></i></span>
+                    <select class="form-select" id="subcategoria" name="subcategoria">
+                        <option value="">Subcategoría: Todas</option>
+                        <?php
+                            $datos_subcategorias = $insLogin->seleccionarDatos("Normal", "subcategoria", "*", 0);
+                            while ($subcategoria = $datos_subcategorias->fetch()) {
+                                echo "<option value='{$subcategoria['id_subcategoria']}'>{$subcategoria['nombre']}</option>";
+                            }
+                        ?>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Filtro por Autor -->
+            <div class="col-md">
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                    <select class="form-select" id="autor" name="autor">
+                        <option value="">Autor: Todos</option>
+                        <?php
+                            $datos_autores = $insLogin->seleccionarDatos("Normal", "autor", "*", 0);
+                            while ($autor = $datos_autores->fetch()) {
+                                echo "<option value='{$autor['idAutor']}'>{$autor['nombre']}</option>";
+                            }
+                        ?>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Filtro por Editorial -->
+            <div class="col-md">
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-book"></i></span>
+                    <select class="form-select" id="editorial" name="editorial">
+                        <option value="">Editorial: Todas</option>
+                        <?php
+                            $datos_editoriales = $insLogin->seleccionarDatos("Normal", "editorial", "*", 0);
+                            while ($editorial = $datos_editoriales->fetch()) {
+                                echo "<option value='{$editorial['idEditorial']}'>{$editorial['nombre']}</option>";
+                            }
+                        ?>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Botones de búsqueda y reset -->
+            <div class="col-md-auto">
+                <div class="d-flex gap-2">
+                    <button type="reset" class="btn btn-secondary" id="btn-reset">
+                        <i class="bi bi-arrow-counterclockwise"></i> Reset
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
     <!-- Listado de Productos -->
     <div id="lista-productos" class="mt-4">
+        
         <!-- Aquí se cargará la lista de productos -->
     </div>
 
@@ -260,17 +346,19 @@
                 ?>
             </select>
         </div>
-        <div class="col-md-8">
-            <label class="form-label fw-semibold text-model">Imagen del Producto</label>
-            <input class="form-control text-model_input" type="file" id="edit_producto_foto" name="producto_foto" accept=".jpg, .png, .jpeg">
-            <small class="text-muted">Formatos permitidos: JPG, JPEG, PNG. (MAX 5MB)</small>
-        </div>
+       <!-- Otros campos del formulario -->
+    <div class="col-md-8">
+        <label class="form-label fw-semibold text-model">Imagen del Producto</label>
+        <input class="form-control text-model_input" type="file" id="edit_producto_foto" name="producto_foto" accept=".jpg, .png, .jpeg">
+        <small class="text-muted">Formatos permitidos: JPG, JPEG, PNG. (MAX 5MB)</small>
+        <!-- Campo oculto para almacenar la imagen actual -->
+        <input type="hidden" id="edit_producto_foto_actual" name="producto_foto_actual">
     </div>
     <!-- Botón para Actualizar -->
-        <div class="mb-3">
-            <button type="submit" class="btn btn-success text-model">Actualizar Producto</button>
-        </div>
-    </form>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-success text-model">Actualizar Producto</button>
+    </div>
+</form>
                 </div>
             </div>
         </div>
@@ -307,6 +395,7 @@ function abrirModalEditarProducto(producto) {
         document.getElementById('edit_producto_subcategoria').value = producto.id_subcategoria;
         document.getElementById('edit_idAutor').value = producto.idAutor;
         document.getElementById('edit_editorial_id').value = producto.idEditorial;
+        document.getElementById('edit_producto_foto_actual').value = producto.producto_foto;
 
         // Abrir el modal
         const modalElement = document.getElementById('modal-editar-producto');
@@ -335,7 +424,7 @@ function cargarProductos(pagina = 1, busqueda = '', categoria = 0) {
         data: {
             modulo_producto: 'listar',
             pagina: pagina,
-            registros: 10,
+            registros: 4,
             url: 'producto', // O la URL base que uses para la paginación
             busqueda: busqueda
         },
@@ -403,41 +492,90 @@ $('#form-registro-producto').on('submit', function(e) {
     });
 });
 
-// Edit form handler with SweetAlert2
+
 $('#form-edicion-producto').on('submit', function(e) {
-    e.preventDefault();
-    let formData = new FormData(this);
-    formData.append('modulo_producto', 'actualizar');
-    
+    e.preventDefault(); // Evita que el formulario se envíe de forma tradicional
+
+    let formData = new FormData(this); // Crea un objeto FormData con los datos del formulario
+
+    // Verifica si se ha seleccionado una nueva imagen
+    const nuevaFoto = document.getElementById('edit_producto_foto').files[0];
+    if (nuevaFoto) {
+        formData.append('modulo_producto', 'actualizarFoto'); // Actualizar foto
+    } else {
+        formData.append('modulo_producto', 'actualizar'); // Actualizar otros campos
+    }
+
     $.ajax({
-        url: '<?= APP_URL ?>app/ajax/productoAjax.php',
+        url: '<?= APP_URL ?>app/ajax/productoAjax.php', // URL a donde se envía el formulario
         type: 'POST',
         data: formData,
-        processData: false,
-        contentType: false,
+        processData: false, // Importante: no procesar los datos
+        contentType: false, // Importante: no establecer el tipo de contenido
+
         success: function(response) {
-            const resp = JSON.parse(response);
+            console.log("Datos recibidos:", response); // Muestra la respuesta en la consola
+
+            try {
+                // Parsear la respuesta JSON
+                const data = JSON.parse(response);
+
+                // Verificar el tipo de respuesta
+                if (data.tipo === 'recargar') {
+                    // SweetAlert2 para éxito
+                    Swal.fire({
+                        icon: data.icono,
+                        title: data.titulo,
+                        text: data.texto,
+                        confirmButtonText: 'Aceptar'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Recargar la página si es necesario
+                            if (data.tipo === 'recargar') {
+                                location.reload(); // Recargar la página
+                            }
+                        }
+                    });
+                } else if (data.tipo === 'simple') {
+                    // SweetAlert2 para errores
+                    Swal.fire({
+                        icon: data.icono,
+                        title: data.titulo,
+                        text: data.texto,
+                        confirmButtonText: 'Aceptar'
+                    });
+                } else {
+                    // Respuesta inesperada
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Respuesta inesperada del servidor',
+                        confirmButtonText: 'Aceptar'
+                    });
+                }
+            } catch (error) {
+                console.error("Error al parsear la respuesta:", error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Hubo un error al procesar la respuesta del servidor',
+                    confirmButtonText: 'Aceptar'
+                });
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("Error en la solicitud:", error); // Muestra errores en la consola
+
+            // SweetAlert2 para errores de conexión
             Swal.fire({
-                icon: resp.icono || 'info',
-                title: resp.titulo,
-                text: resp.texto,
-                width: '400px',
-                padding: '2em',
-                customClass: {
-                    title: 'fs-4',
-                    htmlContainer: 'fs-4',
-                    confirmButton: 'fs-5'
-                }
-            }).then((result) => {
-                if (resp.tipo === "recargar") {
-                    cerrarModalEditarproducto();
-                    cargarProductos();
-                }
+                icon: 'error',
+                title: 'Error',
+                text: 'Hubo un error al enviar la solicitud al servidor',
+                confirmButtonText: 'Aceptar'
             });
         }
     });
 });
-
 
 // Function to delete producto with SweetAlert2
 function eliminarProducto(id) {
@@ -495,4 +633,139 @@ function eliminarProducto(id) {
 $(document).ready(function() {
     cargarProductos();
 });
+
+// Function to load productos list
+function cargarProductos(pagina = 1, busqueda = '', categoria = 0) {
+    $.ajax({
+        url: '<?= APP_URL ?>app/ajax/productoAjax.php',
+        type: 'POST',
+        data: {
+            modulo_producto: 'listar',
+            pagina: pagina,
+            registros: 4,
+            url: 'producto', // O la URL base que uses para la paginación
+            busqueda: busqueda
+        },
+        success: function(response) {
+            $('#lista-productos').html(response);
+
+             // Agregar eventos a los enlaces de paginación
+            $('.pagination .page-link').on('click', function(e) {
+                e.preventDefault();
+                if ($(this).attr('aria-disabled') !== 'true') {
+                    const href = $(this).attr('href');
+                    // Extraer el número de página de la URL (formato: url/{pagina}/)
+                    const match = href.match(/\/(\d+)\//);
+                    if (match && match[1]) {
+                        cargarProductos(parseInt(match[1]), busqueda);
+                    }
+                }
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error("Error cargando categorías:", error);
+            $('#lista-productos').html('<div class="alert alert-danger">Error al cargar los productos</div>');
+        }
+    });
+}
+
+
+
+$(document).ready(function() {
+    // Cargar productos al cargar la página
+    cargarProductos();
+
+    // Búsqueda en tiempo real
+    $('#busqueda').on('input', function() {
+        const busqueda = $(this).val();
+        const categoria = $('#categoria').val();
+        const subcategoria = $('#subcategoria').val();
+        const autor = $('#autor').val();
+        const editorial = $('#editorial').val();
+
+        cargarProductos(1, 10, busqueda, categoria, subcategoria, autor, editorial);
+    });
+
+    // Filtros dinámicos
+    $('#categoria, #subcategoria, #autor, #editorial').on('change', function() {
+        const busqueda = $('#busqueda').val();
+        const categoria = $('#categoria').val();
+        const subcategoria = $('#subcategoria').val();
+        const autor = $('#autor').val();
+        const editorial = $('#editorial').val();
+
+        cargarProductos(1, 10, busqueda, categoria, subcategoria, autor, editorial);
+    });
+});
+
+
+// Función debounce
+function debounce(func, wait) {
+    let timeout;
+    return function(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
+    };
+}
+
+function cargarProductos(pagina = 1, registros = 10) {
+    const busqueda = $('#busqueda').val();
+    const categoria = $('#categoria').val();
+    const subcategoria = $('#subcategoria').val();
+    const autor = $('#autor').val();
+    const editorial = $('#editorial').val();
+
+    $.ajax({
+        url: '<?= APP_URL ?>app/ajax/productoAjax.php',
+        type: 'POST',
+        data: {
+            modulo_producto: 'listar',
+            pagina: pagina,
+            registros: registros,
+            busqueda: busqueda,
+            categoria: categoria,
+            subcategoria: subcategoria,
+            autor: autor,
+            editorial: editorial
+        },
+        success: function(response) {
+            $('#lista-productos').html(response);
+        }
+    });
+}
+
+// Aplicar filtros cuando cambie cualquier dropdown o campo de búsqueda
+$(document).ready(function() {
+    // Cargar productos inicialmente
+    cargarProductos();
+    
+    // Event listeners para todos los campos de filtro
+    $('#busqueda, #categoria, #subcategoria, #autor, #editorial').on('change input', debounce(function() {
+        cargarProductos();
+    }, 300));
+    
+    // También necesitamos manejar la paginación
+    $(document).on('click', '.pagination a', function(e) {
+        e.preventDefault();
+        let pagina = $(this).attr('href').split('/')[1] || 1;
+        cargarProductos(pagina);
+    });
+});
+
+// Asegurarse de que el botón de reset también recargue los productos
+$(document).ready(function() {
+    $('#btn-reset').on('click', function() {
+        // Reiniciar todos los campos del formulario
+        $('#form-busqueda-filtros')[0].reset();
+        
+        // Cargar productos sin filtros
+        cargarProductos();
+    });
+
+    // El resto de tu JavaScript existente para manejar filtros
+    $('#busqueda, #categoria, #subcategoria, #autor, #editorial').on('change input', debounce(function() {
+        cargarProductos();
+    }, 300));
+});
+
 </script>
