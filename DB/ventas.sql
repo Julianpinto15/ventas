@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost:3306
--- Tiempo de generación: 03-03-2025 a las 22:16:42
+-- Servidor: localhost
+-- Tiempo de generación: 03-03-2025 a las 22:30:17
 -- Versión del servidor: 8.0.30
--- Versión de PHP: 7.4.2
+-- Versión de PHP: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -287,9 +287,8 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`usuario_id`, `usuario_nombre`, `usuario_apellido`, `usuario_email`, `usuario_usuario`, `usuario_clave`, `usuario_cargo`, `usuario_foto`, `caja_id`, `usuario_creado`, `usuario_actualizado`) VALUES
-(1, 'Administrador', 'Principal', 'admin@admin.com', 'Administrador', '$2y$10$od1ZIIaCTLIYjxcTY6zHYugid/SDtxxf5Ev2goOkhxQ1HBQhUzYnW', 'Administrador', '', 1, '2025-02-26 00:23:06', '2025-02-26 00:23:06'),
-(5, 'Usuario administrador', 'usuarioadministrador', 'user12@gmail.com', 'user12', '$2y$10$CIlB0xBsoHzoGrWpE0Ub1OGX6.4MOEPYpDSf3yAAVYhZoaMAX4.Lu', 'Administrador', 'Usuario_administrador_16.png', 1, '2025-02-26 23:59:26', '2025-02-26 23:59:26'),
-(10, 'admin', 'admin', '', 'admin', '$2y$10$IEpiimRceGUT8dz5pUVdIuIYY27tBQcDOJv6gu4dyvZIzxPjfmp2a', 'Administrador', '', 1, '2025-03-03 22:14:20', '2025-03-03 22:14:20');
+(5, 'Usuario', 'admin', 'useradmin123@gmail.com', 'admin123', '$2y$10$CIlB0xBsoHzoGrWpE0Ub1OGX6.4MOEPYpDSf3yAAVYhZoaMAX4.Lu', 'Administrador', 'Usuario_administrador_16.png', 1, '2025-02-26 23:59:26', '2025-02-26 23:59:26'),
+(11, 'Usuario', 'Cajero', 'cajero123@gmail.com', 'cajero123', '$2y$10$tFlWEXMfQxIgCZ4IrD4CdeR49pUiHV.Al.wIpxqPDoesopRh7pCsO', 'Cajero', '', 2, '2025-03-03 22:28:14', '2025-03-03 22:28:14');
 
 -- --------------------------------------------------------
 
@@ -466,7 +465,7 @@ ALTER TABLE `subcategoria`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `usuario_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `usuario_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `venta`
