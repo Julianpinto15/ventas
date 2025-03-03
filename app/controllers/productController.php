@@ -560,7 +560,7 @@
 					<td class="text-td">' . $rows['autor_nombre'] . '</td>
 					<td class="text-td">' . $rows['editorial_nombre'] . '</td>
 					<td class="text-td">
-						<img src="' . APP_URL . 'app/views/productos/' . (!empty($rows['producto_foto']) ? $rows['producto_foto'] : 'default.jpg') . '" width="50">
+						<img src="' . APP_URL . 'app/views/productos/' . (!empty($rows['producto_foto']) ? $rows['producto_foto'] : 'default.png') . '" width="50">
 					</td>
 					<td class="text-td">
 						<button class="btn btn-success btn-sm rounded-pill" onclick="abrirModalEditarProducto({
