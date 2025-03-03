@@ -21,7 +21,7 @@
             <div class="col-md">
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-search"></i></span>
-                    <input type="text" class="form-control" id="busqueda" name="busqueda" placeholder="Buscar por Nombre o Código">
+                    <input type="text" class="form-control estilo-input" id="busqueda" name="busqueda" placeholder="Buscar por Nombre o Código">
                 </div>
             </div>
 
@@ -29,7 +29,7 @@
             <div class="col-md">
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-folder"></i></span>
-                    <select class="form-select" id="categoria" name="categoria">
+                    <select class="form-select estilo-input" id="categoria" name="categoria">
                         <option value="">Categoría: Todas</option>
                         <?php
                             $datos_categorias = $insLogin->seleccionarDatos("Normal", "categoria", "*", 0);
@@ -45,7 +45,7 @@
             <div class="col-md">
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-tag"></i></span>
-                    <select class="form-select" id="subcategoria" name="subcategoria">
+                    <select class="form-select estilo-input" id="subcategoria" name="subcategoria">
                         <option value="">Subcategoría: Todas</option>
                         <?php
                             $datos_subcategorias = $insLogin->seleccionarDatos("Normal", "subcategoria", "*", 0);
@@ -61,7 +61,7 @@
             <div class="col-md">
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-person"></i></span>
-                    <select class="form-select" id="autor" name="autor">
+                    <select class="form-select estilo-input" id="autor" name="autor">
                         <option value="">Autor: Todos</option>
                         <?php
                             $datos_autores = $insLogin->seleccionarDatos("Normal", "autor", "*", 0);
@@ -77,7 +77,7 @@
             <div class="col-md">
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-book"></i></span>
-                    <select class="form-select" id="editorial" name="editorial">
+                    <select class="form-select estilo-input" id="editorial" name="editorial">
                         <option value="">Editorial: Todas</option>
                         <?php
                             $datos_editoriales = $insLogin->seleccionarDatos("Normal", "editorial", "*", 0);
@@ -92,7 +92,7 @@
             <!-- Botones de búsqueda y reset -->
             <div class="col-md-auto">
                 <div class="d-flex gap-2">
-                    <button type="reset" class="btn btn-secondary" id="btn-reset">
+                    <button type="reset" class="btn btn-secondary estilo-input" id="btn-reset">
                         <i class="bi bi-arrow-counterclockwise"></i> Reset
                     </button>
                 </div>

@@ -8,6 +8,13 @@
     </button>
   </div>
 
+  <div class="search-container-buscador">
+    <div class="search-group-buscador">
+            <i class="bi bi-search search-icon-buscador"></i>
+            <input type="text" id="buscador-editorial" class="search-input-buscador" placeholder="Buscar...">
+    </div>
+  </div>
+
   <div class="content-name">
       <div class="container-fluid mb-4">
           <h1 class="text-titulo">Editorial</h1>
@@ -15,17 +22,7 @@
       </div>
   </div>
  </div>
-<!-- Buscador elegante y centrado para editoriales -->
-<div class="row justify-content-center mb-4">
-    <div class="col-md-6">
-        <div class="input-group">
-            <span class="input-group-text bg-primary text-white">
-                <i class="bi bi-search"></i>
-            </span>
-            <input type="text" id="buscador-editorial" class="form-control form-control-sm" placeholder="Buscar editorial por nombre, codigo , país ...">
-        </div>
-    </div>
-</div>
+
     <!-- Listado de Editoriales -->
     <div id="lista-editoriales" class="mt-4">
         <!-- Aquí se cargará la lista de editoriales -->
