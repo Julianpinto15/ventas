@@ -13,7 +13,16 @@
             </div>
         </div>
     </div>
-
+    <div class="row justify-content-center mb-4">
+    <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-text bg-primary text-white">
+                <i class="bi bi-search"></i>
+            </span>
+            <input type="text" id="buscador-cliente" class="form-control form-control-sm" placeholder="Buscar categoría por nombre o ubicación...">
+        </div>
+    </div>
+</div>
     <!-- Lista de Clientes -->
     <div id="lista-clientes" class="mt-4">
         <!-- Aquí se cargará la lista de clientes -->
@@ -46,25 +55,25 @@
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Número de documento</label>
-                                <input class="form-control text-model_input" type="text" name="cliente_numero_documento" 
+                                <input class="form-control text-model_input" type="text" name="cliente_numero_documento"  placeholder="Ingrese su documento (7-30 caracteres)"
                                        pattern="[a-zA-Z0-9-]{7,30}" maxlength="30" required>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Nombres</label>
-                                <input class="form-control text-model_input" type="text" name="cliente_nombre" 
+                                <input class="form-control text-model_input" type="text" name="cliente_nombre"  placeholder="Ingrese sus nombres"
                                        pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,40}" maxlength="40" required>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Apellidos</label>
-                                <input class="form-control text-model_input" type="text" name="cliente_apellido" 
+                                <input class="form-control text-model_input" type="text" name="cliente_apellido" placeholder="Ingrese sus apellidos"
                                        pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,40}" maxlength="40" required>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Email</label>
-                                <input class="form-control text-model_input" type="email" name="cliente_email" maxlength="70">
+                                <input class="form-control text-model" type="email" name="cliente_email"  placeholder="ejemplo@correo.com"  maxlength="70">
                                </div>
                         </div>
 
@@ -73,24 +82,24 @@
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Teléfono</label>
                                 <input class="form-control text-model_input" type="text" name="cliente_telefono" 
-                                       pattern="[0-9()+]{8,20}" maxlength="20">
+                                       pattern="[0-9\\(\\)\\+]{8,20}" placeholder="Ingrese su número de teléfono"  maxlength="20">
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Provincia</label>
-                                <input class="form-control text-model_input" type="text" name="cliente_provincia" 
+                                <input class="form-control text-model_input" type="text" name="cliente_provincia"   placeholder="Ingrese su provincia"
                                        pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{4,30}" maxlength="30" required>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Ciudad</label>
-                                <input class="form-control text-model_input" type="text" name="cliente_ciudad" 
+                                <input class="form-control text-model_input" type="text" name="cliente_ciudad"  placeholder="Ingrese su ciudad"
                                        pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{4,30}" maxlength="30" required>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Dirección</label>
-                                <input class="form-control text-model_input" type="text" name="cliente_direccion"
+                                <input class="form-control text-model_input" type="text" name="cliente_direccion" placeholder="Ej: Calle 123, #45-67, Apt 3B" 
                                        pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{4,70}" maxlength="70" required>
                             </div>
                         </div>
@@ -134,25 +143,25 @@
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Número de documento</label>
-                                <input id="edit_cliente_numero_documento" class="form-control text-model_input" 
+                                <input id="edit_cliente_numero_documento" class="form-control text-model_input"  placeholder="Ingrese su documento (7-30 caracteres)"
                                        type="text" name="cliente_numero_documento" pattern="[a-zA-Z0-9-]{7,30}" maxlength="30" required>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Nombres</label>
-                                <input id="edit_cliente_nombre" class="form-control text-model_input" 
+                                <input id="edit_cliente_nombre" class="form-control text-model_input"   placeholder="Ingrese sus nombres"
                                        type="text" name="cliente_nombre" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,40}" maxlength="40" required>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Apellidos</label>
-                                <input id="edit_cliente_apellido" class="form-control text-model_input" 
+                                <input id="edit_cliente_apellido" class="form-control text-model_input"   placeholder="Ingrese sus apellidos" 
                                        type="text" name="cliente_apellido" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,40}" maxlength="40" required>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Email</label>
-                                <input id="edit_cliente_email" class="form-control text-model_input" 
+                                <input id="edit_cliente_email" class="form-control text-model"  placeholder="ejemplo@correo.com"
                                        type="email" name="cliente_email" maxlength="70">
                             </div>
                         </div>
@@ -161,25 +170,25 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Teléfono</label>
-                                <input id="edit_cliente_telefono" class="form-control text-model_input" type="text" 
-                                       name="cliente_telefono" pattern="[0-9()+]{8,20}" maxlength="20">
+                                <input id="edit_cliente_telefono" class="form-control text-model_input" type="text"  placeholder="Ingrese su número de teléfono" 
+                                       name="cliente_telefono" pattern="[0-9\\(\\)\\+]{8,20}" maxlength="20">
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Provincia</label>
-                                <input id="edit_cliente_provincia" class="form-control text-model_input" type="text" 
+                                <input id="edit_cliente_provincia" class="form-control text-model_input" type="text"  placeholder="Ingrese su provincia"
                                        name="cliente_provincia" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{4,30}" maxlength="30" required>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Ciudad</label>
-                                <input id="edit_cliente_ciudad" class="form-control text-model_input" type="text" 
+                                <input id="edit_cliente_ciudad" class="form-control text-model_input" type="text" placeholder="Ingrese su ciudad"
                                        name="cliente_ciudad" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{4,30}" maxlength="30" required>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-semibold text-model">Dirección</label>
-                                <input id="edit_cliente_direccion" class="form-control text-model_input" type="text" 
+                                <input id="edit_cliente_direccion" class="form-control text-model_input" type="text" placeholder="Ej: Calle 123, #45-67, Apt 3B"
                                        name="cliente_direccion" pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{4,70}" maxlength="70" required>
                             </div>
                         </div>
@@ -197,6 +206,22 @@
 </div>
 
 <script>
+
+    // Función para mostrar alertas con SweetAlert
+function mostrarAlerta(icono, titulo, texto) {
+    Swal.fire({
+        icon: icono,
+        title: titulo,
+        text: texto,
+        width: '400px',
+        padding: '2em',
+        customClass: {
+            title: 'fs-4',
+            htmlContainer: 'fs-5',
+            confirmButton: 'fs-5'
+        }
+    });
+}
     // Función para abrir el Modal de Registro de Cliente
     function abrirModalRegistroCliente() {
         var modal = new bootstrap.Modal(document.getElementById('registroClienteModal'));
@@ -274,148 +299,126 @@
     }
 
     // Manejador para el formulario de registro
-    $('#form-registro-cliente').on('submit', function(e) {
+// Manejador para el formulario de registro
+$('#form-registro-cliente').on('submit', function(e) {
     e.preventDefault();
     $.ajax({
         url: '<?= APP_URL ?>app/ajax/clienteAjax.php',
         type: 'POST',
         data: $(this).serialize(),
         success: function(response) {
-            // Agregar log de la respuesta
-            console.log("Respuesta del servidor:", response);
-            
             try {
                 const resp = JSON.parse(response);
-                console.log("JSON parseado:", resp);
-                
                 if (resp.tipo === "limpiar") {
                     cerrarModalRegistroCliente();
                     cargarClientes();
-                    
-                    Swal.fire({
-                        icon: resp.icono || 'info',
-                        title: resp.titulo,
-                        text: resp.texto,
-                        width: '400px',
-                        padding: '2em',
-                        customClass: {
-                            title: 'fs-4',
-                            htmlContainer: 'fs-4',
-                            confirmButton: 'fs-5'
-                        },
-                        timer: 2000,
-                        timerProgressBar: true
-                    });
+                    mostrarAlerta(resp.icono || 'success', resp.titulo, resp.texto);
+                } else if (resp.tipo === "error") {
+                    mostrarAlerta(resp.icono || 'error', resp.titulo, resp.texto);
                 }
             } catch (e) {
                 console.error("Error al parsear JSON:", e);
-                console.log("Respuesta cruda:", response);
-                
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error de respuesta',
-                    text: 'La respuesta del servidor no es válida',
-                    width: '400px',
-                    padding: '2em'
-                });
+                mostrarAlerta('error', 'Error de respuesta', 'La respuesta del servidor no es válida');
             }
         },
         error: function(xhr, status, error) {
-            console.error("Error AJAX:", {
-                status: status,
-                error: error,
-                response: xhr.responseText
-            });
+            console.error("Error AJAX:", { status: status, error: error, response: xhr.responseText });
+            mostrarAlerta('error', 'Error de conexión', 'Hubo un problema al conectar con el servidor');
         }
     });
 });
 
-    // Manejador para el formulario de edición
-    $('#form-edicion-cliente').on('submit', function(e) {
-        e.preventDefault();
-        const formData = $(this).serialize();
-        
-        $.ajax({
-            url: '<?= APP_URL ?>app/ajax/clienteAjax.php',
-            type: 'POST',
-            data: formData,
-            success: function(response) {
+
+// Manejador para el formulario de edición
+$('#form-edicion-cliente').on('submit', function(e) {
+    e.preventDefault();
+    const formData = $(this).serialize();
+    $.ajax({
+        url: '<?= APP_URL ?>app/ajax/clienteAjax.php',
+        type: 'POST',
+        data: formData,
+        success: function(response) {
+            try {
                 const resp = JSON.parse(response);
                 if (resp.tipo === "recargar") {
                     cerrarModalEditarCliente();
                     cargarClientes();
-                    
-                    Swal.fire({
-                        icon: resp.icono || 'info',
-                        title: resp.titulo,
-                        text: resp.texto,
-                        width: '400px',
-                        padding: '2em',
-                        customClass: {
-                            title: 'fs-4',
-                            htmlContainer: 'fs-5',
-                            confirmButton: 'fs-5'
-                        }
-                    });
+                    mostrarAlerta(resp.icono || 'success', resp.titulo, resp.texto);
+                } else if (resp.tipo === "error") {
+                    mostrarAlerta(resp.icono || 'error', resp.titulo, resp.texto);
                 }
+            } catch (e) {
+                console.error("Error al parsear JSON:", e);
+                mostrarAlerta('error', 'Error de respuesta', 'La respuesta del servidor no es válida');
             }
-        });
+        },
+        error: function(xhr, status, error) {
+            console.error("Error AJAX:", { status: status, error: error, response: xhr.responseText });
+            mostrarAlerta('error', 'Error de conexión', 'Hubo un problema al conectar con el servidor');
+        }
     });
+});
 
     // Función para eliminar un cliente
-    function eliminarCliente(id) {
-        Swal.fire({
-            title: '¿Está seguro?',
-            text: "¿Desea eliminar este cliente?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí, eliminar',
-            cancelButtonText: 'Cancelar',
-            width: '400px',
-            padding: '2em',
-            customClass: {
-                title: 'fs-4',
-                htmlContainer: 'fs-5',
-                confirmButton: 'fs-5',
-                cancelButton: 'fs-5'
-            }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: '<?= APP_URL ?>app/ajax/clienteAjax.php',
-                    type: 'POST',
-                    data: {
-                        modulo_cliente: 'eliminar',
-                        cliente_id: id
-                    },
-                    success: function(response) {
+function eliminarCliente(id) {
+    Swal.fire({
+        title: '¿Está seguro?',
+        text: "¿Desea eliminar este cliente?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+        width: '400px',
+        padding: '2em',
+        customClass: {
+            title: 'fs-4',
+            htmlContainer: 'fs-5',
+            confirmButton: 'fs-5',
+            cancelButton: 'fs-5'
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: '<?= APP_URL ?>app/ajax/clienteAjax.php',
+                type: 'POST',
+                data: {
+                    modulo_cliente: 'eliminar',
+                    cliente_id: id
+                },
+                success: function(response) {
+                    try {
                         const resp = JSON.parse(response);
-                        Swal.fire({
-                            icon: resp.icono || 'info',
-                            title: resp.titulo,
-                            text: resp.texto,
-                            width: '400px',
-                            padding: '2em',
-                            customClass: {
-                                title: 'fs-4',
-                                htmlContainer: 'fs-5',
-                                confirmButton: 'fs-5'
-                            }
-                        }).then(() => {
-                            if (resp.tipo === "recargar") {
-                                cargarClientes();
-                            }
-                        });
+                        if (resp.tipo === "recargar") {
+                            cargarClientes();
+                            mostrarAlerta(resp.icono || 'success', resp.titulo, resp.texto);
+                        } else if (resp.tipo === "error") {
+                            mostrarAlerta(resp.icono || 'error', resp.titulo, resp.texto);
+                        }
+                    } catch (e) {
+                        console.error("Error al parsear JSON:", e);
+                        mostrarAlerta('error', 'Error de respuesta', 'La respuesta del servidor no es válida');
                     }
-                });
-            }
-        });
-    }
-
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error AJAX:", { status: status, error: error, response: xhr.responseText });
+                    mostrarAlerta('error', 'Error de conexión', 'Hubo un problema al conectar con el servidor');
+                }
+            });
+        }
+    });
+}
     // Cargar la lista de clientes al cargar la página
     $(document).ready(function() {
         cargarClientes();
     });
+
+        // Buscador en tiempo real para categorías
+$("#buscador-cliente").on("keyup", function() {
+    var valor = $(this).val().toLowerCase();
+    $("#lista-clientes table tbody tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(valor) > -1);
+    });
+});
 </script>

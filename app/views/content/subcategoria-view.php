@@ -16,6 +16,17 @@
     </div>
 
   </div>
+  <!-- Buscador elegante y centrado para subcategorías -->
+<div class="row justify-content-center mb-4">
+    <div class="col-md-6">
+        <div class="input-group">
+            <span class="input-group-text bg-primary text-white">
+                <i class="bi bi-search"></i>
+            </span>
+            <input type="text" id="buscador-subcategoria" class="form-control form-control-sm" placeholder="Buscar subcategoría por nombre o categoría...">
+        </div>
+    </div>
+</div>
     <!-- Listado de Subcategorías -->
     <div id="lista-subcategorias" class="mt-4">
         <!-- Aquí se cargará la lista de subcategorías -->
@@ -363,6 +374,14 @@ function eliminarSubcategoria(id) {
 $(document).ready(function () {
     cargarSubcategorias();
     cargarCategoriasSubcategoria();
+});
+
+// Buscador en tiempo real para subcategorías
+$("#buscador-subcategoria").on("keyup", function() {
+    var valor = $(this).val().toLowerCase();
+    $("#lista-subcategorias table tbody tr").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(valor) > -1);
+    });
 });
 
 </script>
