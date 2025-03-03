@@ -19,7 +19,7 @@
     <div class="row justify-content-center">
         <div class="col-lg-10">
             <form class="FormularioAjax" action="<?php echo APP_URL; ?>app/ajax/empresaAjax.php" method="POST" autocomplete="off">
-                <input type="hidden" name="modulo_empresa" value="actualizar">
+                <input type="hidden" name="modulo_empresa" class="fs-3" value="actualizar">
                 <input type="hidden" name="empresa_id" value="<?php echo $datos['empresa_id']; ?>">
 
                 <!-- Sección de la imagen del logo -->
@@ -51,9 +51,9 @@
                 <div class="row mb-4">
                     <div class="col-md-6 mb-3 mb-md-0">
                         <div class="form-group">
-                            <label for="empresa_nombre" class="form-label">Nombre *</label>
+                            <label for="empresa_nombre" class="form-label fs-4">Nombre *</label>
                             <input type="text" 
-                                   class="form-control" 
+                                   class="form-control fs-3" 
                                    id="empresa_nombre" 
                                    name="empresa_nombre" 
                                    pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ., ]{4,85}" 
@@ -64,9 +64,9 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="empresa_telefono" class="form-label">Teléfono</label>
+                            <label for="empresa_telefono" class="form-label fs-4">Teléfono</label>
                             <input type="text" 
-                                   class="form-control" 
+                                   class="form-control fs-3" 
                                    id="empresa_telefono" 
                                    name="empresa_telefono" 
                                    pattern="[0-9()+]{8,20}" 
@@ -79,9 +79,9 @@
                 <div class="row mb-4">
                     <div class="col-md-6 mb-3 mb-md-0">
                         <div class="form-group">
-                            <label for="empresa_email" class="form-label">Email</label>
+                            <label for="empresa_email" class="form-label fs-4">Email</label>
                             <input type="email" 
-                                   class="form-control" 
+                                   class="form-control fs-3" 
                                    id="empresa_email" 
                                    name="empresa_email" 
                                    maxlength="50" 
@@ -90,9 +90,9 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="empresa_direccion" class="form-label">Dirección</label>
+                            <label for="empresa_direccion" class="form-label fs-4">Dirección</label>
                             <input type="text" 
-                                   class="form-control" 
+                                   class="form-control fs-3" 
                                    id="empresa_direccion" 
                                    name="empresa_direccion" 
                                    pattern="[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ().,#\- ]{4,97}" 

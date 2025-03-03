@@ -6,6 +6,13 @@
             </button>
         </div>
 
+        <div class="search-container-buscador">
+            <div class="search-group-buscador">
+                    <i class="bi bi-search search-icon-buscador"></i>
+                    <input type="text" id="buscador-cliente" class="search-input-buscador" placeholder="Buscar...">
+            </div>
+        </div>
+
         <div class="content-name">
             <div class="container-fluid mb-4">
                 <h1 class="text-titulo">Clientes</h1>
@@ -13,21 +20,14 @@
             </div>
         </div>
     </div>
-    <div class="row justify-content-center mb-4">
-    <div class="col-md-6">
-        <div class="input-group">
-            <span class="input-group-text bg-primary text-white">
-                <i class="bi bi-search"></i>
-            </span>
-            <input type="text" id="buscador-cliente" class="form-control form-control-sm" placeholder="Buscar categoría por nombre o ubicación...">
-        </div>
-    </div>
-</div>
+  
+
     <!-- Lista de Clientes -->
     <div id="lista-clientes" class="mt-4">
         <!-- Aquí se cargará la lista de clientes -->
     </div>
 
+    
     <!-- Modal de Registro -->
     <div class="modal fade" id="registroClienteModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered modal-lg">

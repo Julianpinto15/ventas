@@ -6,6 +6,13 @@
             </button>
         </div>
 
+        <div class="search-container-buscador">
+            <div class="search-group-buscador">
+                    <i class="bi bi-search search-icon-buscador"></i>
+                    <input type="text" id="buscador-caja" class="search-input-buscador" placeholder="Buscar...">
+            </div>
+        </div>
+
         <div class="content-name">
             <div class="container-fluid mb-4">
                 <h1 class="text-titulo">Caja</h1>
@@ -13,21 +20,13 @@
             </div>
         </div>
     </div>
-<!-- Buscador elegante y centrado para cajas -->
-<div class="row justify-content-center mb-4">
-    <div class="col-md-6">
-        <div class="input-group">
-            <span class="input-group-text bg-primary text-white">
-                <i class="bi bi-search"></i>
-            </span>
-            <input type="text" id="buscador-caja" class="form-control form-control-sm" placeholder="Buscar caja por número, nombre...">
-        </div>
-    </div>
-</div>
+
+
     <!-- Lista de Cajas -->
     <div id="lista-cajas" class="mt-4">
         <!-- Aquí se cargará la lista de cajas -->
     </div>
+    
 
     <!-- Modal de Registro -->
     <div class="modal fade" id="registroCajaModal" tabindex="-1">
