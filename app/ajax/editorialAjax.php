@@ -22,8 +22,14 @@ if(isset($_POST['modulo_editorial'])) {  // Cambiado a modulo_editorial
     }
 
     if($_POST['modulo_editorial'] == "listar") {
-        // Cambio aquí: usando el nombre correcto del método
-        echo $insEditorial->listarEditorialControlador(1, 15, "", "");
+        $pagina = isset($_POST['pagina']) ? intval($_POST['pagina']) : 1;
+                $registros = isset($_POST['registros']) ? intval($_POST['registros']) : 10;
+                $url = isset($_POST['url']) ? $_POST['url'] : '';
+                $busqueda = isset($_POST['busqueda']) ? $_POST['busqueda'] : '';
+                
+                $resultado = $insEditorial->listarEditorialControlador($pagina, $registros, $url, $busqueda);
+                echo $resultado;
+                exit;
     }
 
 

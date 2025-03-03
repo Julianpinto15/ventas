@@ -1,28 +1,40 @@
-<div class="container is-fluid mb-6">
-	<h1 class="title">Ventas</h1>
-	<h2 class="subtitle"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; Lista de Ventas</h2>
+<div class="container">
+    <div class="position-contenido">
+
+     <div class="filtros w-100">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="filtro-grupo">
+              <div class="input-group mb-3 filtro-input-contenedor">
+                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                <input type="text" id="searchInput-vendedor" class="form-control filtro-input" placeholder="Buscar por vendedor...">
+              </div>
+              <div class="input-group mb-3 filtro-input-contenedor">
+                <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+                <input type="date" id="searchInput-fecha" class="form-control filtro-input">
+              </div>
+              <button id="btnLimpiarFiltros" class="btn btn-info btn-sm filtro-btn">Limpiar filtros</button>
+            </div>
+          </div>
+        </div>
+     </div>
+
+      <div class="content-name">
+          <h1 class="text-titulo">Ventas</h1>
+          <h2 class="h5 text-muted"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; Lista de Ventas</h2>
+      </div>
+   </div>
 </div>
-<div class="container pb-6 pt-6">
-    <div class="search-container-buscador">
-        <div class="search-group-buscador">
-            <i class="bi bi-search search-icon-buscador"></i>
-            <input type="text" id="searchInput-vendedor" class="search-input-buscador" placeholder="Buscar por vendedor...">
-        </div>
-        <div class="search-group-buscador mt-2">
-            <i class="bi bi-calendar search-icon-buscador"></i>
-            <input type="date" id="searchInput-fecha" class="search-input-buscador">
-        </div>
-        <button id="btnLimpiarFiltros" class="button is-small is-info mt-2">Limpiar filtros</button>
-    </div>
-    
-	<div class="form-rest mb-6 mt-6"></div>
+
+<div class="container">
+	<div class="form-rest mb-4"></div>
 
 	<?php
 		use app\controllers\saleController;
 
 		$insVenta = new saleController();
 
-		echo $insVenta->listarVentaControlador($url[1],15,$url[0],"");
+		echo $insVenta->listarVentaControlador($url[1],6,$url[0],"");
 
 		include "./app/views/inc/print_invoice_script.php";
 	?>

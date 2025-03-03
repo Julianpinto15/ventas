@@ -328,19 +328,36 @@ function cerrarModalEditarproducto() {
 }
 
 // Function to load productos list
-function cargarProductos(pagina = 1, registros = 10, busqueda = "", categoria = 0) {
+function cargarProductos(pagina = 1, busqueda = '', categoria = 0) {
     $.ajax({
         url: '<?= APP_URL ?>app/ajax/productoAjax.php',
         type: 'POST',
         data: {
             modulo_producto: 'listar',
             pagina: pagina,
-            registros: registros,
-            busqueda: busqueda,
-            categoria: categoria
+            registros: 10,
+            url: 'producto', // O la URL base que uses para la paginación
+            busqueda: busqueda
         },
         success: function(response) {
             $('#lista-productos').html(response);
+
+             // Agregar eventos a los enlaces de paginación
+            $('.pagination .page-link').on('click', function(e) {
+                e.preventDefault();
+                if ($(this).attr('aria-disabled') !== 'true') {
+                    const href = $(this).attr('href');
+                    // Extraer el número de página de la URL (formato: url/{pagina}/)
+                    const match = href.match(/\/(\d+)\//);
+                    if (match && match[1]) {
+                        cargarProductos(parseInt(match[1]), busqueda);
+                    }
+                }
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error("Error cargando categorías:", error);
+            $('#lista-productos').html('<div class="alert alert-danger">Error al cargar los productos</div>');
         }
     });
 }

@@ -1,11 +1,5 @@
 <div class="sidebar">
 
-    <!-- Dashboard -->
-    <a class="menu-item" href="<?php echo APP_URL; ?>dashboard/">
-        <span class="emoji"><i class="fab fa-dashcube"></i></span>
-        <span class="menu-text">Inicio</span>
-    </a>
-
     <!-- Ventas -->
     <div class="menu-item has-dropdown">
         <span class="emoji"><i class="fas fa-shopping-cart"></i></span>
@@ -58,14 +52,14 @@
     <!-- Reportes -->
     <?php if ($_SESSION['cargo'] == "Administrador") { ?>
     <div class="menu-item has-dropdown">
-        <span class="emoji"><i class="fas fa-tags"></i></span>
+        <span class="emoji"><i class="bi bi-file-earmark-text"></i></span>
         <span class="menu-text">Reportes</span>
         <div class="dropdown-menu">
             <a class="dropdown-item" href="<?php echo APP_URL; ?>reportSales/">
                <span class="emoji"><i class="fas fa-clipboard-list"></i></span> Reporte por venta
             </a>
             <a class="dropdown-item" href="<?php echo APP_URL; ?>reportInventory/">
-                <span class="emoji"><i class="bi bi-book"></i></span> Reporte por inventario
+                <span class="emoji"><i class="bi bi-book"></i></span> Reporte inventario
             </a>
         </div>
     </div>

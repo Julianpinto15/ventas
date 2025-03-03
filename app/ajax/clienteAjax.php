@@ -21,15 +21,17 @@
 		if($_POST['modulo_cliente']=="actualizar"){
 			echo $insCliente->actualizarClienteControlador();
 		}
+    
     if($_POST['modulo_cliente']=="listar"){
-    // Obtener los parámetros de la petición o establecer valores por defecto
-    $pagina = isset($_POST['pagina']) ? $_POST['pagina'] : 1;
-    $registros = isset($_POST['registros']) ? $_POST['registros'] : 10;
-    $url = isset($_POST['url']) ? $_POST['url'] : 'cliente/lista';
-    $busqueda = isset($_POST['busqueda']) ? $_POST['busqueda'] : '';
-
-    echo $insCliente->listarClienteControlador($pagina, $registros, $url, $busqueda);
-}
+    $pagina = isset($_POST['pagina']) ? intval($_POST['pagina']) : 1;
+                $registros = isset($_POST['registros']) ? intval($_POST['registros']) : 10;
+                $url = isset($_POST['url']) ? $_POST['url'] : '';
+                $busqueda = isset($_POST['busqueda']) ? $_POST['busqueda'] : '';
+                
+                $resultado = $insCliente->listarClienteControlador($pagina, $registros, $url, $busqueda);
+                echo $resultado;
+                exit;
+    }
 		
 	}else{
 		session_destroy();

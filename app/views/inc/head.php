@@ -32,6 +32,11 @@
 <link rel="stylesheet" href="<?php echo APP_URL; ?>app/views/css/companyNew.css">
 <link rel="stylesheet" href="<?php echo APP_URL; ?>app/views/css/userList.css">
 <link rel="stylesheet" href="<?php echo APP_URL; ?>app/views/css/userNew.css">
+<link rel="stylesheet" href="<?php echo APP_URL; ?>app/views/css/reportSales.css">
+<link rel="stylesheet" href="<?php echo APP_URL; ?>app/views/css/reportInventory.css">
+<link rel="stylesheet" href="<?php echo APP_URL; ?>app/views/css/saleList.css">
+<link rel="stylesheet" href="<?php echo APP_URL; ?>app/views/css/saleDetail.css">
+<link rel="stylesheet" href="<?php echo APP_URL; ?>app/views/css/saleNew.css">
 
 
 <!-- Scripts -->

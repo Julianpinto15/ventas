@@ -151,59 +151,76 @@
         }
 
 
-		/*---------- Paginador de tablas ----------*/
-		protected function paginadorTablas($pagina,$numeroPaginas,$url,$botones){
-	        $tabla='<nav class="pagination is-centered is-rounded" role="navigation" aria-label="pagination">';
-
-	        if($pagina<=1){
-	            $tabla.='
-	            <a class="pagination-previous is-disabled" disabled ><i class="fas fa-arrow-alt-circle-left"></i> &nbsp; Anterior</a>
-	            <ul class="pagination-list">
-	            ';
-	        }else{
-	            $tabla.='
-	            <a class="pagination-previous" href="'.$url.($pagina-1).'/"><i class="fas fa-arrow-alt-circle-left"></i> &nbsp; Anterior</a>
-	            <ul class="pagination-list">
-	                <li><a class="pagination-link" href="'.$url.'1/">1</a></li>
-	                <li><span class="pagination-ellipsis">&hellip;</span></li>
-	            ';
-	        }
-
-
-	        $ci=0;
-	        for($i=$pagina; $i<=$numeroPaginas; $i++){
-
-	            if($ci>=$botones){
-	                break;
-	            }
-
-	            if($pagina==$i){
-	                $tabla.='<li><a class="pagination-link is-current" href="'.$url.$i.'/">'.$i.'</a></li>';
-	            }else{
-	                $tabla.='<li><a class="pagination-link" href="'.$url.$i.'/">'.$i.'</a></li>';
-	            }
-
-	            $ci++;
-	        }
-
-
-	        if($pagina==$numeroPaginas){
-	            $tabla.='
-	            </ul>
-	            <a class="pagination-next is-disabled" disabled ><i class="fas fa-arrow-alt-circle-right"></i> &nbsp; Siguiente</a>
-	            ';
-	        }else{
-	            $tabla.='
-	                <li><span class="pagination-ellipsis">&hellip;</span></li>
-	                <li><a class="pagination-link" href="'.$url.$numeroPaginas.'/">'.$numeroPaginas.'</a></li>
-	            </ul>
-	            <a class="pagination-next" href="'.$url.($pagina+1).'/"><i class="fas fa-arrow-alt-circle-right"></i> &nbsp; Siguiente</a>
-	            ';
-	        }
-
-	        $tabla.='</nav>';
-	        return $tabla;
-	    }
+        /*---------- Funcion el ----------*/
+protected function paginadorTablas($pagina, $numeroPaginas, $url, $botones) {
+    $tabla = '<nav aria-label="Page navigation"><ul class="pagination justify-content-center">';
+    
+    // Botón Anterior
+    if ($pagina <= 1) {
+        $tabla .= '
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="true"><i class="fas fa-arrow-alt-circle-left"></i> &nbsp; Anterior</a>
+        </li>';
+    } else {
+        $tabla .= '
+        <li class="page-item">
+            <a class="page-link" href="' . $url . ($pagina - 1) . '/"><i class="fas fa-arrow-alt-circle-left"></i> &nbsp; Anterior</a>
+        </li>';
+    }
+    
+    // Primera página
+    if ($pagina > 2) {
+        $tabla .= '<li class="page-item"><a class="page-link" href="' . $url . '1/">1</a></li>';
+        
+        // Mostrar ellipsis si no estamos cerca del inicio
+        if ($pagina > 3) {
+            $tabla .= '<li class="page-item disabled"><span class="page-link">&hellip;</span></li>';
+        }
+    }
+    
+    // Páginas centrales
+    $inicio = max(1, $pagina - floor($botones / 2));
+    $fin = min($numeroPaginas, $inicio + $botones - 1);
+    
+    // Ajuste si alcanzamos el final
+    if ($fin == $numeroPaginas) {
+        $inicio = max(1, $fin - $botones + 1);
+    }
+    
+    for ($i = $inicio; $i <= $fin; $i++) {
+        if ($pagina == $i) {
+            $tabla .= '<li class="page-item active" aria-current="page"><a class="page-link" href="' . $url . $i . '/">' . $i . '</a></li>';
+        } else {
+            $tabla .= '<li class="page-item"><a class="page-link" href="' . $url . $i . '/">' . $i . '</a></li>';
+        }
+    }
+    
+    // Última página
+    if ($pagina < $numeroPaginas - 1) {
+        // Mostrar ellipsis si no estamos cerca del final
+        if ($pagina < $numeroPaginas - 2) {
+            $tabla .= '<li class="page-item disabled"><span class="page-link">&hellip;</span></li>';
+        }
+        
+        $tabla .= '<li class="page-item"><a class="page-link" href="' . $url . $numeroPaginas . '/">' . $numeroPaginas . '</a></li>';
+    }
+    
+    // Botón Siguiente
+    if ($pagina >= $numeroPaginas) {
+        $tabla .= '
+        <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="true"><i class="fas fa-arrow-alt-circle-right"></i> &nbsp; Siguiente</a>
+        </li>';
+    } else {
+        $tabla .= '
+        <li class="page-item">
+            <a class="page-link" href="' . $url . ($pagina + 1) . '/"><i class="fas fa-arrow-alt-circle-right"></i> &nbsp; Siguiente</a>
+        </li>';
+    }
+    
+    $tabla .= '</ul></nav>';
+    return $tabla;
+}
 
 
 	    /*----------  Funcion generar select ----------*/

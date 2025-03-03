@@ -22,8 +22,16 @@ if(isset($_POST['modulo_subcategoria'])) {
     }
     
     if($_POST['modulo_subcategoria'] == "listar") {
-        echo $insSubcategoria->listarSubcategoriaControlador(1, 15, '', '');
+       $pagina = isset($_POST['pagina']) ? intval($_POST['pagina']) : 1;
+                $registros = isset($_POST['registros']) ? intval($_POST['registros']) : 10;
+                $url = isset($_POST['url']) ? $_POST['url'] : '';
+                $busqueda = isset($_POST['busqueda']) ? $_POST['busqueda'] : '';
+
+                $resultado = $insSubcategoria->listarSubcategoriaControlador($pagina, $registros, $url, $busqueda);
+                echo $resultado;
+                exit;
     }
+
     if ($_POST['modulo_subcategoria'] == "obtenerCategoriasSubcategoria") {
     echo json_encode($insSubcategoria->obtenerCategoriaSControlador());
     }

@@ -38,10 +38,10 @@
 
 				foreach($datos_productos as $rows){
 					$tabla.='
-					<tr class="has-text-left" >
-                        <td><i class="fas fa-box fa-fw"></i> &nbsp; '.$rows['producto_nombre'].'</td>
-                        <td class="has-text-centered">
-                            <button type="button" class="button is-link is-rounded is-small" onclick="agregar_codigo(\''.$rows['producto_codigo'].'\')"><i class="fas fa-plus-circle"></i></button>
+					<tr class="text-td" >
+                        <td class="text-td"><i class="fas fa-box fa-fw"></i> &nbsp; '.$rows['producto_nombre'].'</td>
+                        <td class="text-td">
+                            <button type="button" class="btn btn-primary btn-sm rounded-pill boton-accion" onclick="agregar_codigo(\''.$rows['producto_codigo'].'\')"><i class="fas fa-plus-circle icono-centrado"></i></button>
                         </td>
                     </tr>
                     ';
@@ -56,7 +56,7 @@
 					 </div>
 				    <div class="message-body has-text-centered">
 				    	<i class="fas fa-exclamation-triangle fa-2x"></i><br>
-						No hemos encontrado ningún producto en el sistema que coincida con <strong>“'.$producto.'”
+						No hemos encontrado ningún producto en el sistema que coincida con “'.$producto.'”
 				    </div>
 				</article>';
 
@@ -142,7 +142,7 @@
 					"autor" => $campos['autor_nombre'] // Agregar el autor aquí
 				];
 		
-				$_SESSION['alerta_producto_agregado'] = "Se agregó <strong>" . $campos['producto_nombre'] . "</strong> a la venta";
+				$_SESSION['alerta_producto_agregado'] = "Se agregó " . $campos['producto_nombre'] . "a la venta";
 			} else {
 				$detalle_cantidad = ($_SESSION['datos_producto_venta'][$codigo]['venta_detalle_cantidad']) + 1;
 				$stock_total = $campos['producto_stock_total'] - $detalle_cantidad;
@@ -174,7 +174,7 @@
 					"autor" => $campos['autor_nombre'] // Agregar el autor aquí
 				];
 		
-				$_SESSION['alerta_producto_agregado'] = "Se agregó +1 <strong>" . $campos['producto_nombre'] . "</strong> a la venta. Total en carrito: <strong>$detalle_cantidad</strong>";
+				$_SESSION['alerta_producto_agregado'] = "Se agregó +1 " . $campos['producto_nombre'] . " a la venta. Total en carrito: $detalle_cantidad";
 			}
 		
 			$alerta = [
@@ -312,7 +312,7 @@
 
                 ];
 
-                $_SESSION['alerta_producto_agregado']="Se $diferencia_productos <strong>".$campos['producto_nombre']."</strong> a la venta. Total en carrito <strong>$detalle_cantidad</strong>";
+                $_SESSION['alerta_producto_agregado']="Se $diferencia_productos ".$campos['producto_nombre']." a la venta. Total en carrito $detalle_cantidad";
 
                 $alerta=[
 					"tipo"=>"redireccionar",
@@ -365,9 +365,9 @@
 				foreach($datos_cliente as $rows){
 					$tabla.='
 					<tr>
-                        <td class="has-text-left" ><i class="fas fa-male fa-fw"></i> &nbsp; '.$rows['cliente_nombre'].' '.$rows['cliente_apellido'].' ('.$rows['cliente_tipo_documento'].': '.$rows['cliente_numero_documento'].')</td>
+                        <td class="text-td" ><i class="fas fa-male fa-fw"></i> &nbsp; '.$rows['cliente_nombre'].' '.$rows['cliente_apellido'].' ('.$rows['cliente_tipo_documento'].': '.$rows['cliente_numero_documento'].')</td>
                         <td class="has-text-centered" >
-                            <button type="button" class="button is-link is-rounded is-small" onclick="agregar_cliente('.$rows['cliente_id'].')"><i class="fas fa-user-plus"></i></button>
+                            <button type="button" class="btn btn-primary btn-sm rounded-pill boton-accion" onclick="agregar_cliente('.$rows['cliente_id'].')"><i class="fas fa-user-plus"></i></button>
                         </td>
                     </tr>
                     ';
@@ -383,7 +383,7 @@
 					 </div>
 				    <div class="message-body has-text-centered">
 				    	<i class="fas fa-exclamation-triangle fa-2x"></i><br>
-						No hemos encontrado ningún cliente en el sistema que coincida con <strong>“'.$cliente.'”</strong>
+						No hemos encontrado ningún cliente en el sistema que coincida con “'.$cliente.'”
 				    </div>
 				</article>';
 				exit();
@@ -927,17 +927,17 @@
 			$numeroPaginas =ceil($total/$registros);
 
 			$tabla.='
-		        <div class="table-container">
-		        <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
-		            <thead>
-		                <tr>
-		                    <th class="has-text-centered">NRO.</th>
-		                    <th class="has-text-centered">Codigo</th>
-		                    <th class="has-text-centered">Fecha</th>
-		                    <th class="has-text-centered">Cliente</th>
-		                    <th class="has-text-centered">Vendedor</th>
-		                    <th class="has-text-centered">Total</th>
-		                    <th class="has-text-centered">Opciones</th>
+		        <div class="table-responsive">
+		        <table class="table table-striped table-bordered table-hover">
+		            <thead  class="table-dark">
+		                <tr class="text-center">
+		                    <th class="text-th">NRO.</th>
+		                    <th class="text-th">Codigo</th>
+		                    <th class="text-th">Fecha</th>
+		                    <th class="text-th">Cliente</th>
+		                    <th class="text-th">Vendedor</th>
+		                    <th class="text-th">Total</th>
+		                    <th class="text-th">Opciones</th>
 		                </tr>
 		            </thead>
 		            <tbody>
@@ -948,33 +948,33 @@
 				$pag_inicio=$inicio+1;
 				foreach($datos as $rows){
 					$tabla.='
-						<tr class="has-text-centered" >
-							<td>'.$rows['venta_id'].'</td>
-							<td>'.$rows['venta_codigo'].'</td>
-							<td>'.date("d-m-Y", strtotime($rows['venta_fecha'])).' '.$rows['venta_hora'].'</td>
-							<td>'.$this->limitarCadena($rows['cliente_nombre'].' '.$rows['cliente_apellido'],30,"...").'</td>
-							<td>'.$this->limitarCadena($rows['usuario_nombre'].' '.$rows['usuario_apellido'],30,"...").'</td>
-							<td>'.MONEDA_SIMBOLO.number_format($rows['venta_total'],MONEDA_DECIMALES,MONEDA_SEPARADOR_DECIMAL,MONEDA_SEPARADOR_MILLAR).' '.MONEDA_NOMBRE.'</td>
-			                <td>
+						<tr class="tr-main text-center">
+							<td class="text-td">'.$rows['venta_id'].'</td>
+							<td class="text-td">'.$rows['venta_codigo'].'</td>
+							<td class="text-td">'.date("d-m-Y", strtotime($rows['venta_fecha'])).' '.$rows['venta_hora'].'</td>
+							<td class="text-td">'.$this->limitarCadena($rows['cliente_nombre'].' '.$rows['cliente_apellido'],30,"...").'</td>
+							<td class="text-td">'.$this->limitarCadena($rows['usuario_nombre'].' '.$rows['usuario_apellido'],30,"...").'</td>
+							<td class="text-td">'.MONEDA_SIMBOLO.number_format($rows['venta_total'],MONEDA_DECIMALES,MONEDA_SEPARADOR_DECIMAL,MONEDA_SEPARADOR_MILLAR).' '.MONEDA_NOMBRE.'</td>
+			                <td class="text-td botones-accion">
 
-			                	<button type="button" class="button is-link is-outlined is-rounded is-small btn-sale-options" onclick="print_invoice(\''.APP_URL.'app/pdf/invoice.php?code='.$rows['venta_codigo'].'\')" title="Imprimir factura Nro. '.$rows['venta_id'].'" >
-	                                <i class="fas fa-file-invoice-dollar fa-fw"></i>
+			                	<button type="button" class="text-td btn btn-success btn-sm rounded-pill  boton-accion" onclick="print_invoice(\''.APP_URL.'app/pdf/invoice.php?code='.$rows['venta_codigo'].'\')" title="Imprimir factura Nro. '.$rows['venta_id'].'" >
+	                                <i class="fas fa-file-invoice-dollar fa-fw "></i>
 	                            </button>
 
-                                <button type="button" class="button is-link is-outlined is-rounded is-small btn-sale-options" onclick="print_ticket(\''.APP_URL.'app/pdf/ticket.php?code='.$rows['venta_codigo'].'\')" title="Imprimir ticket Nro. '.$rows['venta_id'].'" >
-                                    <i class="fas fa-receipt fa-fw"></i>
+                                <button type="button" class="text-td btn btn-warning btn-sm rounded-pill boton-accion" onclick="print_ticket(\''.APP_URL.'app/pdf/ticket.php?code='.$rows['venta_codigo'].'\')" title="Imprimir ticket Nro. '.$rows['venta_id'].'" >
+                                    <i class="fas fa-receipt fa-fw icono-color"></i>
                                 </button>
 
-			                    <a href="'.APP_URL.'saleDetail/'.$rows['venta_codigo'].'/" class="button is-link is-rounded is-small" title="Informacion de venta Nro. '.$rows['venta_id'].'" >
-			                    	<i class="fas fa-shopping-bag fa-fw"></i>
+			                    <a href="'.APP_URL.'saleDetail/'.$rows['venta_codigo'].'/" class="text-td btn btn-primary btn-sm rounded-pill boton-accion" title="Informacion de venta Nro. '.$rows['venta_id'].'" >
+			                    	<i class="fas fa-shopping-bag fa-fw icono-centrado"></i>
 			                    </a>
 
-			                	<form class="FormularioAjax is-inline-block" action="'.APP_URL.'app/ajax/ventaAjax.php" method="POST" autocomplete="off" >
+			                	<form class="FormularioAjax form-accion" action="'.APP_URL.'app/ajax/ventaAjax.php" method="POST" autocomplete="off" >
 
 			                		<input type="hidden" name="modulo_venta" value="eliminar_venta">
 			                		<input type="hidden" name="venta_id" value="'.$rows['venta_id'].'">
 
-			                    	<button type="submit" class="button is-danger is-rounded is-small" title="Eliminar venta Nro. '.$rows['venta_id'].'" >
+			                    	<button type="submit" class="text-td btn btn-danger btn-sm rounded-pill boton-accion" title="Eliminar venta Nro. '.$rows['venta_id'].'" >
 			                    		<i class="far fa-trash-alt fa-fw"></i>
 			                    	</button>
 			                    </form>
@@ -1011,7 +1011,7 @@
 
 			### Paginacion ###
 			if($total>0 && $pagina<=$numeroPaginas){
-				$tabla.='<p class="has-text-right">Mostrando ventas <strong>'.$pag_inicio.'</strong> al <strong>'.$pag_final.'</strong> de un <strong>total de '.$total.'</strong></p>';
+				$tabla.='<p class="text-end">Mostrando ventas '.$pag_inicio.' al '.$pag_final.' de un total de '.$total.'</p>';
 
 				$tabla.=$this->paginadorTablas($pagina,$numeroPaginas,$url,7);
 			}
