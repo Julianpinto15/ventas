@@ -955,32 +955,35 @@
 							<td class="text-td">'.$this->limitarCadena($rows['cliente_nombre'].' '.$rows['cliente_apellido'],30,"...").'</td>
 							<td class="text-td">'.$this->limitarCadena($rows['usuario_nombre'].' '.$rows['usuario_apellido'],30,"...").'</td>
 							<td class="text-td">'.MONEDA_SIMBOLO.number_format($rows['venta_total'],MONEDA_DECIMALES,MONEDA_SEPARADOR_DECIMAL,MONEDA_SEPARADOR_MILLAR).' '.MONEDA_NOMBRE.'</td>
-			                <td class="text-td botones-accion">
+								
+				<td class="text-td botones-accion">
+				<button type="button" class="text-td btn btn-success btn-sm rounded-pill boton-accion" onclick="print_invoice(\''.APP_URL.'app/pdf/invoice.php?code='.$rows['venta_codigo'].'\')" title="Imprimir factura Nro. '.$rows['venta_id'].'" >
+					<i class="fas fa-file-invoice-dollar fa-fw "></i>
+				</button>
 
-			                	<button type="button" class="text-td btn btn-success btn-sm rounded-pill  boton-accion" onclick="print_invoice(\''.APP_URL.'app/pdf/invoice.php?code='.$rows['venta_codigo'].'\')" title="Imprimir factura Nro. '.$rows['venta_id'].'" >
-	                                <i class="fas fa-file-invoice-dollar fa-fw "></i>
-	                            </button>
+				<button type="button" class="text-td btn btn-warning btn-sm rounded-pill boton-accion" onclick="print_ticket(\''.APP_URL.'app/pdf/ticket.php?code='.$rows['venta_codigo'].'\')" title="Imprimir ticket Nro. '.$rows['venta_id'].'" >
+					<i class="fas fa-receipt fa-fw icono-color"></i>
+				</button>
 
-                                <button type="button" class="text-td btn btn-warning btn-sm rounded-pill boton-accion" onclick="print_ticket(\''.APP_URL.'app/pdf/ticket.php?code='.$rows['venta_codigo'].'\')" title="Imprimir ticket Nro. '.$rows['venta_id'].'" >
-                                    <i class="fas fa-receipt fa-fw icono-color"></i>
-                                </button>
+				<a href="'.APP_URL.'saleDetail/'.$rows['venta_codigo'].'/" class="text-td btn btn-primary btn-sm rounded-pill boton-accion" title="Informacion de venta Nro. '.$rows['venta_id'].'" >
+					<i class="fas fa-shopping-bag fa-fw icono-centrado"></i>
+				</a>';
 
-			                    <a href="'.APP_URL.'saleDetail/'.$rows['venta_codigo'].'/" class="text-td btn btn-primary btn-sm rounded-pill boton-accion" title="Informacion de venta Nro. '.$rows['venta_id'].'" >
-			                    	<i class="fas fa-shopping-bag fa-fw icono-centrado"></i>
-			                    </a>
+				// Verificar si el usuario es administrador antes de agregar el botón eliminar  
+				if(isset($_SESSION['cargo']) && $_SESSION['cargo'] == "Administrador"){
+					$tabla.='
+						<form class="FormularioAjax form-accion" action="'.APP_URL.'app/ajax/ventaAjax.php" method="POST" autocomplete="off" >
+							<input type="hidden" name="modulo_venta" value="eliminar_venta">
+							<input type="hidden" name="venta_id" value="'.$rows['venta_id'].'">
+							<button type="submit" class="text-td btn btn-danger btn-sm rounded-pill boton-accion" title="Eliminar venta Nro. '.$rows['venta_id'].'" >
+								<i class="far fa-trash-alt fa-fw"></i>
+							</button>
+						</form>';
+				}
 
-			                	<form class="FormularioAjax form-accion" action="'.APP_URL.'app/ajax/ventaAjax.php" method="POST" autocomplete="off" >
-
-			                		<input type="hidden" name="modulo_venta" value="eliminar_venta">
-			                		<input type="hidden" name="venta_id" value="'.$rows['venta_id'].'">
-
-			                    	<button type="submit" class="text-td btn btn-danger btn-sm rounded-pill boton-accion" title="Eliminar venta Nro. '.$rows['venta_id'].'" >
-			                    		<i class="far fa-trash-alt fa-fw"></i>
-			                    	</button>
-			                    </form>
-
-			                </td>
-						</tr>
+		$tabla.='
+			</td>
+				</td>
 					';
 					$contador++;
 				}
