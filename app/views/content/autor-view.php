@@ -2,34 +2,28 @@
   <div class="position-contenido">
 
   <div class="position-buttom">
-  <button class="btn-registrar btn btn-primary mb-4" onclick="abrirModalRegistroAutor()">
+    <button class="btn-registrar btn btn-primary mb-4" onclick="abrirModalRegistroAutor()">
         Registrar Nuevo Autor
     </button>
   </div>
 
+<div class="search-container-buscador">
+    <div class="search-group-buscador">
+            <i class="bi bi-search search-icon-buscador"></i>
+            <input type="text" id="buscador-simple" class="search-input-buscador" placeholder="Buscar...">
+    </div>
+</div>
+
   <div class="content-name">
     <div class="container-fluid mb-4">
-    <h1 class="text-titulo">Autores</h1>
-    <h2 class="h5 text-muted">Gestión de Autores</h2>
-    
-</div>
+      <h1 class="text-titulo">Autores</h1>
+      <h2 class="h5 text-muted">Gestión de Autores</h2>
+    </div>
   </div>
 
   </div>
 
    
-
-<!-- Buscador elegante y centrado -->
-<div class="row justify-content-center mb-4">
-    <div class="col-md-6">
-        <div class="input-group">
-            <span class="input-group-text bg-primary text-white">
-                <i class="bi bi-search"></i>
-            </span>
-            <input type="text" id="buscador-simple" class="form-control form-control-sm" placeholder="Buscar autor por nombre, codigo,biografia...">
-        </div>
-    </div>
-</div>
     <!-- Lista de Autores -->
     <div id="lista-autores" class="mt-4">
         <!-- Aquí se cargará la lista de autores -->

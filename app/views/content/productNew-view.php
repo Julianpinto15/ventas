@@ -699,16 +699,7 @@ $(document).ready(function() {
 });
 
 
-// Función debounce
-function debounce(func, wait) {
-    let timeout;
-    return function(...args) {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => func.apply(this, args), wait);
-    };
-}
-
-function cargarProductos(pagina = 1, registros = 10) {
+function cargarProductos(pagina = 1, registros = 4) {
     const busqueda = $('#busqueda').val();
     const categoria = $('#categoria').val();
     const subcategoria = $('#subcategoria').val();
@@ -722,6 +713,7 @@ function cargarProductos(pagina = 1, registros = 10) {
             modulo_producto: 'listar',
             pagina: pagina,
             registros: registros,
+            url: 'producto',
             busqueda: busqueda,
             categoria: categoria,
             subcategoria: subcategoria,
@@ -730,25 +722,49 @@ function cargarProductos(pagina = 1, registros = 10) {
         },
         success: function(response) {
             $('#lista-productos').html(response);
+
+            // Agregar eventos a los enlaces de paginación
+            $('.pagination .page-link').on('click', function(e) {
+                e.preventDefault();
+                if ($(this).attr('aria-disabled') !== 'true') {
+                    const href = $(this).attr('href');
+                    // Extraer el número de página de la URL (formato: url/{pagina}/)
+                    const match = href.match(/\/(\d+)\//);
+                    if (match && match[1]) {
+                        cargarProductos(parseInt(match[1]), registros);
+                    }
+                }
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error("Error cargando productos:", error);
+            $('#lista-productos').html('<div class="alert alert-danger">Error al cargar los productos</div>');
         }
     });
 }
 
-// Aplicar filtros cuando cambie cualquier dropdown o campo de búsqueda
+// Función debounce para evitar múltiples llamadas AJAX
+function debounce(func, wait) {
+    let timeout;
+    return function(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
+    };
+}
+
+// Cargar productos al cargar la página
 $(document).ready(function() {
-    // Cargar productos inicialmente
     cargarProductos();
-    
+
     // Event listeners para todos los campos de filtro
     $('#busqueda, #categoria, #subcategoria, #autor, #editorial').on('change input', debounce(function() {
         cargarProductos();
     }, 300));
-    
-    // También necesitamos manejar la paginación
-    $(document).on('click', '.pagination a', function(e) {
-        e.preventDefault();
-        let pagina = $(this).attr('href').split('/')[1] || 1;
-        cargarProductos(pagina);
+
+    // Manejar el botón de reset
+  $('#btn-reset').on('click', function() {
+        $('#form-busqueda-filtros')[0].reset();
+        cargarProductos();
     });
 });
 

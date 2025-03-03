@@ -447,9 +447,8 @@
 
 
 		/*----------  Controlador listar producto  ----------*/
-	/*----------  Controlador listar producto  ----------*/
-	public function listarProductoControlador($pagina, $registros, $url, $busqueda, $categoria, $subcategoria = 0, $autor = 0, $editorial = 0) {
-		// Limpiar y validar datos
+		public function listarProductoControlador($pagina, $registros, $url, $busqueda, $categoria, $subcategoria, $autor, $editorial) {
+			// Limpiar y validar datos
 		$pagina = $this->limpiarCadena($pagina);
 		$registros = $this->limpiarCadena($registros);
 		$categoria = $this->limpiarCadena($categoria);
@@ -522,17 +521,17 @@
 			<table class="table table-striped table-bordered table-hover">
 				<thead class="table-dark">
 					<tr class="text-center">
-						<th class="text-th">Cod.</th>
-						<th class="text-th">Nom.</th>
-						<th class="text-th">P. C.</th>
-						<th class="text-th">P. V. </th>
+						<th class="text-th">Codigo</th>
+						<th class="text-th">Nombre</th>
+						<th class="text-th">Precio C.</th>
+						<th class="text-th">Precio V. </th>
 						<th class="text-th">Stk.</th>
-						<th class="text-th">Tip.</th>
+						<th class="text-th">Tipo.</th>
 						<th class="text-th">Prov.</th>
 						<th class="text-th">Tel.</th>
 						<th class="text-th">Cat.</th>
 						<th class="text-th">Subcat.</th>
-						<th class="text-th">Aut.</th>
+						<th class="text-th">Autor.</th>
 						<th class="text-th">Ed.</th>
 						<th class="text-th">Img.</th>
 						<th class="text-th">Menú</th>

@@ -33,19 +33,25 @@ if (isset($_POST['modulo_producto'])) {
         if ($_POST['modulo_producto'] == "eliminarFoto") {
             echo $insProducto->eliminarFotoProductoControlador();
         }
-
-        if ($_POST['modulo_producto'] == "listar") {
-            $pagina = isset($_POST['pagina']) ? intval($_POST['pagina']) : 1;
-            $registros = isset($_POST['registros']) ? intval($_POST['registros']) : 4;
-            $url = isset($_POST['url']) ? $_POST['url'] : '';
-            $busqueda = isset($_POST['busqueda']) ? $_POST['busqueda'] : '';
-            $categoria = isset($_POST['categoria']) ? $_POST['categoria'] : ''; // Add this line
-            
-            $resultado = $insProducto->listarProductoControlador($pagina, $registros, $url, $busqueda, $categoria);
-            echo $resultado;
-            exit;
-        }
+// En productoAjax.php, donde está este bloque:
+if ($_POST['modulo_producto'] == "listar") {
+    $pagina = isset($_POST['pagina']) ? intval($_POST['pagina']) : 1;
+    $registros = isset($_POST['registros']) ? intval($_POST['registros']) : 4;
+    $url = isset($_POST['url']) ? $_POST['url'] : '';
+    $busqueda = isset($_POST['busqueda']) ? $_POST['busqueda'] : '';
+    $categoria = isset($_POST['categoria']) ? $_POST['categoria'] : ''; // Ya existe
+    
+    // Agregar estas líneas para los filtros faltantes
+    $subcategoria = isset($_POST['subcategoria']) ? $_POST['subcategoria'] : '';
+    $autor = isset($_POST['autor']) ? $_POST['autor'] : '';
+    $editorial = isset($_POST['editorial']) ? $_POST['editorial'] : '';
+    
+    $resultado = $insProducto->listarProductoControlador($pagina, $registros, $url, $busqueda, $categoria, $subcategoria, $autor, $editorial);
+    echo $resultado;
+    exit;
+}
     }
+    
 } else {
     session_destroy();
     header("Location: " . APP_URL . "login/");
