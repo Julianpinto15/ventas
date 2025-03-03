@@ -153,15 +153,36 @@ function cerrarModalEditarautor() {
 }
 
     // Función para cargar la lista de autores
-    function cargarAutores() {
+    function cargarAutores(pagina = 1, busqueda = '') {
         $.ajax({
             url: '<?= APP_URL ?>app/ajax/autorAjax.php',
             type: 'POST',
             data: {
-                modulo_autor: 'listar'
+                modulo_autor: 'listar',
+                pagina: pagina,
+                registros: 10,
+                url: 'autor', 
+                busqueda: busqueda
             },
             success: function(response) {
                 $('#lista-autores').html(response);
+
+                 $('.pagination .page-link').on('click', function(e) {
+                e.preventDefault();
+                if ($(this).attr('aria-disabled') !== 'true') {
+                    const href = $(this).attr('href');
+                    // Extraer el número de página de la URL (formato: url/{pagina}/)
+                    const match = href.match(/\/(\d+)\//);
+                    if (match && match[1]) {
+                        cargarAutores(parseInt(match[1]), busqueda);
+                    }
+                }
+            });
+            
+            },
+            error: function(xhr, status, error) {
+                console.error("Error cargando categorías:", error);
+                $('#lista-autores').html('<div class="alert alert-danger">Error al cargar los autores</div>');
             }
         });
     }

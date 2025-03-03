@@ -136,15 +136,36 @@ function cerrarModalEditareditorial() {
 }
 
 // Function to load editorial list
-function cargarEditoriales() {
+function cargarEditoriales(pagina = 1, busqueda = '') {
     $.ajax({
         url: '<?= APP_URL ?>app/ajax/editorialAjax.php',
         type: 'POST',
         data: {
-            modulo_editorial: 'listar'
+            modulo_editorial: 'listar',
+            pagina: pagina,
+            registros: 10,
+            url: 'editorial', 
+            busqueda: busqueda
         },
         success: function(response) {
             $('#lista-editoriales').html(response);
+
+            $('.pagination .page-link').on('click', function(e) {
+                e.preventDefault();
+                if ($(this).attr('aria-disabled') !== 'true') {
+                    const href = $(this).attr('href');
+                    // Extraer el número de página de la URL (formato: url/{pagina}/)
+                    const match = href.match(/\/(\d+)\//);
+                    if (match && match[1]) {
+                        cargarEditoriales(parseInt(match[1]), busqueda);
+                    }
+                }
+            });
+
+        },
+        error: function(xhr, status, error) {
+            console.error("Error cargando categorías:", error);
+            $('#lista-editoriales').html('<div class="alert alert-danger">Error al cargar las editoriales</div>');
         }
     });
 }

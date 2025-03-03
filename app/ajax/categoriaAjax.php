@@ -42,7 +42,12 @@ if(isset($_POST['modulo_categoria'])){
                 break;
 
             case 'listar':
-                $resultado = $insCategory->listarCategoriaControlador(1, 15, '', '');
+                $pagina = isset($_POST['pagina']) ? intval($_POST['pagina']) : 1;
+                $registros = isset($_POST['registros']) ? intval($_POST['registros']) : 10;
+                $url = isset($_POST['url']) ? $_POST['url'] : '';
+                $busqueda = isset($_POST['busqueda']) ? $_POST['busqueda'] : '';
+                
+                $resultado = $insCategory->listarCategoriaControlador($pagina, $registros, $url, $busqueda);
                 echo $resultado;
                 exit;
         }

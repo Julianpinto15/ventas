@@ -238,16 +238,38 @@
     }
 
     // Función para cargar la lista de clientes
-    function cargarClientes() {
+    function cargarClientes(pagina = 1, busqueda = '') {
         $.ajax({
             url: '<?= APP_URL ?>app/ajax/clienteAjax.php',
             type: 'POST',
             data: {
-                modulo_cliente: 'listar'
+                modulo_cliente: 'listar',
+                pagina: pagina,
+                registros: 10,
+                url: 'clientes', 
+                busqueda: busqueda
             },
             success: function(response) {
                 $('#lista-clientes').html(response);
-            }
+
+                // Agregar eventos a los enlaces de paginación
+            $('.pagination .page-link').on('click', function(e) {
+                e.preventDefault();
+                if ($(this).attr('aria-disabled') !== 'true') {
+                    const href = $(this).attr('href');
+                    // Extraer el número de página de la URL (formato: url/{pagina}/)
+                    const match = href.match(/\/(\d+)\//);
+                    if (match && match[1]) {
+                        cargarClientes(parseInt(match[1]), busqueda);
+                    }
+                }
+            });
+
+            },
+              error: function(xhr, status, error) {
+                  console.error("Error cargando categorías:", error);
+                  $('#lista-clientes').html('<div class="alert alert-danger">Error al cargar las categorías</div>');
+              }
         });
     }
 

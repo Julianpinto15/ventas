@@ -343,17 +343,17 @@
 			$numeroPaginas =ceil($total/$registros);
 
 			$tabla.='
-		        <div class="table-container">
-		        <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
-		            <thead>
-		                <tr>
-		                    <th class="has-text-centered">#</th>
-		                    <th class="has-text-centered">Nombre</th>
-		                    <th class="has-text-centered">Usuario</th>
-		                    <th class="has-text-centered">Email</th>
-		                    <th class="has-text-centered">Foto</th>
-		                    <th class="has-text-centered">Actualizar</th>
-		                    <th class="has-text-centered">Eliminar</th>
+		        <div class="table-responsive">
+		        <table class="table table-striped table-bordered table-hover">
+		            <thead class="table-dark">
+		                <tr class="text-center">
+		                    <th class="text-th">#</th>
+		                    <th class="text-th">Nombre</th>
+		                    <th class="text-th">Usuario</th>
+		                    <th class="text-th">Email</th>
+		                    <th class="text-th">Foto</th>
+		                    <th class="text-th">Actualizar</th>
+		                    <th class="text-th">Eliminar</th>
 		                </tr>
 		            </thead>
 		            <tbody>
@@ -364,28 +364,28 @@
 				$pag_inicio=$inicio+1;
 				foreach($datos as $rows){
 					$tabla.='
-						<tr class="has-text-centered" >
-							<td>'.$contador.'</td>
-							<td>'.$rows['usuario_nombre'].' '.$rows['usuario_apellido'].'</td>
-							<td>'.$rows['usuario_usuario'].'</td>
-							<td>'.$rows['usuario_email'].'</td>
-							<td>
-			                    <a href="'.APP_URL.'userPhoto/'.$rows['usuario_id'].'/" class="button is-info is-rounded is-small">
-			                    	<i class="fas fa-camera fa-fw"></i>
+						<tr class="tr-main text-center" >
+							<td class="text-td">'.$contador.'</td>
+							<td class="text-td">'.$rows['usuario_nombre'].' '.$rows['usuario_apellido'].'</td>
+							<td class="text-td">'.$rows['usuario_usuario'].'</td>
+							<td class="text-td">'.$rows['usuario_email'].'</td>
+							<td class="text-td">
+			                    <a href="'.APP_URL.'userPhoto/'.$rows['usuario_id'].'/" class="text-td btn btn-info btn-sm rounded-pill">
+			                    	<i class="fas fa-camera fa-fw icono-camara"></i>
 			                    </a>
 			                </td>
-			                <td>
-			                    <a href="'.APP_URL.'userUpdate/'.$rows['usuario_id'].'/" class="button is-success is-rounded is-small">
+			                <td class="text-td">
+			                    <a href="'.APP_URL.'userUpdate/'.$rows['usuario_id'].'/" class="text-td btn btn-success btn-sm rounded-pill">
 			                    	<i class="fas fa-sync fa-fw"></i>
 			                    </a>
 			                </td>
-			                <td>
+			                <td class="text-td">
 			                	<form class="FormularioAjax" action="'.APP_URL.'app/ajax/usuarioAjax.php" method="POST" autocomplete="off" >
 
 			                		<input type="hidden" name="modulo_usuario" value="eliminar">
 			                		<input type="hidden" name="usuario_id" value="'.$rows['usuario_id'].'">
 
-			                    	<button type="submit" class="button is-danger is-rounded is-small">
+			                    	<button type="submit" class="text-td btn btn-danger btn-sm rounded-pill">
 			                    		<i class="far fa-trash-alt fa-fw"></i>
 			                    	</button>
 			                    </form>
@@ -421,7 +421,7 @@
 
 			### Paginacion ###
 			if($total>0 && $pagina<=$numeroPaginas){
-				$tabla.='<p class="has-text-right">Mostrando usuarios <strong>'.$pag_inicio.'</strong> al <strong>'.$pag_final.'</strong> de un <strong>total de '.$total.'</strong></p>';
+				$tabla.='<p class="text-end">Mostrando usuarios <strong>'.$pag_inicio.'</strong> al <strong>'.$pag_final.'</strong> de un <strong>total de '.$total.'</strong></p>';
 
 				$tabla.=$this->paginadorTablas($pagina,$numeroPaginas,$url,7);
 			}

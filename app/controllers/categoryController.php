@@ -141,7 +141,6 @@
             <tr class="text-center">
                 <th class="text-th">Nombre</th>
                 <th class="text-th">Ubicación</th>
-                <th class="text-th">Productos</th>
                 <th class="text-th">Opciones</th>
             </tr>
         </thead>
@@ -156,12 +155,6 @@
                 <tr class="tr-main text-center">
                     <td class="text-td">'.$rows['categoria_nombre'].'</td>
                     <td class="text-td">'.$rows['categoria_ubicacion'].'</td>
-                    <td class="text-td">
-                        <a href="'.APP_URL.'productCategory/'.$rows['categoria_id'].'/" class="text-td btn btn-info btn-sm rounded-pill">
-                            <i class="bi bi-boxes"></i>
-                            <span class="text-icono">Productos</span>
-                        </a>
-                    </td>
                     <td class="text-td">
                         <button class="text-td btn btn-success btn-sm rounded-pill" onclick="abrirModalEditarCategoria({
                             categoria_id: \''.$rows['categoria_id'].'\',
@@ -208,7 +201,7 @@
 
 			### Paginacion ###
 			if($total>0 && $pagina<=$numeroPaginas){
-				$tabla.='<p class="has-text-right">Mostrando categorías <strong>'.$pag_inicio.'</strong> al <strong>'.$pag_final.'</strong> de un <strong>total de '.$total.'</strong></p>';
+				$tabla.='<p class="text-end">Mostrando categorías <strong>'.$pag_inicio.'</strong> al <strong>'.$pag_final.'</strong> de un <strong>total de '.$total.'</strong></p>';
 
 				$tabla.=$this->paginadorTablas($pagina,$numeroPaginas,$url,7);
 			}

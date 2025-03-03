@@ -160,7 +160,7 @@ public function obtenerCategoriasSubcategoriaControlador() {
         $tabla .= '</tbody></table></div>';
 
         if($total > 0 && $pagina <= $numeroPaginas){
-            $tabla .= '<p class="text-end">Mostrando subcategor\u00edas del <strong>'.($inicio+1).'</strong> al <strong>'.($contador-1).'</strong> de un total de <strong>'.$total.'</strong></p>';
+            $tabla .= '<p class="text-end">Mostrando subcategorias del <strong>'.($inicio+1).'</strong> al <strong>'.($contador-1).'</strong> de un total de <strong>'.$total.'</strong></p>';
             $tabla .= $this->paginadorTablas($pagina, $numeroPaginas, $url, 7);
         }
 

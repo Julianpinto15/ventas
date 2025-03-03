@@ -194,18 +194,36 @@ function cargarCategoriasSubcategoria() {
 }
 
 
-function cargarSubcategorias() {
+function cargarSubcategorias(pagina = 1, registrosPorPagina = 5, busqueda = '') {
     $.ajax({
         url: "<?= APP_URL ?>app/ajax/subcategoriaAjax.php",
         type: "POST",
         data: {
             modulo_subcategoria: "listar",
-            pagina: 1,
-            registros: 15,
+            pagina: pagina,  // Ahora usa la variable pagina
+            registros: 10,  // Usa el parámetro de registros por página
             url: "subcategoria",
+            busqueda: busqueda
         },
         success: function (response) {
             $("#lista-subcategorias").html(response);
+            
+            // Agregar eventos a los enlaces de paginación
+            $('.pagination .page-link').on('click', function(e) {
+                e.preventDefault();
+                if ($(this).attr('aria-disabled') !== 'true') {
+                    const href = $(this).attr('href');
+                    // Extraer el número de página de la URL (formato: url/{pagina}/)
+                    const match = href.match(/\/(\d+)\//);
+                    if (match && match[1]) {
+                        cargarSubcategorias(parseInt(match[1]), busqueda);
+                    }
+                }
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error("Error cargando subcategorías:", error);
+            $('#lista-subcategorias').html('<div class="alert alert-danger">Error al cargar las subcategorías</div>');
         }
     });
 }

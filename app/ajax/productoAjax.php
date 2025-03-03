@@ -32,13 +32,16 @@
 
 
 		if ($_POST['modulo_producto'] == "listar") {
-			$pagina = isset($_POST['pagina']) ? $_POST['pagina'] : 1;
-			$registros = isset($_POST['registros']) ? $_POST['registros'] : 10;
-			$busqueda = isset($_POST['busqueda']) ? $_POST['busqueda'] : "";
-			$categoria = isset($_POST['categoria']) ? $_POST['categoria'] : 0;
-		
-			echo $insProducto->listarProductoControlador($pagina, $registros, "productList", $busqueda, $categoria);
-		}
+    $pagina = isset($_POST['pagina']) ? intval($_POST['pagina']) : 1;
+    $registros = isset($_POST['registros']) ? intval($_POST['registros']) : 5;
+    $url = isset($_POST['url']) ? $_POST['url'] : '';
+    $busqueda = isset($_POST['busqueda']) ? $_POST['busqueda'] : '';
+    $categoria = isset($_POST['categoria']) ? $_POST['categoria'] : ''; // Add this line
+    
+    $resultado = $insProducto->listarProductoControlador($pagina, $registros, $url, $busqueda, $categoria);
+    echo $resultado;
+    exit;
+}
 		
 		
 	}else{

@@ -1011,7 +1011,7 @@
 
 			### Paginacion ###
 			if($total>0 && $pagina<=$numeroPaginas){
-				$tabla.='<p class="has-text-right">Mostrando ventas '.$pag_inicio.' al '.$pag_final.' de un total de '.$total.'</p>';
+				$tabla.='<p class="text-end">Mostrando ventas '.$pag_inicio.' al '.$pag_final.' de un total de '.$total.'</p>';
 
 				$tabla.=$this->paginadorTablas($pagina,$numeroPaginas,$url,7);
 			}
