@@ -8,6 +8,13 @@
       </button>
     </div>
 
+    <div class="search-container-buscador">
+      <div class="search-group-buscador">
+              <i class="bi bi-search search-icon-buscador"></i>
+              <input type="text" id="buscador-subcategoria" class="search-input-buscador" placeholder="Buscar subcategoría por nombre o categoría...">
+      </div>
+    </div>
+
     <div class="content-name">
         <div class="container-fluid mb-4">
           <h1 class="text-titulo">Subcategorías</h1>
@@ -16,22 +23,14 @@
     </div>
 
   </div>
-  <!-- Buscador elegante y centrado para subcategorías -->
-<div class="row justify-content-center mb-4">
-    <div class="col-md-6">
-        <div class="input-group">
-            <span class="input-group-text bg-primary text-white">
-                <i class="bi bi-search"></i>
-            </span>
-            <input type="text" id="buscador-subcategoria" class="form-control form-control-sm" placeholder="Buscar subcategoría por nombre o categoría...">
-        </div>
-    </div>
-</div>
+   
+
     <!-- Listado de Subcategorías -->
     <div id="lista-subcategorias" class="mt-4">
         <!-- Aquí se cargará la lista de subcategorías -->
     </div>
 
+    
     <!-- Modal de Registro -->
     <div id="modal-registro_subcategoria" class="modal fade" tabindex="-1" aria-labelledby="modalRegistroLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">

@@ -37,7 +37,7 @@
 <link rel="stylesheet" href="<?php echo APP_URL; ?>app/views/css/saleList.css">
 <link rel="stylesheet" href="<?php echo APP_URL; ?>app/views/css/saleDetail.css">
 <link rel="stylesheet" href="<?php echo APP_URL; ?>app/views/css/saleNew.css">
-
+<link rel="stylesheet" href="<?php echo APP_URL; ?>app/views/css/productNew.css">
 
 <!-- Scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

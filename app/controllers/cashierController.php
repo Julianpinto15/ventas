@@ -5,15 +5,15 @@
 
 	class cashierController extends mainModel{
 
-		/*----------  Controlador registrar caja  ----------*/
+		
 		public function registrarCajaControlador(){
 
-			# Almacenando datos#
+			
 		    $numero=$this->limpiarCadena($_POST['caja_numero']);
 		    $nombre=$this->limpiarCadena($_POST['caja_nombre']);
 		    $efectivo=$this->limpiarCadena($_POST['caja_efectivo']);
 
-		    # Verificando campos obligatorios #
+		   
 		    if($numero=="" || $nombre=="" || $efectivo==""){
 		    	$alerta=[
 					"tipo"=>"simple",
@@ -25,7 +25,7 @@
 		        exit();
 		    }
 
-		    # Verificando integridad de los datos #
+		   
 		    if($this->verificarDatos("[0-9]{1,5}",$numero)){
 		    	$alerta=[
 					"tipo"=>"simple",
@@ -59,7 +59,7 @@
 		        exit();
 		    }
 
-		    # Comprobando numero de caja #
+		    
 		    $check_numero=$this->ejecutarConsulta("SELECT caja_numero FROM caja WHERE caja_numero='$numero'");
 		    if($check_numero->rowCount()>0){
 		    	$alerta=[
@@ -72,7 +72,7 @@
 		        exit();
 		    }
 
-		    # Comprobando nombre de caja #
+		   
 		    $check_nombre=$this->ejecutarConsulta("SELECT caja_nombre FROM caja WHERE caja_nombre='$nombre'");
 		    if($check_nombre->rowCount()>0){
 		    	$alerta=[
@@ -85,7 +85,7 @@
 		        exit();
 		    }
 
-		    # Comprobando que el efectivo sea mayor o igual a 0 #
+		   
 			$efectivo=number_format($efectivo,2,'.','');
 			if($efectivo<0){
 				$alerta=[
@@ -139,7 +139,7 @@
 		}
 
 
-		/*----------  Controlador listar cajas  ----------*/
+		
 		public function listarCajaControlador($pagina,$registros,$url,$busqueda){
 
 			$pagina=$this->limpiarCadena($pagina);
@@ -255,7 +255,7 @@ $tabla.='</tbody></table></div>';
 		}
 
 
-		/*----------  Controlador eliminar caja  ----------*/
+		
 		public function eliminarCajaControlador(){
 
 			$id=$this->limpiarCadena($_POST['caja_id']);
@@ -271,7 +271,7 @@ $tabla.='</tbody></table></div>';
 		        exit();
 			}
 
-			# Verificando caja #
+			
 		    $datos=$this->ejecutarConsulta("SELECT * FROM caja WHERE caja_id='$id'");
 		    if($datos->rowCount()<=0){
 		        $alerta=[
@@ -286,7 +286,7 @@ $tabla.='</tbody></table></div>';
 		    	$datos=$datos->fetch();
 		    }
 
-		    # Verificando ventas #
+		    
 		    $check_ventas=$this->ejecutarConsulta("SELECT caja_id FROM venta WHERE caja_id='$id' LIMIT 1");
 		    if($check_ventas->rowCount()>0){
 		        $alerta=[
@@ -299,7 +299,7 @@ $tabla.='</tbody></table></div>';
 		        exit();
 		    }
 
-		    # Verificando usuarios #
+		    
 		    $check_usuarios=$this->ejecutarConsulta("SELECT caja_id FROM usuario WHERE caja_id='$id' LIMIT 1");
 		    if($check_usuarios->rowCount()>0){
 		        $alerta=[
@@ -334,7 +334,7 @@ $tabla.='</tbody></table></div>';
 		}
 
 
-		/*----------  Controlador actualizar caja  ----------*/
+		
 		public function actualizarCajaControlador(){
 
 			$id=$this->limpiarCadena($_POST['caja_id']);
@@ -354,12 +354,12 @@ $tabla.='</tbody></table></div>';
 		    	$datos=$datos->fetch();
 		    }
 
-		    # Almacenando datos#
+		   
 		    $numero=$this->limpiarCadena($_POST['caja_numero']);
 		    $nombre=$this->limpiarCadena($_POST['caja_nombre']);
 		    $efectivo=$this->limpiarCadena($_POST['caja_efectivo']);
 
-		    # Verificando campos obligatorios #
+		    
 		    if($numero=="" || $nombre=="" || $efectivo==""){
 		    	$alerta=[
 					"tipo"=>"simple",
@@ -371,7 +371,7 @@ $tabla.='</tbody></table></div>';
 		        exit();
 		    }
 
-		    # Verificando integridad de los datos #
+		    
 		    if($this->verificarDatos("[0-9]{1,5}",$numero)){
 		    	$alerta=[
 					"tipo"=>"simple",
@@ -405,7 +405,7 @@ $tabla.='</tbody></table></div>';
 		        exit();
 		    }
 
-		    # Comprobando numero de caja #
+		    
 		    if($datos['caja_numero']!=$numero){
 			    $check_numero=$this->ejecutarConsulta("SELECT caja_numero FROM caja WHERE caja_numero='$numero'");
 			    if($check_numero->rowCount()>0){
@@ -420,7 +420,7 @@ $tabla.='</tbody></table></div>';
 			    }
 		    }
 
-		    # Comprobando nombre de caja #
+		   
 		    if($datos['caja_nombre']!=$nombre){
 			    $check_nombre=$this->ejecutarConsulta("SELECT caja_nombre FROM caja WHERE caja_nombre='$nombre'");
 			    if($check_nombre->rowCount()>0){
@@ -435,7 +435,7 @@ $tabla.='</tbody></table></div>';
 			    }
 		    }
 
-		    # Comprobando que el efectivo sea mayor o igual a 0 #
+		    
 			$efectivo=number_format($efectivo,2,'.','');
 			if($efectivo<0){
 				$alerta=[

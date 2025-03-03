@@ -5,16 +5,16 @@ use app\models\mainModel;
 
 class autorController extends mainModel {
 
-    /*----------  Controlador registrar autor  ----------*/
+    
     public function registrarAutorControlador(){
 
-        # Almacenando datos #
+        
         $codigo = $this->limpiarCadena($_POST['autor_codigo']);
         $nombre = $this->limpiarCadena($_POST['autor_nombre']);
         $biografia = $this->limpiarCadena($_POST['autor_biografia']);
         $paisorigen = $this->limpiarCadena($_POST['autor_paisorigen']);
 
-        # Verificando campos obligatorios #
+        
         if($codigo=="" || $nombre==""){
             $alerta=[
                 "tipo"=>"simple",
@@ -26,7 +26,7 @@ class autorController extends mainModel {
             exit();
         }
 
-        # Verificando integridad de los datos #
+        
         if($this->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,100}",$nombre)){
             $alerta=[
                 "tipo"=>"simple",
@@ -38,7 +38,7 @@ class autorController extends mainModel {
             exit();
         }
 
-        # Verificando código único #
+        
         $check_codigo = $this->ejecutarConsulta("SELECT codigo FROM autor WHERE codigo='$codigo'");
         if($check_codigo->rowCount()>0){
             $alerta=[
@@ -95,7 +95,7 @@ class autorController extends mainModel {
         return json_encode($alerta);
     }
 
-    /*----------  Controlador listar autor  ----------*/
+    
     public function listarAutorControlador($pagina, $registros, $url, $busqueda){
         $pagina = $this->limpiarCadena($pagina);
         $registros = $this->limpiarCadena($registros);
@@ -207,7 +207,7 @@ class autorController extends mainModel {
         return $tabla;
     }
 
-    /*----------  Controlador eliminar autor  ----------*/
+    
     public function eliminarAutorControlador(){
         $id = $this->limpiarCadena($_POST['autor_id']);
 
@@ -246,11 +246,11 @@ class autorController extends mainModel {
         return json_encode($alerta);
     }
 
-    /*----------  Controlador actualizar autor  ----------*/
+    
     public function actualizarAutorControlador(){
         $id = $this->limpiarCadena($_POST['autor_id']);
 
-        # Verificando autor #
+       
         $datos = $this->ejecutarConsulta("SELECT * FROM autor WHERE idAutor='$id'");
         if($datos->rowCount()<=0){
             $alerta=[
@@ -265,13 +265,13 @@ class autorController extends mainModel {
             $datos = $datos->fetch();
         }
 
-        # Almacenando datos #
+       
         $codigo = $this->limpiarCadena($_POST['autor_codigo']);
         $nombre = $this->limpiarCadena($_POST['autor_nombre']);
         $biografia = $this->limpiarCadena($_POST['autor_biografia']);
         $paisorigen = $this->limpiarCadena($_POST['autor_paisorigen']);
 
-        # Verificando campos obligatorios #
+        
         if($codigo=="" || $nombre==""){
             $alerta=[
                 "tipo"=>"simple",
@@ -283,7 +283,7 @@ class autorController extends mainModel {
             exit();
         }
 
-        # Verificando código único #
+        
         if($datos['codigo'] != $codigo){
             $check_codigo = $this->ejecutarConsulta("SELECT codigo FROM autor WHERE codigo='$codigo'");
             if($check_codigo->rowCount()>0){
