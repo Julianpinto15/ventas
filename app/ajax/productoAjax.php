@@ -29,14 +29,12 @@
 		if($_POST['modulo_producto']=="actualizarFoto"){
 			echo $insProducto->actualizarFotoProductoControlador();
 		}
-
-
 		if ($_POST['modulo_producto'] == "listar") {
     $pagina = isset($_POST['pagina']) ? intval($_POST['pagina']) : 1;
     $registros = isset($_POST['registros']) ? intval($_POST['registros']) : 5;
     $url = isset($_POST['url']) ? $_POST['url'] : '';
     $busqueda = isset($_POST['busqueda']) ? $_POST['busqueda'] : '';
-    $categoria = isset($_POST['categoria']) ? $_POST['categoria'] : ''; // Add this line
+    $categoria = isset($_POST['categoria']) ? $_POST['categoria'] : ''; 
     
     $resultado = $insProducto->listarProductoControlador($pagina, $registros, $url, $busqueda, $categoria);
     echo $resultado;
