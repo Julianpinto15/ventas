@@ -1,4 +1,4 @@
-RewriteEngine On
+﻿RewriteEngine On
 Options All -Indexes
 
 # Asegurarse de que no se aplica la regla a archivos o directorios existentes
